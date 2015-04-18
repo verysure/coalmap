@@ -95,3 +95,26 @@ function infostring(infos) {
                     'Power plant Info: ' + infos['info']+ ''+
                 '</div>';
 }
+
+
+
+
+
+
+$(document).ready(function() {
+    $.ajax({
+            type: 'GET',
+            url: 'https://developer.nrel.gov/api/pvwatts/v4.json?api_key=AyxJQCb3jgWo5pWvz122yF2SdWCcHGxviGgfa4Eo&system_size=4&dataset=tmy2&derate=0.77&lat=40&lon=-105',
+            dataType: "jsonp",
+            crossDomain: true,
+            success: function (msg) {
+
+                alert("success");
+
+            },
+            error: function (request, status, error) {
+
+                alert(error);
+            }
+    });
+});
