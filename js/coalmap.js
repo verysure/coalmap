@@ -12,7 +12,7 @@ function renderMap() {
 
 
 
-
+// Supporting functions
 
 function initialize() {
     var mapCanvas = document.getElementById('map-canvas');
@@ -31,7 +31,7 @@ function addCoalPlant(map, name, position, coal_mc, renew_mc) {
     coal_mc = typeof coal_mc !== 'undefined' ? coal_mc : 1;
     renew_mc = typeof renew_mc !== 'undefined' ? renew_mc : 0;
 
-
+    var infoopen = false;
     var marker = new google.maps.Marker({
         title: name,
         position: position,
@@ -40,6 +40,23 @@ function addCoalPlant(map, name, position, coal_mc, renew_mc) {
             // size: new google.maps.Size(30, 30),
             scaledSize: new google.maps.Size(20, 20),
             url: planticon(coal_mc, renew_mc),
+        }
+    });
+
+    var infowindow = new google.maps.InfoWindow({
+        content: infostring({
+            title: name,
+            content: "testing...",
+        }),
+    });
+
+    google.maps.event.addListener(marker, 'click', function() {
+        if (infoopen) {
+            infowindow.close(map,marker);
+            infoopen = false;
+        } else {
+            infowindow.open(map,marker);
+            infoopen = true;
         }
     });
 
@@ -58,5 +75,15 @@ function planticon(coal_mc, renew_mc) {
     } else {
         iconstring = "red.png"
     }
-    return iconpath + iconstring ;
+    return iconpath + iconstring;
+}
+
+
+
+function infostring(infos) {
+
+    return  '<h1>' + infos['title'] + '</h1>' +
+                '<div id="bodyContent">' +
+                    infos['content']+
+                '</div>';
 }
