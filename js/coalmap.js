@@ -46,7 +46,9 @@ function addCoalPlant(map, name, position, coal_mc, renew_mc) {
     var infowindow = new google.maps.InfoWindow({
         content: infostring({
             title: name,
-            content: "testing...",
+            coal_mc: coal_mc,
+            renew_mc: renew_mc,
+            info: "testing...",
         }),
     });
 
@@ -84,6 +86,8 @@ function infostring(infos) {
 
     return  '<h1 style="font-size:15px;">' + infos['title'] + '</h1>' +
                 '<div id="bodyContent">' +
-                    infos['content']+
+                    'Current Marginal Cost: ' + infos['coal_mc']+ '<br>'+
+                    'Renewable Energy LCOE: ' + infos['renew_mc']+ '<br>'+
+                    'Power plant Info: ' + infos['info']+ ''+
                 '</div>';
 }
