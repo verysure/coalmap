@@ -8,6 +8,7 @@ function renderMap() {
     addCoalPlant(map, 'Alabama Power Co.', {lat: 33.150917, lng: -87.499806}, 100, 50);
     addCoalPlant(map, 'Tennessee Valley Authority', {lat: 34.2457755, lng:-88.4037623}, 100, 200);
 
+
 }
 
 
@@ -22,6 +23,7 @@ function initialize() {
         mapTypeId: google.maps.MapTypeId.ROADMAP
     }
     var map = new google.maps.Map(mapCanvas, mapOptions);
+
 
     return map;
 }
@@ -64,6 +66,8 @@ function addCoalPlant(map, name, position, coal_mc, renew_mc) {
 
     return marker;
 }
+
+
 
 function planticon(coal_mc, renew_mc) {
     var iconstring = "";

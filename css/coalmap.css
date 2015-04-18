@@ -5,7 +5,8 @@ html, body {
 
 
 #map-canvas {
-    /*margin: auto auto;*/
-    width: 80%;
-    height: 80%;
+    margin: 40px auto;
+    /*margin-top: 40px;*/
+    width: 90%;
+    height: 65%;
 }
