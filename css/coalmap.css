@@ -1,4 +1,11 @@
-/*#map-canvas {
-    width: 500px;
-    height: 400px;
-}*/
+html, body {
+    height: 100%;
+    width: 100%;
+}
+
+
+#map-canvas {
+    /*margin: auto auto;*/
+    width: 80%;
+    height: 80%;
+}

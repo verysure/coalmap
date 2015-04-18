@@ -5,7 +5,7 @@ function renderMap() {
 
     var map = initialize();
 
-    addCoalPlant(map, 'Albama Power Co.', {lat: 33.150917, lng: -87.499806}, 100, 50);
+    addCoalPlant(map, 'Alabama Power Co.', {lat: 33.150917, lng: -87.499806}, 100, 50);
     addCoalPlant(map, 'Tennessee Valley Authority', {lat: 34.2457755, lng:-88.4037623}, 100, 200);
 
 }
