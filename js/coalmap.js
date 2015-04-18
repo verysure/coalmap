@@ -71,7 +71,7 @@ function addCoalPlant(map, name, position, coal_mc, renew_mc) {
 
 function planticon(coal_mc, renew_mc) {
     var iconstring = "";
-    var iconpath = "js/markers/";
+    var iconpath = "/coalmap/js/markers/";
     var renew_ratio = renew_mc / coal_mc;
 
     if (renew_ratio >= 1) {
