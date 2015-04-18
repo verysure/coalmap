@@ -82,7 +82,7 @@ function planticon(coal_mc, renew_mc) {
 
 function infostring(infos) {
 
-    return  '<h1>' + infos['title'] + '</h1>' +
+    return  '<h1 style="font-size:15px;">' + infos['title'] + '</h1>' +
                 '<div id="bodyContent">' +
                     infos['content']+
                 '</div>';
