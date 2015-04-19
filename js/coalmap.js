@@ -4,12 +4,41 @@ var map;
 var markers = [];
 google.maps.event.addDomListener(window, 'load', renderMap);
 
+
+
+// general functions
 function renderMap() {
 
     initialize();
 
-    addCoalPlant('Alabama Power Co.', {lat: 33.150917, lng: -87.499806}, 100);
-    addCoalPlant('Tennessee Valley Authority', {lat: 34.2457755, lng:-88.4037623}, 100);
+    $.ajax({
+        type: "GET",
+        url: "/coalmap/data/test.json",
+        dataType: "json",
+        success: function(data) {
+            for (var i = 0; i< data.length; i++) {
+                addCoalPlant(
+                    data['name'],
+                    {lat: data['lat'], lng: data['lng']},
+                    data['coal_mc']
+                );
+            }
+        }
+     });
+
+
+    // addCoalPlant('Alabama Power Co.', {lat: 33.150917, lng: -87.499806}, 100);
+    // addCoalPlant('Tennessee Valley Authority', {lat: 34.2457755, lng:-88.4037623}, 100);
+}
+
+
+
+
+
+
+
+function updateMap(formdata) {
+
 }
 
 
@@ -19,10 +48,14 @@ function renderMap() {
 
 
 
-
-
-
 // Supporting functions
+
+function readDataAddCoalPlant(data) {
+    data;
+
+}
+
+
 
 function initialize() {
     var mapCanvas = document.getElementById('map-canvas');
@@ -42,7 +75,6 @@ function addCoalPlant(name, position, coal_mc) {
     $.ajax({
         type: 'GET',
         url: 'https://developer.nrel.gov/api/pvwatts/v5.json?api_key=' + apikey + '&lat=' + position['lat'].toString() +'&lon='+ position['lng'].toString() + '&system_capacity=20000&azimuth=180&tilt=40&array_type=4&module_type=0&losses=10',
-        // url: 'https://developer.nrel.gov/api/pvwatts/v5.json?api_key=' + apikey + '&lat=40.5&lon=-105&system_capacity=20000&azimuth=180&tilt=40&array_type=4&module_type=0&losses=10',
         dataType: "jsonp",
         crossDomain: true,
         success: function (msg) {
@@ -65,7 +97,7 @@ function addMarker(name, position, coal_mc, renew_mc) {
     var marker = new google.maps.Marker({
         title: name,
         position: position,
-        map: map,
+        // map: map,
         icon: {
             // size: new google.maps.Size(30, 30),
             scaledSize: new google.maps.Size(20, 20),
@@ -92,6 +124,7 @@ function addMarker(name, position, coal_mc, renew_mc) {
         }
     });
 
+    marker.setMap(map);
     markers.push(marker);
 }
 
