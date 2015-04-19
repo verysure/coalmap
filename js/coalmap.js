@@ -2,6 +2,7 @@
 var apikey = 'AyxJQCb3jgWo5pWvz122yF2SdWCcHGxviGgfa4Eo';
 var map;
 var markers = [];
+var plantcounts = {green:0, yellow:0, red:0};
 google.maps.event.addDomListener(window, 'load', renderMap);
 
 
@@ -113,6 +114,13 @@ function addCoalPlant(name, position, coal_mc, pv_lcoe, co2, plantinfo) {
 }
 
 
+function updatePlantCounts() {
+    $('#greenspan').text(plantcounts['green']);
+    $('#yellowspan').text(plantcounts['yellow']);
+    $('#redspan').text(plantcounts['red']);
+}
+
+
 function addMarker(name, position, coal_mc, renew_mc, co2, plantinfo) {
     coal_mc = typeof coal_mc !== 'undefined' ? coal_mc : 1;
     renew_mc = typeof renew_mc !== 'undefined' ? renew_mc : 0;
@@ -120,6 +128,19 @@ function addMarker(name, position, coal_mc, renew_mc, co2, plantinfo) {
     var co2ratio = co2/20000000;
 
     var infoopen = false;
+    var iconurl = planticon(coal_mc, renew_mc);
+
+    if (iconurl[20] === 'g') {
+        plantcounts['green'] += 1;
+    } else if (iconurl[20] === 'y') {
+        plantcounts['yellow'] += 1;
+    } else {
+        plantcounts['red'] += 1;
+    }
+    updatePlantCounts();
+
+
+
     var marker = new google.maps.Marker({
         title: name,
         position: position,
@@ -127,7 +148,7 @@ function addMarker(name, position, coal_mc, renew_mc, co2, plantinfo) {
         icon: {
             // size: new google.maps.Size(30, 30),
             scaledSize: new google.maps.Size(15*co2ratio + 5, 30*co2ratio+10),
-            url: planticon(coal_mc, renew_mc),
+            url: iconurl,
         }
     });
 
