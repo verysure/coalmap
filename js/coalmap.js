@@ -10,22 +10,7 @@ google.maps.event.addDomListener(window, 'load', renderMap);
 function renderMap() {
 
     initialize();
-
-    $.ajax({
-        type: "GET",
-        url: "/coalmap/data/test.json",
-        dataType: "json",
-        success: function(data) {
-
-            for (var i = 0; i< data.length; i++) {
-                addCoalPlant(
-                    data[i]['name'],
-                    {lat: parseFloat(data[i]['lat']), lng: parseFloat(data[i]['lng'])},
-                    parseFloat(data[i]['coal_mc'])
-                );
-            }
-        }
-    });
+    parseAdd(1);
 
 
 }
@@ -37,22 +22,12 @@ function renderMap() {
 
 
 function updateMap(formdata) {
-    console.log(formdata.factor1.value);
-    // $.ajax({
-    //     type: "GET",
-    //     url: "/coalmap/data/test.json",
-    //     dataType: "json",
-    //     success: function(data) {
-    //
-    //         for (var i = 0; i< data.length; i++) {
-    //             addCoalPlant(
-    //                 data[i]['name'],
-    //                 {lat: parseFloat(data[i]['lat']), lng: parseFloat(data[i]['lng'])},
-    //                 parseFloat(data[i]['coal_mc'])
-    //             );
-    //         }
-    //     }
-    // });
+    for (var i = 0; i<markers.length; i++) {
+        markers[i].setMap(null);
+    }
+    markers = [];
+
+    parseAdd(parseFloat(formdata.factor1.value));
 }
 
 
@@ -64,8 +39,22 @@ function updateMap(formdata) {
 
 // Supporting functions
 
-function parseAdd() {
+function parseAdd(value) {
+    $.ajax({
+        type: "GET",
+        url: "/coalmap/data/test.json",
+        dataType: "json",
+        success: function(data) {
 
+            for (var i = 0; i< data.length; i++) {
+                addCoalPlant(
+                    data[i]['name'],
+                    {lat: parseFloat(data[i]['lat']), lng: parseFloat(data[i]['lng'])},
+                    parseFloat(data[i]['coal_mc'])*value
+                );
+            }
+        }
+    });
 }
 
 
