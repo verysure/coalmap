@@ -30,7 +30,8 @@ input[type=range].input {
 
 .output {
     float: left;
-    width: 50px;
+    font-size: 15px;
+    width: 30px;
 }
 
 
