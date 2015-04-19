@@ -65,6 +65,7 @@ function parseAdd(values) {
                     data[i]['Utility Name'],
                     {lat: (data[i]['Latitude']), lng: (data[i]["Longitude"])},
                     (data[i]["Marginal cost"] + values[0]*data[i]["CO2"]/data[i]["Net Generation (Megawatthours)"]),
+                    data[i]["CO2"],
                     "Address: " + data[i]['Street Address'] + ", " + data[i]['State'] + "<br>CO2 emission (ton/yr): "+data[i]["CO2"]
                 );
             }
@@ -87,7 +88,7 @@ function initialize() {
 
 
 
-function addCoalPlant(name, position, coal_mc, plantinfo) {
+function addCoalPlant(name, position, coal_mc, co2, plantinfo) {
 
     // First get the msg and then we can add the marker onto the map
     $.ajax({
@@ -98,7 +99,7 @@ function addCoalPlant(name, position, coal_mc, plantinfo) {
         success: function (msg) {
             // After getting the value of output per year, we can finally addMarker
             renew_mc = msg['outputs']['ac_annual'];
-            addMarker(name, position, coal_mc, renew_mc, plantinfo);
+            addMarker(name, position, coal_mc, renew_mc, co2, plantinfo);
         },
         error: function (request, status, error) {
             console.log(error);
@@ -107,9 +108,11 @@ function addCoalPlant(name, position, coal_mc, plantinfo) {
 }
 
 
-function addMarker(name, position, coal_mc, renew_mc, plantinfo) {
+function addMarker(name, position, coal_mc, renew_mc, co2, plantinfo) {
     coal_mc = typeof coal_mc !== 'undefined' ? coal_mc : 1;
     renew_mc = typeof renew_mc !== 'undefined' ? renew_mc : 0;
+
+    var co2ratio = co2/20000000;
 
     var infoopen = false;
     var marker = new google.maps.Marker({
@@ -118,7 +121,7 @@ function addMarker(name, position, coal_mc, renew_mc, plantinfo) {
         // map: map,
         icon: {
             // size: new google.maps.Size(30, 30),
-            scaledSize: new google.maps.Size(10, 20),
+            scaledSize: new google.maps.Size(20*co2ratio, 40*co2ratio),
             url: planticon(coal_mc, renew_mc),
         }
     });
