@@ -22,12 +22,15 @@ function renderMap() {
 
 
 function updateMap(formdata) {
+    formdata = typeof formdata !== 'undefined' ? formdata : {"carbontax": 1, "solarprice": 1};
+
+
     for (var i = 0; i<markers.length; i++) {
         markers[i].setMap(null);
     }
     markers = [];
 
-    parseAdd(parseFloat(formdata.factor1.value));
+    parseAdd(parseFloat(formdata.carbontax.value));
 }
 
 
