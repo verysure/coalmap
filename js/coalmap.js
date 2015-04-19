@@ -1,7 +1,7 @@
 // initialize map when loaded
 var apikey = 'AyxJQCb3jgWo5pWvz122yF2SdWCcHGxviGgfa4Eo';
 var map;
-var markers;
+var markers = [];
 google.maps.event.addDomListener(window, 'load', renderMap);
 
 function renderMap() {
@@ -92,7 +92,7 @@ function addMarker(name, position, coal_mc, renew_mc) {
         }
     });
 
-    return marker;
+    markers.push(marker);
 }
 
 
