@@ -103,7 +103,7 @@ function addMarker(name, position, coal_mc, renew_mc) {
         // map: map,
         icon: {
             // size: new google.maps.Size(30, 30),
-            scaledSize: new google.maps.Size(20, 20),
+            scaledSize: new google.maps.Size(10, 20),
             url: planticon(coal_mc, renew_mc),
         }
     });
