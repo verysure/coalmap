@@ -65,6 +65,7 @@ html, body {
 .plantspan {
     float: left;
     width: 50px;
+    text-align: right;
 }
 
 .navbar-header {

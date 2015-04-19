@@ -55,18 +55,21 @@
         </nav>
 
 
-        <div class="legendform">
-            <div class="container">
-                <span class="plantspan" id="greenspan">0</span><img src="/coalmap/js/markers/green.png" alt="" style="width: 15px; height: 30px;" />: Shut it down! <br>
-                <span class="plantspan" id="yellowspan">0</span><img src="/coalmap/js/markers/yellow.png" alt="" style="width: 15px; height: 30px;" />: Almost there <br>
-                <span class="plantspan" id="redspan">0</span><img src="/coalmap/js/markers/red.png" alt="" style="width: 15px; height: 30px;" />: Maybe next year ...
+        <div class="container" id='map'>
 
+            <div class="legendform">
+                <div class="container">
+                    <span class="plantspan" id="greenspan">0</span><img src="/coalmap/js/markers/green.png" alt="" style="width: 15px; height: 30px;" />: Shut it down! <br>
+                    <span class="plantspan" id="yellowspan">0</span><img src="/coalmap/js/markers/yellow.png" alt="" style="width: 15px; height: 30px;" />: Almost there <br>
+                    <span class="plantspan" id="redspan">0</span><img src="/coalmap/js/markers/red.png" alt="" style="width: 15px; height: 30px;" />: Maybe next year ...
+
+                </div>
             </div>
+
+
+            <div id="map-canvas"></div>
+
         </div>
-
-
-        <div id="map-canvas"></div>
-
 
 
         <script src="/coalmap/js/coalmap.js"> </script>
