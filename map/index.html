@@ -4,6 +4,8 @@
         <title></title>
 
         <link href='http://fonts.googleapis.com/css?family=Raleway:500,300' rel='stylesheet' type='text/css'>
+
+        <script type="text/javascript" src="https://www.google.com/jsapi"></script>
         <link rel="stylesheet" type="text/css" href="/coalmap/css/coalmap.css">
         <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
@@ -35,8 +37,8 @@
                         <!-- <div> </div> -->
 
                     <label class=label for=redfader>PV price drop (%/yr):</label>
-                        <input class=input type=range min=0 max=50 value=0 id=redfader step=1 oninput="outputUpdate('#solarred', value);" name=solarred>
-                        <output class=output for=redfader id="solarred">0</output>
+                        <input class=input type=range min=0 max=50 value=5 id=redfader step=1 oninput="outputUpdate('#solarred', value);" name=solarred>
+                        <output class=output for=redfader id="solarred">5</output>
                         <!-- <div> </div> -->
 
                     <input type="submit" value="Submit">
@@ -70,8 +72,12 @@
 
 
         <div class="container" id='charts'>
+            <!-- year green numbers -->
+
+            <!-- carbontax -->
         </div>
 
+        <div id="chart_div"></div>
 
 
 

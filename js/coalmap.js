@@ -23,7 +23,10 @@ function renderMap() {
     // carbon tax
 
 
+
 }
+
+
 
 
 
@@ -63,6 +66,7 @@ function parseAdd(values) {
         url: "/coalmap/data/alldata_records_unformatted.json",
         dataType: "json",
         success: function(data) {
+            var mc_lcoe = [];
 
             for (var i = 0; i< data.length; i++) {
             // for (var i = 0; i< 20; i++) {
@@ -74,7 +78,15 @@ function parseAdd(values) {
                     data[i]["CO2"],
                     "Address: " + data[i]['Street Address'] + ", " + data[i]['State'] + "<br>CO2 emission (ton/yr): "+data[i]["CO2"]
                 );
+
+
+                // update graph
+                mc_lcoe.push( mc: (data[i]["Marginal cost"] + values[0]*data[i]["CO2"]/data[i]["Net Generation (Megawatthours)"]), pv_lcoe: data[i]['PV LCOE']*values[1]*Math.pow((1-values[3]/100),(values[2]-2015)));
             }
+            drawCharts();
+
+
+
         }
     });
 }
@@ -92,6 +104,42 @@ function initialize() {
     map = new google.maps.Map(mapCanvas, mapOptions);
 }
 
+
+
+function drawCharts() {
+    // Load the Visualization API and the piechart package.
+      google.load('visualization', '1.0', {'packages':['corechart']});
+
+      // Set a callback to run when the Google Visualization API is loaded.
+      google.setOnLoadCallback(drawChart);
+
+      // Callback that creates and populates a data table,
+      // instantiates the pie chart, passes in the data and
+      // draws it.
+      function drawChart() {
+
+        // Create the data table.
+        var data = new google.visualization.DataTable();
+        data.addColumn('string', 'Topping');
+        data.addColumn('number', 'Slices');
+        data.addRows([
+          ['Mushrooms', 3],
+          ['Onions', 1],
+          ['Olives', 1],
+          ['Zucchini', 1],
+          ['Pepperoni', 2]
+        ]);
+
+        // Set chart options
+        var options = {'title':'How Much Pizza I Ate Last Night',
+                       'width':400,
+                       'height':300};
+
+        // Instantiate and draw our chart, passing in some options.
+        var chart = new google.visualization.PieChart(document.getElementById('chart_div'));
+        chart.draw(data, options);
+      }
+}
 
 
 function addCoalPlant(name, position, coal_mc, pv_lcoe, co2, plantinfo) {
@@ -230,24 +278,3 @@ function scrollTo(obj) {
      }, 300);
 
 }
-
-//
-// $("#nav ul li a[href^='#']").on('click', function(e) {
-//
-//    // prevent default anchor click behavior
-//    e.preventDefault();
-//
-//    // store hash
-//    var hash = this.hash;
-//
-//    // animate
-//    $('html, body').animate({
-//        scrollTop: $(hash).offset().top
-//      }, 300, function(){
-//
-//        // when done, add hash to url
-//        // (default click behaviour)
-//        window.location.hash = hash;
-//      });
-//
-// });
