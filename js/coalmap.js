@@ -105,7 +105,7 @@ $(document).ready(function() {
     var apikey = 'AyxJQCb3jgWo5pWvz122yF2SdWCcHGxviGgfa4Eo';
     $.ajax({
             type: 'GET',
-            url: 'https://developer.nrel.gov/api/pvwatts/v5.json?api_key=' + apikey + '&lat=40&lon=-105&system_capacity=20000&azimuth=180&tilt=40&array_type=4&module_type=1&losses=10',
+            url: 'https://developer.nrel.gov/api/pvwatts/v5.json?api_key=' + apikey + '&lat=40&lon=-105&system_capacity=20000&azimuth=180&tilt=40&array_type=4&module_type=0&losses=10',
             dataType: "jsonp",
             crossDomain: true,
             success: function (msg) {
