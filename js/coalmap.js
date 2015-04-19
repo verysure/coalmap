@@ -45,7 +45,7 @@ function updateMap(formdata) {
 function parseAdd(value) {
     $.ajax({
         type: "GET",
-        url: "/coalmap/data/test.json",
+        url: "/coalmap/data/coaldata_records_formatted.json",
         dataType: "json",
         success: function(data) {
 
