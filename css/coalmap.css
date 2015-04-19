@@ -17,6 +17,8 @@ html, body {
 }
 
 .label {
+    color: black;
+    font-size: 20px;
     float: left;
     width: 150px;
 }
