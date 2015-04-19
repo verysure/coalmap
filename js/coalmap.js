@@ -60,13 +60,13 @@ function parseAdd(values) {
         success: function(data) {
 
             for (var i = 0; i< data.length; i++) {
-                console.log({lat: (data[i]['Latitude']), lng: (data[i]["Longitude"])});
-                // addCoalPlant(
-                //     data[i]['Utility Name'],
-                //     "Address: " + data[i]['Street Address'] + ", " + data[i]['State'] + "<br>CO2 emission (ton/yr): "+data[i]["CO2"],
-                //     {lat: (data[i]['Latitude']), lng: (data[i]["Longitude"])},
-                //     (data[i]["Marginal cost"] + values[0]*data[i]["CO2"]/data[i]["Net Generation (Megawatthours)"])
-                // );
+                // console.log({lat: (data[i]['Latitude']), lng: (data[i]["Longitude"])});
+                addCoalPlant(
+                    data[i]['Utility Name'],
+                    "Address: " + data[i]['Street Address'] + ", " + data[i]['State'] + "<br>CO2 emission (ton/yr): "+data[i]["CO2"],
+                    {lat: (data[i]['Latitude']), lng: (data[i]["Longitude"])},
+                    (data[i]["Marginal cost"] + values[0]*data[i]["CO2"]/data[i]["Net Generation (Megawatthours)"])
+                );
             }
         }
     });
@@ -89,21 +89,22 @@ function initialize() {
 
 function addCoalPlant(name, position, coal_mc, plantinfo) {
 
+    console.log(position['lat'].toString() + position['lng'].toString() );
     // First get the msg and then we can add the marker onto the map
-    $.ajax({
-        type: 'GET',
-        url: 'https://developer.nrel.gov/api/pvwatts/v5.json?api_key=' + apikey + '&lat=' + position['lat'].toString() +'&lon='+ position['lng'].toString() + '&system_capacity=20000&azimuth=180&tilt=40&array_type=4&module_type=0&losses=10',
-        dataType: "jsonp",
-        crossDomain: true,
-        success: function (msg) {
-            // After getting the value of output per year, we can finally addMarker
-            renew_mc = msg['outputs']['ac_annual'];
-            addMarker(name, position, coal_mc, renew_mc, plantinfo);
-        },
-        error: function (request, status, error) {
-            console.log(error);
-        }
-    });
+    // $.ajax({
+    //     type: 'GET',
+    //     url: 'https://developer.nrel.gov/api/pvwatts/v5.json?api_key=' + apikey + '&lat=' + position['lat'].toString() +'&lon='+ position['lng'].toString() + '&system_capacity=20000&azimuth=180&tilt=40&array_type=4&module_type=0&losses=10',
+    //     dataType: "jsonp",
+    //     crossDomain: true,
+    //     success: function (msg) {
+    //         // After getting the value of output per year, we can finally addMarker
+    //         renew_mc = msg['outputs']['ac_annual'];
+    //         addMarker(name, position, coal_mc, renew_mc, plantinfo);
+    //     },
+    //     error: function (request, status, error) {
+    //         console.log(error);
+    //     }
+    // });
 }
 
 
