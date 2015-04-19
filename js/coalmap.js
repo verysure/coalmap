@@ -37,7 +37,7 @@ function renderMap() {
 
 
 function updateMap(formdata) {
-    console.log(formdata.factor1);
+    console.log(formdata.factor1.value);
     // $.ajax({
     //     type: "GET",
     //     url: "/coalmap/data/test.json",
