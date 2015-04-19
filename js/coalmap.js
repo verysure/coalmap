@@ -60,7 +60,7 @@ function parseAdd(values) {
         success: function(data) {
 
             for (var i = 0; i< data.length; i++) {
-                console.log(data[i]["Marginal cost"] + values[0]*data[i]["CO2"]);
+                console.log(data[i]["Marginal cost"]);
                 // addCoalPlant(
                 //     data[i]['name'],
                 //     {lat: (data[i]['Latitude']), lng: (data[i]['Longitude'])},
