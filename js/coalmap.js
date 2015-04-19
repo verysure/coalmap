@@ -104,7 +104,7 @@ function infostring(infos) {
 $(document).ready(function() {
     $.ajax({
             type: 'GET',
-            url: 'https://developer.nrel.gov/api/pvwatts/v5.json?api_key=AyxJQCb3jgWo5pWvz122yF2SdWCcHGxviGgfa4Eo&dataset=tmy2&lat=33.15091&lon=-87.499806',
+            url: 'https://developer.nrel.gov/api/pvwatts/v5.json?api_key=AyxJQCb3jgWo5pWvz122yF2SdWCcHGxviGgfa4Eo&dataset=tmy2&lat=33&lon=-87',
             dataType: "jsonp",
             crossDomain: true,
             success: function (msg) {
