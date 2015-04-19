@@ -103,7 +103,7 @@ function getLCOE(position) {
     console.log('LCOE');
     $.ajax({
         type: 'GET',
-        url: 'https://developer.nrel.gov/api/pvwatts/v5.json?api_key=' + apikey + '&lat=' + toString(position['lat']) +'&lon='+ toString(position['lng']) + '&system_capacity=20000&azimuth=180&tilt=40&array_type=4&module_type=0&losses=10',
+        url: 'https://developer.nrel.gov/api/pvwatts/v5.json?api_key=' + apikey + '&lat=' + position['lat'].toString() +'&lon='+ position['lng'].toString() + '&system_capacity=20000&azimuth=180&tilt=40&array_type=4&module_type=0&losses=10',
         // url: 'https://developer.nrel.gov/api/pvwatts/v5.json?api_key=' + apikey + '&lat=40.5&lon=-105&system_capacity=20000&azimuth=180&tilt=40&array_type=4&module_type=0&losses=10',
         dataType: "jsonp",
         crossDomain: true,
