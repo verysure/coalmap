@@ -66,7 +66,7 @@ function parseAdd(values) {
                     data[i]['Utility Name'],
                     {lat: (data[i]['Latitude']), lng: (data[i]["Longitude"])},
                     (data[i]["Marginal cost"] + values[0]*data[i]["CO2"]/data[i]["Net Generation (Megawatthours)"]),
-                    "Address: " + data[i]['Street Address'] + ", " + data[i]['State'] + "<br>CO2 emission (ton/yr): "+data[i]["CO2"],
+                    "Address: " + data[i]['Street Address'] + ", " + data[i]['State'] + "<br>CO2 emission (ton/yr): "+data[i]["CO2"]
                 );
             }
         }
