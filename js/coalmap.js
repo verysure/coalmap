@@ -60,14 +60,13 @@ function parseAdd(values) {
         success: function(data) {
 
             // for (var i = 0; i< data.length; i++) {
-            for (var i = 0; i< 50; i++) {
-                console.log(data[i]["Marginal cost"] + values[0]*data[i]["CO2"]/data[i]["Net Generation (Megawatthours)"]);
-                // addCoalPlant(
-                //     data[i]['Utility Name'],
-                //     {lat: (data[i]['Latitude']), lng: (data[i]["Longitude"])},
-                //     (data[i]["Marginal cost"] + values[0]*data[i]["CO2"]/data[i]["Net Generation (Megawatthours)"]),
-                //     "Address: " + data[i]['Street Address'] + ", " + data[i]['State'] + "<br>CO2 emission (ton/yr): "+data[i]["CO2"]
-                // );
+            for (var i = 0; i< 20; i++) {
+                addCoalPlant(
+                    data[i]['Utility Name'],
+                    {lat: (data[i]['Latitude']), lng: (data[i]["Longitude"])},
+                    (data[i]["Marginal cost"] + values[0]*data[i]["CO2"]/data[i]["Net Generation (Megawatthours)"]),
+                    "Address: " + data[i]['Street Address'] + ", " + data[i]['State'] + "<br>CO2 emission (ton/yr): "+data[i]["CO2"]
+                );
             }
         }
     });
