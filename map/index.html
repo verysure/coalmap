@@ -15,13 +15,19 @@
         <nav class="navbar navbar-default navbar-fixed-top">
           <div class="container">
             <div class="navbar-header">
-              <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+                <!--  input controls-->
+                <form action="#" onsubmit="updateMap(this);return false">
+                    Carbon Tax (usd per):<input type="text" name="carbontax">
+                    PV value ratio ():<input type="text" name="solarprice">
+                    <input type="submit" value="Submit">
+                </form>
+              <!-- <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
                 <span class="sr-only">Toggle navigation</span>
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
               </button>
-              <a class="navbar-brand" href="/coalmap">CoalMap</a>
+              <a class="navbar-brand" href="/coalmap">CoalMap</a> -->
             </div>
             <div id="navbar" class="navbar-collapse collapse">
               <ul class="nav navbar-nav navbar-right">
@@ -43,7 +49,7 @@
                 <!--  input controls-->
                 <form action="#" onsubmit="updateMap(this);return false">
                     Carbon Tax (usd per):<input type="text" name="carbontax">
-                    Solar Price Drop (year):<input type="text" name="solarprice">
+                    PV value ratio ():<input type="text" name="solarprice">
                     <input type="submit" value="Submit">
                 </form>
             </div>
