@@ -227,9 +227,7 @@ function scrollTo(obj) {
    // animate
    $('html, body').animate({
        scrollTop: $(obj.attr('href')).offset().top
-     }, 300, function(){
-
-     });
+     }, 300);
 
 }
 
