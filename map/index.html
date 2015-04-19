@@ -40,13 +40,10 @@
 
 
         <!--  input controls-->
-        <form  id="render" method="post">
+        <form action="#" onsubmit"updateMap(this);return false">
             Factor1:<input type="text" name="factor1">
             <input type="submit" value="Submit">
         </form>
-        <script>
-            $("#render").submit(updateMap(this));
-        </script>
 
         <script src="/coalmap/js/coalmap.js"> </script>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
