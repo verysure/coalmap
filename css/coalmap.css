@@ -61,7 +61,11 @@ html, body {
     margin-top: 100px;
 }
 
+.navbar-header {
+    margin-top: 30px;
+}
 .navbar-header .label {
+    text-align: left;
     color: black;
     font-size: 15px;
     float: left;
