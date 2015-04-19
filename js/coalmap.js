@@ -63,8 +63,8 @@ function parseAdd(values) {
         dataType: "json",
         success: function(data) {
 
-            // for (var i = 0; i< data.length; i++) {
-            for (var i = 0; i< 20; i++) {
+            for (var i = 0; i< data.length; i++) {
+            // for (var i = 0; i< 20; i++) {
                 addCoalPlant(
                     data[i]['Utility Name'],
                     {lat: (data[i]['Latitude']), lng: (data[i]["Longitude"])},
