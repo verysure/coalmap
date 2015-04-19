@@ -18,9 +18,9 @@
                 <!--  input controls-->
                 <form action="#" onsubmit="updateMap(this);return false">
                     <!-- Carbon Tax (usd per):<input type="text" name="carbontax"> -->
-                    <label for=fader>Carbon Tax (usd per)</label>
+                    <span for=fader>Carbon Tax (usd per):</span>
                         <input type=range min=0 max=100 value=1 id=fader step=1 oninput="outputUpdate('#volume', value);">
-                        <output for=fader id=volume>1</output>
+                        <span for=fader id="volume">1</span>
                     PV value ratio ():<input type="text" name="solarprice">
                     <input type="submit" value="Submit">
                 </form>

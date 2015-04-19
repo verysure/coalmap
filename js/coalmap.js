@@ -188,5 +188,5 @@ $(document).ready(function() {
 
 
 function outputUpdate(target, value) {
-    $(target).value = value;
+    $(target).text(value);
 }
