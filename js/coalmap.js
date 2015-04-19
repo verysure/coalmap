@@ -11,10 +11,10 @@ function renderMap() {
 
     initialize();
     parseAdd([
-        parseFloat($('#carbontax')),
-        parseFloat($('#solarprice')),
-        parseFloat($('#solaryear')),
-        parseFloat($('#solarred')),
+        parseFloat($('#carbontax').text()),
+        parseFloat($('#solarprice').text()),
+        parseFloat($('#solaryear').text()),
+        parseFloat($('#solarred').text()),
     ]);
 
 
@@ -60,12 +60,13 @@ function parseAdd(values) {
         success: function(data) {
 
             for (var i = 0; i< data.length; i++) {
-                console.log(data[i]["Marginal cost"]);
-                // addCoalPlant(
-                //     data[i]['name'],
-                //     {lat: (data[i]['Latitude']), lng: (data[i]['Longitude'])},
-                //     (data[i]["Marginal cost"] + values[0]*data[i]["CO2"])
-                // );
+                // console.log(data[i]["Marginal cost"]);
+                addCoalPlant(
+                    data[i]['Utility Name'],
+                    "Address: " + data[i]['Street Address'] + ", " + data[i]['State'] + "<br>CO2 emission (ton/yr): "+data[i]["CO2"],
+                    {lat: (data[i]['Latitude']), lng: (data[i]['Longitude'])},
+                    (data[i]["Marginal cost"] + values[0]*data[i]["CO2"]/data[i]["Net Generation (Megawatthours)"])
+                );
             }
         }
     });
@@ -86,7 +87,7 @@ function initialize() {
 
 
 
-function addCoalPlant(name, position, coal_mc) {
+function addCoalPlant(name, position, coal_mc, plantinfo) {
 
     // First get the msg and then we can add the marker onto the map
     $.ajax({
@@ -97,7 +98,7 @@ function addCoalPlant(name, position, coal_mc) {
         success: function (msg) {
             // After getting the value of output per year, we can finally addMarker
             renew_mc = msg['outputs']['ac_annual'];
-            addMarker(name, position, coal_mc, renew_mc);
+            addMarker(name, position, coal_mc, renew_mc, plantinfo);
         },
         error: function (request, status, error) {
             console.log(error);
@@ -106,7 +107,7 @@ function addCoalPlant(name, position, coal_mc) {
 }
 
 
-function addMarker(name, position, coal_mc, renew_mc) {
+function addMarker(name, position, coal_mc, renew_mc, plantinfo) {
     coal_mc = typeof coal_mc !== 'undefined' ? coal_mc : 1;
     renew_mc = typeof renew_mc !== 'undefined' ? renew_mc : 0;
 
@@ -127,7 +128,7 @@ function addMarker(name, position, coal_mc, renew_mc) {
             title: name,
             coal_mc: coal_mc,
             renew_mc: renew_mc,
-            info: "testing...",
+            info: plantinfo,
         }),
     });
 
@@ -168,7 +169,7 @@ function infostring(infos) {
 
     return  '<h1 style="font-size:15px;">' + infos['title'] + '</h1>' +
                 '<div id="bodyContent">' +
-                    'Current Marginal Cost: ' + infos['coal_mc']+ '<br>'+
+                    'Current Marginal Cost ($/MWh): ' + infos['coal_mc']+ '<br>'+
                     'Renewable Energy LCOE: ' + infos['renew_mc']+ '<br>'+
                     'Power plant Info: ' + infos['info']+ ''+
                 '</div>';
