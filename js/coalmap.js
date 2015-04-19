@@ -31,7 +31,7 @@ function updateMap(formdata) {
 
 
     for (var i = 0; i<markers.length; i++) {
-        markers[i].setMap(null);
+        markers[i]['marker'].setMap(null);
     }
     markers = [];
 
@@ -133,6 +133,7 @@ function addMarker(name, position, coal_mc, renew_mc, plantinfo) {
     });
 
     google.maps.event.addListener(marker, 'click', function() {
+        clearInfos();
         if (infoopen) {
             infowindow.close(map,marker);
             infoopen = false;
@@ -143,7 +144,13 @@ function addMarker(name, position, coal_mc, renew_mc, plantinfo) {
     });
 
     marker.setMap(map);
-    markers.push(marker);
+    markers.push({marker:marker, infowindow:infowindow});
+}
+
+function clearInfos() {
+    for (var i = 0; i < markers.length; i++) {
+        markers[i]['infowindow'].close(map, markers[i]['marker']);
+    }
 }
 
 
@@ -171,7 +178,7 @@ function infostring(infos) {
                 '<div id="bodyContent">' +
                     'Current Marginal Cost ($/MWh): ' + infos['coal_mc']+ '<br>'+
                     'Renewable Energy LCOE: ' + infos['renew_mc']+ '<br>'+
-                    'Power plant Info: ' + infos['info']+ ''+
+                    infos['info']+ ''+
                 '</div>';
 }
 
