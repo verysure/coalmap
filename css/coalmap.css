@@ -12,12 +12,15 @@ html, body {
     /*height: 100%;*/
 }
 
+.legendform {
+    margin-top: 50px;
+}
 
 
 
 
 #map-canvas {
-    margin: 50px auto;
+    margin: 0 auto;
     /*margin-top: 40px;*/
     width: 90%;
     height: 65%;
