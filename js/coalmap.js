@@ -223,6 +223,7 @@ function outputUpdate(target, value) {
 
 // scroll
 function scrollTo(obj) {
+    console.log(obj.attr('href'));
 
    // animate
    $('html, body').animate({
