@@ -108,9 +108,7 @@ $(document).ready(function() {
             dataType: "jsonp",
             crossDomain: true,
             success: function (msg) {
-
-                alert("success");
-
+                console.log(msg);
             },
             error: function (request, status, error) {
 
