@@ -81,7 +81,7 @@ function parseAdd(values) {
 
 
                 // update graph
-                mc_lcoe.push( mc: (data[i]["Marginal cost"] + values[0]*data[i]["CO2"]/data[i]["Net Generation (Megawatthours)"]), pv_lcoe: data[i]['PV LCOE']*values[1]*Math.pow((1-values[3]/100),(values[2]-2015)));
+                mc_lcoe.push( {mc: (data[i]["Marginal cost"] + values[0]*data[i]["CO2"]/data[i]["Net Generation (Megawatthours)"]), pv_lcoe: data[i]['PV LCOE']*values[1]*Math.pow((1-values[3]/100),(values[2]-2015)) });
             }
             drawCharts();
 
@@ -107,18 +107,11 @@ function initialize() {
 
 
 function drawCharts() {
-    // Load the Visualization API and the piechart package.
       google.load('visualization', '1.0', {'packages':['corechart']});
-
-      // Set a callback to run when the Google Visualization API is loaded.
       google.setOnLoadCallback(drawChart);
 
-      // Callback that creates and populates a data table,
-      // instantiates the pie chart, passes in the data and
-      // draws it.
       function drawChart() {
 
-        // Create the data table.
         var data = new google.visualization.DataTable();
         data.addColumn('string', 'Topping');
         data.addColumn('number', 'Slices');
