@@ -13,3 +13,7 @@ References
 EIA Levelized Cost outlook for new generation assets: http://www.eia.gov/forecasts/aeo/pdf/electricity_generation.pdf
 
 PV data: https://developer.nrel.gov/
+
+Google Map API: https://developers.google.com/maps/
+
+Design: Bootstrap, JQuery, FontsAwesome, Google Fonts.
