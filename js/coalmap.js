@@ -16,6 +16,7 @@ function renderMap() {
         url: "/coalmap/data/test.json",
         dataType: "json",
         success: function(data) {
+            console.log(data[i]['lat']);
             for (var i = 0; i< data.length; i++) {
                 addCoalPlant(
                     data[i]['name'],
