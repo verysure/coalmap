@@ -6,8 +6,8 @@ function renderMap() {
 
     var map = initialize();
 
-    addCoalPlant(map, 'Alabama Power Co.', {lat: 33.150917, lng: -87.499806}, 100, 50);
-    addCoalPlant(map, 'Tennessee Valley Authority', {lat: 34.2457755, lng:-88.4037623}, 100, 200);
+    addCoalPlant(map, 'Alabama Power Co.', {lat: 33.150917, lng: -87.499806}, 100);
+    addCoalPlant(map, 'Tennessee Valley Authority', {lat: 34.2457755, lng:-88.4037623}, 100);
 
 
 }
@@ -30,10 +30,31 @@ function initialize() {
 }
 
 
-function addCoalPlant(map, name, position, coal_mc, renew_mc) {
+
+function addCoalPlant(map, name, position, coal_mc) {
+
+    // First get the msg and then we can add the marker onto the map
+    $.ajax({
+        type: 'GET',
+        url: 'https://developer.nrel.gov/api/pvwatts/v5.json?api_key=' + apikey + '&lat=' + position['lat'].toString() +'&lon='+ position['lng'].toString() + '&system_capacity=20000&azimuth=180&tilt=40&array_type=4&module_type=0&losses=10',
+        // url: 'https://developer.nrel.gov/api/pvwatts/v5.json?api_key=' + apikey + '&lat=40.5&lon=-105&system_capacity=20000&azimuth=180&tilt=40&array_type=4&module_type=0&losses=10',
+        dataType: "jsonp",
+        crossDomain: true,
+        success: function (msg) {
+            // After getting the value of output per year, we can finally addMarker
+            renew_mc = msg['outputs']['ac_annual'];
+            addMarker(map, name, position, coal_mc, renew_mc);
+        },
+        error: function (request, status, error) {
+            console.log(error);
+        }
+    });
+}
+
+
+function addMarker(map, name, position, coal_mc, renew_mc) {
     coal_mc = typeof coal_mc !== 'undefined' ? coal_mc : 1;
     renew_mc = typeof renew_mc !== 'undefined' ? renew_mc : 0;
-    getLCOE(position);
 
     var infoopen = false;
     var marker = new google.maps.Marker({
@@ -98,23 +119,6 @@ function infostring(infos) {
                 '</div>';
 }
 
-function getLCOE(position) {
-
-    console.log('LCOE');
-    $.ajax({
-        type: 'GET',
-        url: 'https://developer.nrel.gov/api/pvwatts/v5.json?api_key=' + apikey + '&lat=' + position['lat'].toString() +'&lon='+ position['lng'].toString() + '&system_capacity=20000&azimuth=180&tilt=40&array_type=4&module_type=0&losses=10',
-        // url: 'https://developer.nrel.gov/api/pvwatts/v5.json?api_key=' + apikey + '&lat=40.5&lon=-105&system_capacity=20000&azimuth=180&tilt=40&array_type=4&module_type=0&losses=10',
-        dataType: "jsonp",
-        crossDomain: true,
-        success: function (msg) {
-            console.log(msg['outputs']['ac_annual']);
-        },
-        error: function (request, status, error) {
-            console.log(error);
-        }
-    });
-}
 
 
 
