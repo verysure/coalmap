@@ -20,7 +20,7 @@ html, body {
     width: 150px;
 }
 
-.input {
+input[type=range].input {
     width: 150px;
 }
 
