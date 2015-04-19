@@ -10,7 +10,12 @@ google.maps.event.addDomListener(window, 'load', renderMap);
 function renderMap() {
 
     initialize();
-    parseAdd(1);
+    parseAdd([
+        parseFloat($('#carbontax')),
+        parseFloat($('#solarprice')),
+        parseFloat($('#solaryear')),
+        parseFloat($('#solarred')),
+    ]);
 
 
 }
@@ -30,7 +35,12 @@ function updateMap(formdata) {
     }
     markers = [];
 
-    parseAdd(parseFloat(formdata.carbontax.value));
+    parseAdd([
+        parseFloat(formdata.carbontax.value),
+        parseFloat(formdata.solarprice.value),
+        parseFloat(formdata.solaryear.value),
+        parseFloat(formdata.solarred.value),
+        ]);
 }
 
 
@@ -42,7 +52,7 @@ function updateMap(formdata) {
 
 // Supporting functions
 
-function parseAdd(value) {
+function parseAdd(values) {
     $.ajax({
         type: "GET",
         url: "/coalmap/data/coaldata_records_formatted.json",
@@ -52,8 +62,8 @@ function parseAdd(value) {
             for (var i = 0; i< data.length; i++) {
                 addCoalPlant(
                     data[i]['name'],
-                    {lat: (data[i]['lat']), lng: (data[i]['lng'])},
-                    (data[i]['coal_mc'])*value
+                    {lat: (data[i]['Latitude']), lng: (data[i]['Longitude'])},
+                    (data[i]["Marginal cost"] + values[0]*data[i]["CO2"])
                 );
             }
         }
