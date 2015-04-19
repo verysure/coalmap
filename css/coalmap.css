@@ -19,7 +19,7 @@ html, body {
 .navbar-header .label {
     color: black;
     font-size: 15px;
-    /*float: left;*/
+    float: left;
     width: 150px;
 }
 
