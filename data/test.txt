@@ -1,0 +1,2 @@
+Alabama Power Co.,33.150917,-87.499806,100
+Tennessee Valley Authority,34.2457755,-88.4037623,10000000

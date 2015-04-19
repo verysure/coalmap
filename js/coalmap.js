@@ -1,16 +1,24 @@
 // initialize map when loaded
 var apikey = 'AyxJQCb3jgWo5pWvz122yF2SdWCcHGxviGgfa4Eo';
+var map;
+var markers;
 google.maps.event.addDomListener(window, 'load', renderMap);
 
 function renderMap() {
 
-    var map = initialize();
+    initialize();
 
-    addCoalPlant(map, 'Alabama Power Co.', {lat: 33.150917, lng: -87.499806}, 100);
-    addCoalPlant(map, 'Tennessee Valley Authority', {lat: 34.2457755, lng:-88.4037623}, 100);
-
-
+    addCoalPlant('Alabama Power Co.', {lat: 33.150917, lng: -87.499806}, 100);
+    addCoalPlant('Tennessee Valley Authority', {lat: 34.2457755, lng:-88.4037623}, 100);
 }
+
+
+
+
+
+
+
+
 
 
 
@@ -23,15 +31,12 @@ function initialize() {
         zoom: 4,
         mapTypeId: google.maps.MapTypeId.ROADMAP
     }
-    var map = new google.maps.Map(mapCanvas, mapOptions);
-
-
-    return map;
+    map = new google.maps.Map(mapCanvas, mapOptions);
 }
 
 
 
-function addCoalPlant(map, name, position, coal_mc) {
+function addCoalPlant(name, position, coal_mc) {
 
     // First get the msg and then we can add the marker onto the map
     $.ajax({
@@ -43,7 +48,7 @@ function addCoalPlant(map, name, position, coal_mc) {
         success: function (msg) {
             // After getting the value of output per year, we can finally addMarker
             renew_mc = msg['outputs']['ac_annual'];
-            addMarker(map, name, position, coal_mc, renew_mc);
+            addMarker(name, position, coal_mc, renew_mc);
         },
         error: function (request, status, error) {
             console.log(error);
@@ -52,7 +57,7 @@ function addCoalPlant(map, name, position, coal_mc) {
 }
 
 
-function addMarker(map, name, position, coal_mc, renew_mc) {
+function addMarker(name, position, coal_mc, renew_mc) {
     coal_mc = typeof coal_mc !== 'undefined' ? coal_mc : 1;
     renew_mc = typeof renew_mc !== 'undefined' ? renew_mc : 0;
 
