@@ -52,8 +52,8 @@ function parseAdd(value) {
             for (var i = 0; i< data.length; i++) {
                 addCoalPlant(
                     data[i]['name'],
-                    {lat: parseFloat(data[i]['lat']), lng: parseFloat(data[i]['lng'])},
-                    parseFloat(data[i]['coal_mc'])*value
+                    {lat: (data[i]['lat']), lng: (data[i]['lng'])},
+                    (data[i]['coal_mc'])*value
                 );
             }
         }
