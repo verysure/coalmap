@@ -3,8 +3,8 @@ CoalMap from team FossilFree
 
 CoalMap is an opensource demonstration on timeline for replacing coal power plants to solar energy.
 
-Authors
--------
+Contacts
+--------
 [verysure](http://www.mit.edu/~tonyw/), [Joel Jean](http://www.joeljean.com/), David Borrelli.
 
 
