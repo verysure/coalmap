@@ -16,6 +16,9 @@ html, body {
     margin-top: 70px;
 }
 
+.navbar-header {
+    width: 60%;
+}
 
 
 
