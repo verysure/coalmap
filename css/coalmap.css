@@ -65,6 +65,7 @@ html, body {
     float: left;
     width: 50px;
     text-align: right;
+    font-weight: bold;
 }
 .plantimg {
     float: left;

@@ -46,8 +46,8 @@
             <div id="navbar" class="navbar-collapse collapse">
               <ul class="nav navbar-nav navbar-right">
                 <!-- <li class="active"><a href="#">About</a></li> -->
-                <li><a href="/coalmap/map">Map</a></li>
-                <li><a href="/coalmap/timeline">Timeline</a></li>
+                <li><a href="#map" onclick="scrollTo(this);">Map</a></li>
+                <li><a href="#charts" onclick="scrollTo(this);">Charts</a></li>
                 <li><a href="/coalmap/">Home</a></li>
               </ul>
             </div><!--/.nav-collapse -->
@@ -67,6 +67,13 @@
             </div>
         </div>
         <div id="map-canvas"></div>
+
+
+        <div class="container" id='charts'>
+        </div>
+
+
+
 
 
         <script src="/coalmap/js/coalmap.js"> </script>

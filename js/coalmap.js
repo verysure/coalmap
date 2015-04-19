@@ -215,3 +215,41 @@ $(document).ready(function() {
 function outputUpdate(target, value) {
     $(target).text(value);
 }
+
+
+
+
+
+
+// scroll
+function scrollTo(obj) {
+
+   // animate
+   $('html, body').animate({
+       scrollTop: $(obj.attr('href')).offset().top
+     }, 300, function(){
+
+     });
+
+}
+
+//
+// $("#nav ul li a[href^='#']").on('click', function(e) {
+//
+//    // prevent default anchor click behavior
+//    e.preventDefault();
+//
+//    // store hash
+//    var hash = this.hash;
+//
+//    // animate
+//    $('html, body').animate({
+//        scrollTop: $(hash).offset().top
+//      }, 300, function(){
+//
+//        // when done, add hash to url
+//        // (default click behaviour)
+//        window.location.hash = hash;
+//      });
+//
+// });
