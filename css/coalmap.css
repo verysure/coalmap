@@ -63,6 +63,7 @@ html, body {
 }
 
 .plantspan {
+    float: left;
     width: 50px;
 }
 
