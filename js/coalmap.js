@@ -16,7 +16,7 @@ function renderMap() {
         url: "/coalmap/data/test.json",
         dataType: "json",
         success: function(data) {
-            
+
             for (var i = 0; i< data.length; i++) {
                 addCoalPlant(
                     data[i]['name'],
@@ -25,11 +25,9 @@ function renderMap() {
                 );
             }
         }
-     });
+    });
 
 
-    // addCoalPlant('Alabama Power Co.', {lat: 33.150917, lng: -87.499806}, 100);
-    // addCoalPlant('Tennessee Valley Authority', {lat: 34.2457755, lng:-88.4037623}, 100);
 }
 
 
@@ -39,7 +37,22 @@ function renderMap() {
 
 
 function updateMap(formdata) {
-
+    console.log(formdata)
+    // $.ajax({
+    //     type: "GET",
+    //     url: "/coalmap/data/test.json",
+    //     dataType: "json",
+    //     success: function(data) {
+    //
+    //         for (var i = 0; i< data.length; i++) {
+    //             addCoalPlant(
+    //                 data[i]['name'],
+    //                 {lat: parseFloat(data[i]['lat']), lng: parseFloat(data[i]['lng'])},
+    //                 parseFloat(data[i]['coal_mc'])
+    //             );
+    //         }
+    //     }
+    // });
 }
 
 
@@ -50,6 +63,10 @@ function updateMap(formdata) {
 
 
 // Supporting functions
+
+function parseAdd() {
+    
+}
 
 
 
