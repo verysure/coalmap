@@ -45,6 +45,7 @@ function updateMap(formdata) {
         parseFloat(formdata.solaryear.value),
         parseFloat(formdata.solarred.value),
         ]);
+        console.log(parseFloat(formdata.carbontax.value));
 }
 
 
