@@ -37,15 +37,15 @@ html, body {
     font-size: 20px;
 }
 
-.intro .button-default{
+.intro .btn-default{
     color: white;
     background-color: rgba(255, 255, 255, 0);
     border-color: #FFF;
     font-size: 30px;
     border-radius: 10px;
 }
-.intro .button-default:hover,
-.intro .button-default:focus{
+.intro .btn-default:hover,
+.intro .btn-default:focus{
     color: white;
     background-color: rgba(255, 255, 255, 0);
     border-color: #FFF;
