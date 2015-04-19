@@ -89,7 +89,7 @@ function initialize() {
 
 function addCoalPlant(name, position, coal_mc, plantinfo) {
 
-    console.log(position['lat'].toString() + position['lng'].toString() );
+    console.log(position['lat']);
     // First get the msg and then we can add the marker onto the map
     // $.ajax({
     //     type: 'GET',
