@@ -18,10 +18,14 @@
                 <!--  input controls-->
                 <form action="#" onsubmit="updateMap(this);return false">
                     <!-- Carbon Tax (usd per):<input type="text" name="carbontax"> -->
-                    <span for=fader>Carbon Tax (usd per):</span>
-                        <input type=range min=0 max=100 value=1 id=fader step=1 oninput="outputUpdate('#volume', value);">
-                        <span for=fader id="volume">1</span>
-                    PV value ratio ():<input type="text" name="solarprice">
+                    <label for=fader>Carbon Tax (usd per):</label>
+                        <input type=range min=0 max=100 value=1 id=fader step=1 oninput="outputUpdate('#volume', value);" name=carbontax>
+                        <output for=fader id="volume">1</output>
+
+                    <label for=fader>PV value ratio ():</label>
+                        <input type=range min=0 max=100 value=1 id=fader step=1 oninput="outputUpdate('#solarprice', value);" name=solarprice>
+                        <output for=fader id="solarprice">1</output>
+                        
                     <input type="submit" value="Submit">
                 </form>
               <!-- <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
