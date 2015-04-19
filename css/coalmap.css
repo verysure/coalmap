@@ -37,8 +37,20 @@ html, body {
     font-size: 20px;
 }
 
-.intro button {
-    background-color: transparent;
+.intro .button-default{
+    color: white;
+    background-color: rgba(255, 255, 255, 0);
+    border-color: #FFF;
+    font-size: 30px;
+    border-radius: 10px;
+}
+.intro .button-default:hover,
+.intro .button-default:focus{
+    color: white;
+    background-color: rgba(255, 255, 255, 0);
+    border-color: #FFF;
+    font-size: 30px;
+    border-radius: 10px;
 }
 
 
