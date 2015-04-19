@@ -24,9 +24,21 @@ html, body {
     -o-background-size: cover;
 }
 
+.brand-heading {
+    font-family: 'Raleway', sans-serif;
+    font-weight: bold;
+    font-size: 70px;
+}
+.intro-text {
+    font-family: 'Raleway', sans-serif;
+    font-weight: normal;
+    font-size: 20px;
+}
+
 .intro button {
     background-color: transparent;
 }
+
 
 .legendform {
     margin-top: 100px;
