@@ -12,7 +12,7 @@ html, body {
     display: table;
     width: 100%;
     /*height: auto;*/
-    padding: 100px 0;
+    padding: 250px 0 0 0;
     text-align: center;
     color: #fff;
     background: url(/coalmap/img/solar-1.jpg) no-repeat bottom center scroll;
@@ -22,6 +22,10 @@ html, body {
     -moz-background-size: cover;
     background-size: cover;
     -o-background-size: cover;
+}
+
+.intro button {
+    background-color: transparent;
 }
 
 .legendform {
