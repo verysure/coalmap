@@ -16,8 +16,12 @@ html, body {
     margin-top: 70px;
 }
 
-.navbar-header {
-    width: 60%;
+.label {
+    width: 150px;
+}
+
+.input {
+    width: 150px;
 }
 
 
