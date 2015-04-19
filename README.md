@@ -11,9 +11,12 @@ Contacts
 References
 ----------
 EIA Levelized Cost outlook for new generation assets: http://www.eia.gov/forecasts/aeo/pdf/electricity_generation.pdf
-
 PV data: https://developer.nrel.gov/
-
 Google Map API: https://developers.google.com/maps/
-
 Design: Bootstrap, JQuery, FontsAwesome, Google Fonts.
+Image are temporarily used from: http://groundswell.org/wp-content/uploads/2014/10/solar-1.jpg, no infringement intended.
+
+License
+-------
+
+The project is released under MIT License.
