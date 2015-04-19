@@ -83,7 +83,7 @@ function parseAdd(values) {
                 // update graph
                 mc_lcoe.push( {mc: (data[i]["Marginal cost"] + values[0]*data[i]["CO2"]/data[i]["Net Generation (Megawatthours)"]), pv_lcoe: data[i]['PV LCOE']*values[1]*Math.pow((1-values[3]/100),(values[2]-2015)) });
             }
-            drawCharts();
+            // drawCharts();
 
 
 
