@@ -34,16 +34,21 @@
         </nav>
 
 
-
-
-        <div id="map-canvas"></div>
-
-
+        <div class="">
+            <img src="/coalmap/js/markers/green.png" alt="" style="width: 10px; height: 20px;" /> : Favorable to shut down
+            <img src="/coalmap/js/markers/yellow.png" alt="" style="width: 10px; height: 20px;" /> : Projective to shut down
+            <img src="/coalmap/js/markers/green.png" alt="" style="width: 10px; height: 20px;" /> : Hard to shut down
+        </div>
         <!--  input controls-->
         <form action="#" onsubmit="updateMap(this);return false">
             Factor1:<input type="text" name="factor1">
             <input type="submit" value="Submit">
         </form>
+
+
+        <div id="map-canvas"></div>
+
+
 
         <script src="/coalmap/js/coalmap.js"> </script>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
