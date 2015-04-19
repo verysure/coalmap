@@ -15,7 +15,8 @@ html, body {
     padding: 100px 0;
     text-align: center;
     color: #fff;
-    background: url(/coalmap/img/allen_bg_b.jpg) no-repeat bottom center scroll;
+    background: url(/coalmap/img/solar-1.jpg) no-repeat bottom center scroll;
+    /*http://groundswell.org/wp-content/uploads/2014/10/solar-1.jpg*/
     background-color: #000;
     -webkit-background-size: cover;
     -moz-background-size: cover;
