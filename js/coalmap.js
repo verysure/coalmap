@@ -19,7 +19,7 @@ function renderMap() {
             for (var i = 0; i< data.length; i++) {
                 addCoalPlant(
                     data['name'],
-                    {lat: data['lat'], lng: data['lng']},
+                    {lat: parseFloat(data['lat']), lng: parseFloat(data['lng'])},
                     data['coal_mc']
                 );
             }
