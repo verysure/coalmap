@@ -30,8 +30,7 @@ function renderMap() {
 
 
 
-function updateMap(formdata) {
-    formdata = typeof formdata !== 'undefined' ? formdata : {"carbontax": 1, "solarprice": 1};
+function updateMap() {
 
 
     for (var i = 0; i<markers.length; i++) {

@@ -16,7 +16,7 @@
           <div class="container">
             <div class="navbar-header">
                 <!--  input controls-->
-                <form action="#" onsubmit="updateMap(this);return false">
+                <form action="#" onsubmit="updateMap();return false">
                     <!-- Carbon Tax (usd per):<input type="text" name="carbontax"> -->
                     <label class=label for=carbonfader>Carbon Tax ($/ton):</label>
                         <input class=input type=range min=0 max=100 value=0 id=carbonfader step=1 oninput="outputUpdate('#volume', value);" name=carbontax>
