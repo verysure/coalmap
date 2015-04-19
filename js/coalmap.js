@@ -51,10 +51,6 @@ function updateMap(formdata) {
 
 // Supporting functions
 
-function readDataAddCoalPlant(data) {
-    data;
-
-}
 
 
 
@@ -71,6 +67,7 @@ function initialize() {
 
 
 function addCoalPlant(name, position, coal_mc) {
+    console.log(position);
 
     // First get the msg and then we can add the marker onto the map
     $.ajax({
