@@ -21,7 +21,7 @@ function renderMap() {
                 addCoalPlant(
                     data['name'],
                     {lat: parseFloat(data['lat']), lng: parseFloat(data['lng'])},
-                    data['coal_mc']
+                    parseFloat(data['coal_mc'])
                 );
             }
         }
