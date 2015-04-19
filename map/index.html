@@ -20,22 +20,22 @@
                     <!-- Carbon Tax (usd per):<input type="text" name="carbontax"> -->
                     <label class=label for=volumefader>Carbon Tax (usd per):</label>
                         <input class=input type=range min=0 max=100 value=1 id=volumefader step=1 oninput="outputUpdate('#volume', value);" name=carbontax>
-                        <output for=volumefader id="volume">1</output>
+                        <output class=output for=volumefader id="volume">1</output>
                         <!-- <div> </div> -->
 
                     <label class=label for=pricefader>PV value ratio ():</label>
                         <input class=input type=range min=0.8 max=1.2 value=1 id=pricefader step=0.02 oninput="outputUpdate('#solarprice', value);" name=solarprice>
-                        <output for=pricefader id="solarprice">1</output>
+                        <output class=output for=pricefader id="solarprice">1</output>
                         <!-- <div> </div> -->
 
                     <label class=label for=yearfader>Year:</label>
                         <input class=input type=range min=2015 max=2050 value=2015 id=yearfader step=1 oninput="outputUpdate('#solaryear', value);" name=solaryear>
-                        <output for=yearfader id="solaryear">1</output>
+                        <output class=output for=yearfader id="solaryear">1</output>
                         <!-- <div> </div> -->
 
                     <label class=label for=redfader>Price reduction (%/yr):</label>
                         <input class=input type=range min=0 max=50 value=0 id=redfader step=1 oninput="outputUpdate('#solarred', value);" name=solarred>
-                        <output for=redfader id="solarred">1</output>
+                        <output class=output for=redfader id="solarred">1</output>
                         <!-- <div> </div> -->
 
                     <input type="submit" value="Submit">

@@ -28,6 +28,11 @@ input[type=range].input {
     width: 150px;
 }
 
+.output {
+    float: left;
+    width: 50px;
+}
+
 
 
 #map-canvas {
