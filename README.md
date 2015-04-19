@@ -1,7 +1,7 @@
 CoalMap from team FossilFree
 ============================
 
-CoalMap is an opensource demonstration on timeline for replacing coal power plants to solar energy.
+CoalMap is an open-source demonstration of the timeline for economically replacing U.S. coal-fired power plants with utility-scale solar photovoltaic (PV) generation.
 
 Contacts
 --------
