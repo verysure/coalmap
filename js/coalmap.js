@@ -16,12 +16,11 @@ function renderMap() {
         url: "/coalmap/data/test.json",
         dataType: "json",
         success: function(data) {
-            console.log(data['lat']);
             for (var i = 0; i< data.length; i++) {
                 addCoalPlant(
-                    data['name'],
-                    {lat: parseFloat(data['lat']), lng: parseFloat(data['lng'])},
-                    parseFloat(data['coal_mc'])
+                    data[i]['name'],
+                    {lat: parseFloat(data[i]['lat']), lng: parseFloat(data[i]['lng'])},
+                    parseFloat(data[i]['coal_mc'])
                 );
             }
         }
@@ -67,7 +66,6 @@ function initialize() {
 
 
 function addCoalPlant(name, position, coal_mc) {
-    console.log(position);
 
     // First get the msg and then we can add the marker onto the map
     $.ajax({
