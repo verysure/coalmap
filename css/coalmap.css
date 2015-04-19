@@ -66,6 +66,9 @@ html, body {
     width: 50px;
     text-align: right;
 }
+.plantimg {
+    float: left;
+}
 .plantdes {
     float: left;
     width: 100px;
