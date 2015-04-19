@@ -205,8 +205,8 @@ function infostring(infos) {
 
     return  '<h1 style="font-size:15px;">' + infos['title'] + '</h1>' +
                 '<div id="bodyContent">' +
-                    'Current Marginal Cost ($/MWh): ' + infos['coal_mc']+ '<br>'+
-                    'Renewable Energy LCOE: ' + infos['renew_mc']+ '<br>'+
+                    'Current Marginal Cost ($/MWh): ' + infos['coal_mc'].toFixed(3)+ '<br>'+
+                    'Renewable Energy LCOE: ' + infos['renew_mc'].toFixed(3)+ '<br>'+
                     infos['info']+ ''+
                 '</div>';
 }
