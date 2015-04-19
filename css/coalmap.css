@@ -43,6 +43,9 @@ html, body {
     border-color: #FFF;
     font-size: 30px;
     border-radius: 10px;
+    font-family: 'Raleway', sans-serif;
+    font-weight: 300;
+    font-size: 20px;
 }
 .intro .btn-default:hover,
 .intro .btn-default:focus{
@@ -62,7 +65,7 @@ html, body {
     color: black;
     font-size: 15px;
     float: left;
-    width: 150px;
+    width: 170px;
 }
 
 input[type=range].input {
