@@ -40,12 +40,11 @@ function updateMap(formdata) {
     markers = [];
 
     parseAdd([
-        parseFloat(formdata.carbontax.value),
-        parseFloat(formdata.solarprice.value),
-        parseFloat(formdata.solaryear.value),
-        parseFloat(formdata.solarred.value),
+        parseFloat($('#carbontax').text()),
+        parseFloat($('#solarprice').text()),
+        parseFloat($('#solaryear').text()),
+        parseFloat($('#solarred').text()),
         ]);
-        console.log(parseFloat(formdata.carbontax.value));
 }
 
 
