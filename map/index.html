@@ -23,19 +23,19 @@
                         <output class=output for=volumefader id="volume">1</output>
                         <!-- <div> </div> -->
 
-                    <label class=label for=pricefader>PV Value Ratio (%):</label>
+                    <label class=label for=pricefader>PV Value Ratio:</label>
                         <input class=input type=range min=0.8 max=1.2 value=1 id=pricefader step=0.02 oninput="outputUpdate('#solarprice', value);" name=solarprice>
                         <output class=output for=pricefader id="solarprice">1</output>
                         <div style="clear:both"> </div>
 
                     <label class=label for=yearfader>Year:</label>
                         <input class=input type=range min=2015 max=2050 value=2015 id=yearfader step=1 oninput="outputUpdate('#solaryear', value);" name=solaryear>
-                        <output class=output for=yearfader id="solaryear">1</output>
+                        <output class=output for=yearfader id="solaryear">2015</output>
                         <!-- <div> </div> -->
 
                     <label class=label for=redfader>PV price drop (%/yr):</label>
                         <input class=input type=range min=0 max=50 value=0 id=redfader step=1 oninput="outputUpdate('#solarred', value);" name=solarred>
-                        <output class=output for=redfader id="solarred">1</output>
+                        <output class=output for=redfader id="solarred">0</output>
                         <!-- <div> </div> -->
 
                     <input type="submit" value="Submit">
