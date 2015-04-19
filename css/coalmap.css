@@ -17,10 +17,12 @@ html, body {
 }
 
 .label {
+    float: left;
     width: 150px;
 }
 
 input[type=range].input {
+    float: left;
     width: 150px;
 }
 
