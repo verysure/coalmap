@@ -18,7 +18,10 @@ Google Map API: https://developers.google.com/maps/
 
 Design: Bootstrap, JQuery, FontsAwesome, Google Fonts.
 
-Image are temporarily used from: http://groundswell.org/wp-content/uploads/2014/10/solar-1.jpg, no infringement intended.
+Cover image is taken by the follow:
+
+"Sideka Solartechnik Ibbenbüren 5" by Sideka Solartechnik - Own work. Licensed under CC BY-SA 3.0 via Wikimedia Commons - http://commons.wikimedia.org/wiki/File:Sideka_Solartechnik_Ibbenb%C3%BCren_5.JPG#/media/File:Sideka_Solartechnik_Ibbenb%C3%BCren_5.JPG
+
 
 License
 -------
