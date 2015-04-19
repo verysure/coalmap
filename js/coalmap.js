@@ -1,4 +1,5 @@
 // initialize map when loaded
+var apikey = 'AyxJQCb3jgWo5pWvz122yF2SdWCcHGxviGgfa4Eo';
 google.maps.event.addDomListener(window, 'load', renderMap);
 
 function renderMap() {
@@ -32,6 +33,7 @@ function initialize() {
 function addCoalPlant(map, name, position, coal_mc, renew_mc) {
     coal_mc = typeof coal_mc !== 'undefined' ? coal_mc : 1;
     renew_mc = typeof renew_mc !== 'undefined' ? renew_mc : 0;
+    getLCOE(position);
 
     var infoopen = false;
     var marker = new google.maps.Marker({
@@ -96,13 +98,26 @@ function infostring(infos) {
                 '</div>';
 }
 
+function getLCOE(position) {
 
+    $.ajax({
+        type: 'GET',
+        url: 'https://developer.nrel.gov/api/pvwatts/v5.json?api_key=' + apikey + '&lat=' + toString(position['lat']) +'&lon='+ toString(position['lng']) + '&system_capacity=20000&azimuth=180&tilt=40&array_type=4&module_type=0&losses=10',
+        dataType: "jsonp",
+        crossDomain: true,
+        success: function (msg) {
+            console.log(msg['outputs']['ac_annual']);
+        },
+        error: function (request, status, error) {
+            console.log(error);
+        }
+    });
+}
 
 
 
 
 $(document).ready(function() {
-    var apikey = 'AyxJQCb3jgWo5pWvz122yF2SdWCcHGxviGgfa4Eo';
     $.ajax({
             type: 'GET',
             url: 'https://developer.nrel.gov/api/pvwatts/v5.json?api_key=' + apikey + '&lat=40&lon=-105&system_capacity=20000&azimuth=180&tilt=40&array_type=4&module_type=0&losses=10',
@@ -112,7 +127,6 @@ $(document).ready(function() {
                 console.log(msg);
             },
             error: function (request, status, error) {
-
                 alert(error);
             }
     });
