@@ -76,7 +76,7 @@ function parseAdd(values) {
                     (data[i]["Marginal cost"] + values[0]*data[i]["CO2"]/data[i]["Net Generation (Megawatthours)"]),
                     data[i]['PV LCOE']*values[1]*Math.pow((1-values[3]/100),(values[2]-2015)),
                     data[i]["CO2"],
-                    "Address: " + data[i]['Street Address'] + ", " + data[i]['State'] + "<br>CO2 emissions (Mt/yr): "+ (data[i]["CO2"]/1000000).toFixed(1)
+                    "Address: " + data[i]['Street Address'] + ", "+ data[i]['City'] +", " + data[i]['State'] +  ", "+data[i]['Zip']+"<br>CO2 emissions (Mt/yr): "+ (data[i]["CO2"]/1000000).toFixed(1)
                 );
 
 
