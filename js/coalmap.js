@@ -71,7 +71,7 @@ function parseAdd(values) {
             for (var i = 0; i< data.length; i++) {
             // for (var i = 0; i< 20; i++) {
                 addCoalPlant(
-                    data[i]['Utility Name'],
+                    data[i]['Plant Name'] + ' (' data[i]['Utility Name'] + ')',
                     {lat: (data[i]['Latitude']), lng: (data[i]["Longitude"])},
                     (data[i]["Marginal cost"] + values[0]*data[i]["CO2"]/data[i]["Net Generation (Megawatthours)"]),
                     data[i]['PV LCOE']*values[1]*Math.pow((1-values[3]/100),(values[2]-2015)),
