@@ -194,9 +194,9 @@ function planticon(coal_mc, renew_mc) {
     //
 
     var plantPath = 'M 15,0 85,0 100,150 200,150 200,300 0,300 0,150 z'
-    var greenPlant = { path: plantPath, fillColor: 'green' };
-    var yellowPlant = { path: plantPath, fillColor: 'yellow' };
-    var redPlant = { path: plantPath, fillColor: 'red' };
+    var greenPlant = { path: plantPath, scale: 0.1, fillOpacity:0.8, fillColor: 'green' };
+    var yellowPlant = { path: plantPath, scale: 0.1, fillOpacity:0.8, fillColor: 'yellow' };
+    var redPlant = { path: plantPath, scale: 0.1, fillOpacity:0.8, fillColor: 'red' };
 
 
     if (renew_ratio <= 1) {
