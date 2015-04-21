@@ -129,14 +129,16 @@ function addMarker(name, position, coal_mc, renew_mc, co2, plantinfo) {
 
     var infoopen = false;
     // var iconurl = planticon(coal_mc, renew_mc);
+    var icon = planticon(coal_mc, renew_mc);
+    plantcounts[icon['fillColor']] += 1
 
-    if (iconurl[20] === 'g') {
-        plantcounts['green'] += 1;
-    } else if (iconurl[20] === 'y') {
-        plantcounts['yellow'] += 1;
-    } else {
-        plantcounts['red'] += 1;
-    }
+    // if (iconurl[20] === 'g') {
+    //     plantcounts['green'] += 1;
+    // } else if (iconurl[20] === 'y') {
+    //     plantcounts['yellow'] += 1;
+    // } else {
+    //     plantcounts['red'] += 1;
+    // }
     updatePlantCounts();
 
 
@@ -144,7 +146,7 @@ function addMarker(name, position, coal_mc, renew_mc, co2, plantinfo) {
     var marker = new google.maps.Marker({
         title: name,
         position: position,
-        icon: planticon(coal_mc, renew_mc),
+        icon: icon,
         // map: map,
         // icon: {
         //     size: new google.maps.Size(2*Math.round(10*co2ratio), 3*Math.round(10*co2ratio)),
