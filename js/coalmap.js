@@ -190,7 +190,7 @@ function clearInfos() {
 function planticon(coal_mc, renew_mc) {
     // var iconstring = "";
     // var iconpath = "/coalmap/js/markers/";
-    // var renew_ratio = renew_mc / coal_mc;
+    var renew_ratio = renew_mc / coal_mc;
     //
 
     var plantPath = 'M 15,0 85,0 100,150 200,150 200,300 0,300 0,150 z'
