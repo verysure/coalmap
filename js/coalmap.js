@@ -64,31 +64,33 @@ function getFormData() {
 
 function addCoalPlants(fdata) {
     for (var d in raw_plant_data) {
-        // calculation for the coal and pv marginal cost
-        var coal_mc = d["Marginal cost"] + fdata.carbontax*d["CO2"]/d["Net Generation (Megawatthours)"];
-        var pv_lcoe = d['PV LCOE']*fdata.solarprice*Math.pow((1-fdata.solarred/100),(fdata.solaryear-2015));
-        var title = d['Plant Name'] + ' ('+ d['Utility Name'] + ')';
-        var icon = planticon(coal_mc, pv_lcoe, d["CO2"]/20000000);
+        console.log(d);
         
-        // add
-        addMarker({
-            title: title,
-            position: {
-                lat: d['Latitude'],
-                lng: d["Longitude"]
-            },
-            icon: icon,
-            info: renderInfo({
-                title: title,
-                coal_mc: coal_mc.toFixed(2),
-                pv_lcoe: pv_lcoe.toFixed(2),
-                co2: (d["CO2"]/1000000).toFixed(1),
-                address: d['Street Address'] + ", "+ d['City'] +", " + d['State'] +  ", "+d['Zip']
-            }),
-        });
+        // // calculation for the coal and pv marginal cost
+        // var coal_mc = d["Marginal cost"] + fdata.carbontax*d["CO2"]/d["Net Generation (Megawatthours)"];
+        // var pv_lcoe = d['PV LCOE']*fdata.solarprice*Math.pow((1-fdata.solarred/100),(fdata.solaryear-2015));
+        // var title = d['Plant Name'] + ' ('+ d['Utility Name'] + ')';
+        // var icon = planticon(coal_mc, pv_lcoe, d["CO2"]/20000000);
         
-        // Update plant counts
-        $('#'+icon.fillColor+'span').text(++plantcounts[icon.fillColor]);
+        // // add
+        // addMarker({
+        //     title: title,
+        //     position: {
+        //         lat: d['Latitude'],
+        //         lng: d["Longitude"]
+        //     },
+        //     icon: icon,
+        //     info: renderInfo({
+        //         title: title,
+        //         coal_mc: coal_mc.toFixed(2),
+        //         pv_lcoe: pv_lcoe.toFixed(2),
+        //         co2: (d["CO2"]/1000000).toFixed(1),
+        //         address: d['Street Address'] + ", "+ d['City'] +", " + d['State'] +  ", "+d['Zip']
+        //     }),
+        // });
+        
+        // // Update plant counts
+        // $('#'+icon.fillColor+'span').text(++plantcounts[icon.fillColor]);
     }
     
     
