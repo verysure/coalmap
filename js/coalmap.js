@@ -72,7 +72,7 @@ function addCoalPlants(fdata) {
         var icon = planticon(coal_mc, pv_lcoe, plant_data[i]["CO2"]/20000000);
         
         // add
-        var marker = addMarker({
+        var mw = addMarker({
             title: title,
             position: {
                 lat: plant_data[i]['Latitude'],
@@ -87,8 +87,8 @@ function addCoalPlants(fdata) {
                 address: plant_data[i]['Street Address'] + ", "+ plant_data[i]['City'] +", " + plant_data[i]['State'] +  ", "+plant_data[i]['Zip']
             }),
         });
-        plant_data[i].marker = marker.marker;
-        plant_data[i].infowindow = marker.infowindow;
+        plant_data[i].marker = mw.marker;
+        plant_data[i].infowindow = mw.infowindow;
         
         // Update plant counts
         $('#'+icon.fillColor+'span').text(++plantcounts[icon.fillColor]);
