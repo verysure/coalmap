@@ -88,15 +88,16 @@ function addCoalPlants(fdata) {
         var coal_mc = raw_plant_data[i]["Marginal cost"] + fdata.carbontax*raw_plant_data[i]["CO2"]/raw_plant_data[i]["Net Generation (Megawatthours)"];
         var pv_lcoe = raw_plant_data[i]['PV LCOE']*fdata.solarprice*Math.pow((1-fdata.solarred/100),(fdata.solaryear-2015));
         var title = raw_plant_data[i]['Plant Name'] + ' ('+ raw_plant_data[i]['Utility Name'] + ')';
+        var icon = planticon(coal_mc, pv_lcoe, raw_plant_data[i]["CO2"]/20000000);
         
-        
+        // add
         addMarker({
             title: title,
             position: {
                 lat: raw_plant_data[i]['Latitude'],
                 lng: raw_plant_data[i]["Longitude"]
             },
-            icon: planticon(coal_mc, pv_lcoe,    raw_plant_data[i]["CO2"]/20000000),
+            icon: icon,
             info: renderInfo({
                 title: title,
                 coal_mc: coal_mc.toFixed(2),
@@ -105,6 +106,12 @@ function addCoalPlants(fdata) {
                 address: raw_plant_data[i]['Street Address'] + ", "+ raw_plant_data[i]['City'] +", " + raw_plant_data[i]['State'] +  ", "+raw_plant_data[i]['Zip']
             }),
         });
+        
+        // record the stats
+        // updatePlantCounts(icon);
+        function updatePlantCounts() {
+            $('#'+icon.fillColor+'span').text(++plantcounts[icon.fillColor]);
+        } ();
     }
     
 }
@@ -123,22 +130,9 @@ function renderInfo(info) {
 
 
 
-function addCoalPlant(name, position, coal_mc, pv_lcoe, co2, plantinfo) {
 
-    // First get the msg and then we can add the marker onto the map
-    addMarker(name, position, coal_mc, pv_lcoe, co2, plantinfo);
-
-}
-
-
-function updatePlantCounts() {
-    $('#greenspan').text(plantcounts['green']);
-    $('#yellowspan').text(plantcounts['yellow']);
-    $('#redspan').text(plantcounts['red']);
-}
 
 function addMarker(mdata) {
-    var infoopen = false;
 
     // add marker
     var marker = new google.maps.Marker({
@@ -149,9 +143,14 @@ function addMarker(mdata) {
     });
 
     // add info to marker
+    var infoopen = false;
     var infowindow = new google.maps.InfoWindow({content: mdata.info});
     google.maps.event.addListener(marker, 'click', function() {
-        clearInfos();
+        // first clear windows
+        for (var i = 0; i < markers.length; i++) {
+            markers[i]['infowindow'].close(map, markers[i]['marker']);
+        }
+        // check if window open or cloase
         if (infoopen) {
             infowindow.close(map,marker);
             infoopen = false;
@@ -164,62 +163,11 @@ function addMarker(mdata) {
     markers.push({marker:marker, infowindow:infowindow});
 }
 
-// function addMarker(name, position, coal_mc, renew_mc, co2, plantinfo) {
-//     coal_mc = typeof coal_mc !== 'undefined' ? coal_mc : 1;
-//     renew_mc = typeof renew_mc !== 'undefined' ? renew_mc : 0;
-
-
-//     var infoopen = false;
-//     var icon = planticon(coal_mc, renew_mc, co2/20000000);
-//     plantcounts[icon['fillColor']] += 1;
-
-//     updatePlantCounts();
-
-
-
-//     var marker = new google.maps.Marker({
-//         title: name,
-//         position: position,
-//         icon: icon,
-//     });
-
-//     var infowindow = new google.maps.InfoWindow({
-//         content: infostring({
-//             title: name,
-//             coal_mc: coal_mc,
-//             renew_mc: renew_mc,
-//             info: plantinfo,
-//         }),
-//     });
-
-//     google.maps.event.addListener(marker, 'click', function() {
-//         clearInfos();
-//         if (infoopen) {
-//             infowindow.close(map,marker);
-//             infoopen = false;
-//         } else {
-//             infowindow.open(map,marker);
-//             infoopen = true;
-//         }
-//     });
-
-//     marker.setMap(map);
-//     markers.push({marker:marker, infowindow:infowindow});
-// }
-
-
-
-function clearInfos() {
-    for (var i = 0; i < markers.length; i++) {
-        markers[i]['infowindow'].close(map, markers[i]['marker']);
-    }
-}
 
 
 
 function planticon(coal_mc, renew_mc, scale) {
     var renew_ratio = renew_mc / coal_mc;
-
     var plant = {
         path: 'M 15,0 85,0 100,150 200,150 200,300 0,300 0,150 z',
         scale: 0.07 * scale + 0.05,
@@ -236,8 +184,8 @@ function planticon(coal_mc, renew_mc, scale) {
     } else {
         plant['fillColor'] = 'red';
     }
-    return plant
-
+    
+    return plant;
 }
 
 
