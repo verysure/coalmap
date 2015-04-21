@@ -44,7 +44,6 @@ function updateMap() {
             addCoalPlants(getFormData());
         });
     } else {
-        console.log('check if parsed');
         addCoalPlants(getFormData());
     }
 }
@@ -117,7 +116,7 @@ function addMarker(mdata) {
     var marker = new google.maps.Marker({
         title: mdata.title,
         position: mdata.position,
-        icon: mdata.icon,
+        // icon: mdata.icon,
         map: map
     });
 
