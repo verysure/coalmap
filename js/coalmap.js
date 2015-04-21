@@ -44,6 +44,7 @@ function updateMap() {
             addCoalPlants(getFormData());
         });
     } else {
+        console.log('check if parsed');
         addCoalPlants(getFormData());
     }
 }
