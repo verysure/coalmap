@@ -146,8 +146,8 @@ function addMarker(name, position, coal_mc, renew_mc, co2, plantinfo) {
         position: position,
         // map: map,
         icon: {
-            // size: new google.maps.Size(30, 30),
-            scaledSize: new google.maps.Size(15*co2ratio + 5, 30*co2ratio+10),
+            size: new google.maps.Size(20*co2ratio + 10, 30*co2ratio+15),
+            scaledSize: new google.maps.Size(20*co2ratio + 10, 30*co2ratio+15),
             url: iconurl,
         }
     });
