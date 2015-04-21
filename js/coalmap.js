@@ -156,7 +156,6 @@ function addMarker(mdata) {
         icon: mdata.icon,
         map: map
     });
-    markers.push({marker:marker, infowindow:infowindow});
 
     // add info to marker
     var infowindow = new google.maps.InfoWindow({content: info});
@@ -171,6 +170,7 @@ function addMarker(mdata) {
         }
     });
 
+    markers.push({marker:marker, infowindow:infowindow});
 }
 
 // function addMarker(name, position, coal_mc, renew_mc, co2, plantinfo) {
