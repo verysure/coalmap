@@ -125,12 +125,12 @@ function addMarker(name, position, coal_mc, renew_mc, co2, plantinfo) {
     coal_mc = typeof coal_mc !== 'undefined' ? coal_mc : 1;
     renew_mc = typeof renew_mc !== 'undefined' ? renew_mc : 0;
 
-    var co2ratio = co2/20000000;
+    // var co2ratio = ;
 
     var infoopen = false;
     // var iconurl = planticon(coal_mc, renew_mc);
-    var icon = planticon(coal_mc, renew_mc);
-    plantcounts[icon['fillColor']] += 1
+    var icon = planticon(coal_mc, renew_mc, co2/20000000);
+    plantcounts[icon['fillColor']] += 1;
 
     // if (iconurl[20] === 'g') {
     //     plantcounts['green'] += 1;
@@ -187,7 +187,7 @@ function clearInfos() {
 
 
 
-function planticon(coal_mc, renew_mc) {
+function planticon(coal_mc, renew_mc, scale) {
     // var iconstring = "";
     // var iconpath = "/coalmap/js/markers/";
     var renew_ratio = renew_mc / coal_mc;
@@ -195,7 +195,7 @@ function planticon(coal_mc, renew_mc) {
 
     var plant = {
         path: 'M 15,0 85,0 100,150 200,150 200,300 0,300 0,150 z',
-        scale: 0.1,
+        scale: 0.1 * scale,
         fillOpacity:1,
         strokeColor: 'transparent',
         fillColor: ''
