@@ -110,22 +110,14 @@ function addCoalPlants(fdata) {
 }
 
 function renderInfo(info) {
-    var infostring = "\
-        <h1 style='font-size:15px;'>{0}</h1> \
+    return "\
+        <h1 style='font-size:15px;'>"+info.title+"</h1>\
         <div id='bodyContent'>\
-            Current Marginal Cost ($/MWh): {1}<br>\
-            Renewable Energy LCOE ($/MWh): {2}<br>\
-            CO2 emissions (Mt/yr): {3}<br>\
-            Address: {4}\
+            Current Marginal Cost ($/MWh): "+info.coal_mc+"<br>\
+            Renewable Energy LCOE ($/MWh): "+info.pv_lcoe+"<br>\
+            CO2 emissions (Mt/yr): "+info.co2+"<br>\
+            Address: "+info.address+"\
         </div>";
-    
-    return infostring.format(
-        info.title,
-        info.coal_mc,
-        info.pv_lcoe,
-        info.co2,
-        info.address
-    );
 }
 
 
