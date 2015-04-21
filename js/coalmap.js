@@ -42,7 +42,7 @@ function updateMap() {
 
     // addCoalPlants, check if there are raw_plant_data
     if (raw_plant_data.length) {
-        parseJson("/coalmap/data/alldata_records_unformatted.json", function() {
+        parseJSON("/coalmap/data/alldata_records_unformatted.json", function() {
             addCoalPlants(getFormData());
         });
     } else {
@@ -67,13 +67,14 @@ function getFormData() {
 }
 
 
-function parseJson(json_url, callback) {
+function parseJSON(json_url, callback) {
     $.ajax({
         type: "GET",
         url: json_url,
         dataType: "json",
         success: function(data) {
             raw_plant_data = data;
+            console.log(raw_plant_data);
             callback();
         }
     });
@@ -83,9 +84,7 @@ function parseJson(json_url, callback) {
 
 
 function addCoalPlants(fdata) {
-    console.log(raw_plant_data.length);
     for (var i = 0; i< raw_plant_data.length; i++) {
-        
         // calculation for the coal and pv marginal cost
         var coal_mc = raw_plant_data[i]["Marginal cost"] + fdata.carbontax*raw_plant_data[i]["CO2"]/raw_plant_data[i]["Net Generation (Megawatthours)"];
         var pv_lcoe = raw_plant_data[i]['PV LCOE']*fdata.solarprice*Math.pow((1-fdata.solarred/100),(fdata.solaryear-2015));
