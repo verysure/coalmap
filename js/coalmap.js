@@ -111,13 +111,13 @@ function addCoalPlants(fdata) {
 }
 
 function renderInfo(info) {
-    var infostring = "
-        <h1 style='font-size:15px;'>{0}</h1>
-        <div id='bodyContent'>
-            Current Marginal Cost ($/MWh): {1}<br>
-            Renewable Energy LCOE ($/MWh): {2}<br>
-            CO2 emissions (Mt/yr): {3}<br>
-            Address: {4}
+    var infostring = "\
+        <h1 style='font-size:15px;'>{0}</h1> \
+        <div id='bodyContent'>\
+            Current Marginal Cost ($/MWh): {1}<br>\
+            Renewable Energy LCOE ($/MWh): {2}<br>\
+            CO2 emissions (Mt/yr): {3}<br>\
+            Address: {4}\
         </div>";
     
     return string.format(
