@@ -149,7 +149,7 @@ function addMarker(mdata) {
     });
 
     // add info to marker
-    var infowindow = new google.maps.InfoWindow({content: info});
+    var infowindow = new google.maps.InfoWindow({content: mdata.info});
     google.maps.event.addListener(marker, 'click', function() {
         clearInfos();
         if (infoopen) {
