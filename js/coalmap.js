@@ -1,4 +1,5 @@
 // var apikey = 'AyxJQCb3jgWo5pWvz122yF2SdWCcHGxviGgfa4Eo';
+// Global varibles
 var map;
 var markers = [];
 var plantcounts = {green:0, yellow:0, red:0};
@@ -24,9 +25,23 @@ function initMap() {
             }
         );
         // First render
-        updateMap();
+        firstMap();
     });
 }
+
+// updateMap on form submit
+function firstMap() {
+
+    // addCoalPlants, check if there are raw_plant_data
+    if (raw_plant_data.length === 0) {
+        parseJSON("/coalmap/data/alldata_records_unformatted.json", function() {
+            addCoalPlants(getFormData());
+        });
+    } else {
+        addCoalPlants(getFormData());
+    }
+}
+
 
 // updateMap on form submit
 function updateMap() {
@@ -43,6 +58,7 @@ function updateMap() {
             addCoalPlants(getFormData());
         });
     } else {
+        console.log('did not reparse');
         addCoalPlants(getFormData());
     }
 }
