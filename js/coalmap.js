@@ -1,5 +1,5 @@
 // initialize map when loaded
-var apikey = 'AyxJQCb3jgWo5pWvz122yF2SdWCcHGxviGgfa4Eo';
+// var apikey = 'AyxJQCb3jgWo5pWvz122yF2SdWCcHGxviGgfa4Eo';
 var map;
 var markers = [];
 var plantcounts = {green:0, yellow:0, red:0};
@@ -7,46 +7,33 @@ google.maps.event.addDomListener(window, 'load', initMap);
 
 
 
-// general functions
+// Initialize the map on load
 function initMap() {
 
     // initialize();
+    $(document).ready(function() {
+        // Initialize the map
+        map = new google.maps.Map(
+            document.getElementById('map-canvas'),
+            {
+                center:  {lat: 39.5, lng: -98.35},
+                zoom: 4,
+                mapTypeId: google.maps.MapTypeId.ROADMAP
+            }
+        );
 
-    // Initialize the map
-    map = new google.maps.Map(
-        document.getElementById('map-canvas'),
-        {
-            center:  {lat: 39.5, lng: -98.35},
-            zoom: 4,
-            mapTypeId: google.maps.MapTypeId.ROADMAP
-        }
-    );
-
-
-
-    parseAdd([
-        parseFloat($('#carbontax').text()),
-        parseFloat($('#solarprice').text()),
-        parseFloat($('#solaryear').text()),
-        parseFloat($('#solarred').text()),
-    ]);
-
-
-    // render google graphs
-    // carbon tax
-
-
-
+        // First render
+        updateMap();
+        // parseAdd([
+        //     parseFloat($('#carbontax').text()),
+        //     parseFloat($('#solarprice').text()),
+        //     parseFloat($('#solaryear').text()),
+        //     parseFloat($('#solarred').text()),
+        // ]);
+    });
 }
 
-
-
-
-
-
-
-
-
+// updateMap on form submit
 function updateMap() {
 
     // clear map
@@ -61,7 +48,7 @@ function updateMap() {
         parseFloat($('#solarprice').text()),
         parseFloat($('#solaryear').text()),
         parseFloat($('#solarred').text()),
-        ]);
+    ]);
 }
 
 
@@ -224,9 +211,7 @@ function infostring(infos) {
 
 
 
-$(document).ready(function() {
 
-});
 
 
 
