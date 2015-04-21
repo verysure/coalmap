@@ -84,31 +84,50 @@ function parseJson(json_url, callback) {
 
 function addCoalPlants(fdata) {
     for (var i = 0; i< raw_plant_data.length; i++) {
-        addCoalPlant(
-            raw_plant_data[i]['Plant Name'] + ' ('+ raw_plant_data[i]['Utility Name'] + ')',
-            {lat: (raw_plant_data[i]['Latitude']), lng: (raw_plant_data[i]["Longitude"])},
-            (raw_plant_data[i]["Marginal cost"] + fdata.carbontax*raw_plant_data[i]["CO2"]/raw_plant_data[i]["Net Generation (Megawatthours)"]),
-            raw_plant_data[i]['PV LCOE']*fdata.solarprice*Math.pow((1-fdata.solarred/100),(fdata.solaryear-2015)),
-            raw_plant_data[i]["CO2"],
-            "Address: " + raw_plant_data[i]['Street Address'] + ", "+ raw_plant_data[i]['City'] +", " + raw_plant_data[i]['State'] +  ", "+raw_plant_data[i]['Zip']+"<br>CO2 emissions (Mt/yr): "+ (raw_plant_data[i]["CO2"]/1000000).toFixed(1)
-        );
+        
+        // calculation for the coal and pv marginal cost
+        var coal_mc = raw_plant_data[i]["Marginal cost"] + fdata.carbontax*raw_plant_data[i]["CO2"]/raw_plant_data[i]["Net Generation (Megawatthours)"];
+        var pv_lcoe = raw_plant_data[i]['PV LCOE']*fdata.solarprice*Math.pow((1-fdata.solarred/100),(fdata.solaryear-2015));
+        var title = raw_plant_data[i]['Plant Name'] + ' ('+ raw_plant_data[i]['Utility Name'] + ')';
+        
+        
+        addMarker({
+            title: title,
+            position: {
+                lat: raw_plant_data[i]['Latitude'],
+                lng: raw_plant_data[i]["Longitude"]
+            },
+            icon: planticon(coal_mc, renew_mc, co2/20000000),
+            info: renderInfo({
+                title: title,
+                coal_mc: coal_mc.toFixed(2),
+                pv_lcoe: pv_lcoe.toFixed(2),
+                co2: (raw_plant_data[i]["CO2"]/1000000).toFixed(1),
+                address: raw_plant_data[i]['Street Address'] + ", "+ raw_plant_data[i]['City'] +", " + raw_plant_data[i]['State'] +  ", "+raw_plant_data[i]['Zip']
+            }),
+        });
     }
     
 }
 
-
-
-
-function initialize() {
-    var mapCanvas = document.getElementById('map-canvas');
-    var mapOptions = {
-        center:  {lat: 39.5, lng: -98.35},
-        zoom: 4,
-        mapTypeId: google.maps.MapTypeId.ROADMAP
-    }
-    map = new google.maps.Map(mapCanvas, mapOptions);
+function renderInfo(info) {
+    var infostring = "
+        <h1 style='font-size:15px;'>{0}</h1>
+        <div id='bodyContent'>
+            Current Marginal Cost ($/MWh): {1}<br>
+            Renewable Energy LCOE ($/MWh): {2}<br>
+            CO2 emissions (Mt/yr): {3}<br>
+            Address: {4}
+        </div>";
+    
+    return string.format(
+        info.title,
+        info.coal_mc,
+        info.pv_lcoe,
+        info.co2,
+        info.address,
+    );
 }
-
 
 
 
@@ -127,35 +146,20 @@ function updatePlantCounts() {
     $('#redspan').text(plantcounts['red']);
 }
 
-
-function addMarker(name, position, coal_mc, renew_mc, co2, plantinfo) {
-    coal_mc = typeof coal_mc !== 'undefined' ? coal_mc : 1;
-    renew_mc = typeof renew_mc !== 'undefined' ? renew_mc : 0;
-
-
+function addMarker(mdata) {
     var infoopen = false;
-    var icon = planticon(coal_mc, renew_mc, co2/20000000);
-    plantcounts[icon['fillColor']] += 1;
 
-    updatePlantCounts();
-
-
-
+    // add marker
     var marker = new google.maps.Marker({
-        title: name,
-        position: position,
-        icon: icon,
+        title: mdata.title,
+        position: mdata.position,
+        icon: mdata.icon,
+        map: map
     });
+    markers.push({marker:marker, infowindow:infowindow});
 
-    var infowindow = new google.maps.InfoWindow({
-        content: infostring({
-            title: name,
-            coal_mc: coal_mc,
-            renew_mc: renew_mc,
-            info: plantinfo,
-        }),
-    });
-
+    // add info to marker
+    var infowindow = new google.maps.InfoWindow({content: info});
     google.maps.event.addListener(marker, 'click', function() {
         clearInfos();
         if (infoopen) {
@@ -167,9 +171,52 @@ function addMarker(name, position, coal_mc, renew_mc, co2, plantinfo) {
         }
     });
 
-    marker.setMap(map);
-    markers.push({marker:marker, infowindow:infowindow});
 }
+
+// function addMarker(name, position, coal_mc, renew_mc, co2, plantinfo) {
+//     coal_mc = typeof coal_mc !== 'undefined' ? coal_mc : 1;
+//     renew_mc = typeof renew_mc !== 'undefined' ? renew_mc : 0;
+
+
+//     var infoopen = false;
+//     var icon = planticon(coal_mc, renew_mc, co2/20000000);
+//     plantcounts[icon['fillColor']] += 1;
+
+//     updatePlantCounts();
+
+
+
+//     var marker = new google.maps.Marker({
+//         title: name,
+//         position: position,
+//         icon: icon,
+//     });
+
+//     var infowindow = new google.maps.InfoWindow({
+//         content: infostring({
+//             title: name,
+//             coal_mc: coal_mc,
+//             renew_mc: renew_mc,
+//             info: plantinfo,
+//         }),
+//     });
+
+//     google.maps.event.addListener(marker, 'click', function() {
+//         clearInfos();
+//         if (infoopen) {
+//             infowindow.close(map,marker);
+//             infoopen = false;
+//         } else {
+//             infowindow.open(map,marker);
+//             infoopen = true;
+//         }
+//     });
+
+//     marker.setMap(map);
+//     markers.push({marker:marker, infowindow:infowindow});
+// }
+
+
 
 function clearInfos() {
     for (var i = 0; i < markers.length; i++) {
@@ -204,15 +251,7 @@ function planticon(coal_mc, renew_mc, scale) {
 
 
 
-function infostring(infos) {
 
-    return  '<h1 style="font-size:15px;">' + infos['title'] + '</h1>' +
-                '<div id="bodyContent">' +
-                    'Current Marginal Cost ($/MWh): ' + infos['coal_mc'].toFixed(3)+ '<br>'+
-                    'Renewable Energy LCOE: ' + infos['renew_mc'].toFixed(3)+ '<br>'+
-                    infos['info']+ ''+
-                '</div>';
-}
 
 
 
