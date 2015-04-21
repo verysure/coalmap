@@ -149,8 +149,7 @@ function addMarker(mdata) {
 function planticon(coal_mc, renew_mc, scale) {
     var renew_ratio = renew_mc / coal_mc;
     var plant = {
-        // path: 'm 15,0 85,0 100,150 200,150 200,300 0,300 0,150 z',
-        path: google.maps.SymbolPath.CIRCLE,
+        path: 'm 15,0 85,0 100,150 200,150 200,300 0,300 0,150 z',
         // scale: 0.07 * scale + 0.05,
         scale: 0.1,
         fillopacity:1,
