@@ -3,14 +3,27 @@ var apikey = 'AyxJQCb3jgWo5pWvz122yF2SdWCcHGxviGgfa4Eo';
 var map;
 var markers = [];
 var plantcounts = {green:0, yellow:0, red:0};
-google.maps.event.addDomListener(window, 'load', renderMap);
+google.maps.event.addDomListener(window, 'load', initMap);
 
 
 
 // general functions
-function renderMap() {
+function initMap() {
 
-    initialize();
+    // initialize();
+
+    // Initialize the map
+    map = new google.maps.Map(
+        document.getElementById('map-canvas'),
+        {
+            center:  {lat: 39.5, lng: -98.35},
+            zoom: 4,
+            mapTypeId: google.maps.MapTypeId.ROADMAP
+        }
+    );
+
+
+
     parseAdd([
         parseFloat($('#carbontax').text()),
         parseFloat($('#solarprice').text()),
@@ -36,7 +49,7 @@ function renderMap() {
 
 function updateMap() {
 
-
+    // clear map
     for (var i = 0; i<markers.length; i++) {
         markers[i]['marker'].setMap(null);
     }
@@ -125,20 +138,11 @@ function addMarker(name, position, coal_mc, renew_mc, co2, plantinfo) {
     coal_mc = typeof coal_mc !== 'undefined' ? coal_mc : 1;
     renew_mc = typeof renew_mc !== 'undefined' ? renew_mc : 0;
 
-    // var co2ratio = ;
 
     var infoopen = false;
-    // var iconurl = planticon(coal_mc, renew_mc);
     var icon = planticon(coal_mc, renew_mc, co2/20000000);
     plantcounts[icon['fillColor']] += 1;
 
-    // if (iconurl[20] === 'g') {
-    //     plantcounts['green'] += 1;
-    // } else if (iconurl[20] === 'y') {
-    //     plantcounts['yellow'] += 1;
-    // } else {
-    //     plantcounts['red'] += 1;
-    // }
     updatePlantCounts();
 
 
@@ -147,12 +151,6 @@ function addMarker(name, position, coal_mc, renew_mc, co2, plantinfo) {
         title: name,
         position: position,
         icon: icon,
-        // map: map,
-        // icon: {
-        //     size: new google.maps.Size(2*Math.round(10*co2ratio), 3*Math.round(10*co2ratio)),
-        //     scaledSize: new google.maps.Size(2*Math.round(10*co2ratio), 3*Math.round(10*co2ratio)),
-        //     url: iconurl,
-        // }
     });
 
     var infowindow = new google.maps.InfoWindow({
@@ -188,10 +186,7 @@ function clearInfos() {
 
 
 function planticon(coal_mc, renew_mc, scale) {
-    // var iconstring = "";
-    // var iconpath = "/coalmap/js/markers/";
     var renew_ratio = renew_mc / coal_mc;
-    //
 
     var plant = {
         path: 'M 15,0 85,0 100,150 200,150 200,300 0,300 0,150 z',
@@ -204,18 +199,12 @@ function planticon(coal_mc, renew_mc, scale) {
 
     if (renew_ratio <= 1) {
         plant['fillColor'] = 'green';
-        // iconstring = "green.png";
     } else if (renew_ratio <= 1.2) {
         plant['fillColor'] = 'yellow';
-        // iconstring = "yellow.png";
     } else {
         plant['fillColor'] = 'red';
-        // iconstring = "red.png"
     }
     return plant
-    // return iconpath + iconstring;
-
-
 
 }
 
