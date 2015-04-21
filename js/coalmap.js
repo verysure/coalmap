@@ -1,8 +1,11 @@
-// initialize map when loaded
 // var apikey = 'AyxJQCb3jgWo5pWvz122yF2SdWCcHGxviGgfa4Eo';
 var map;
 var markers = [];
 var plantcounts = {green:0, yellow:0, red:0};
+var raw_plant_data = [];
+
+
+// initialize map when loaded
 google.maps.event.addDomListener(window, 'load', initMap);
 
 
@@ -30,7 +33,6 @@ function initMap() {
 
 // updateMap on form submit
 function updateMap() {
-
     // clear map
     for (var i = 0; i<markers.length; i++) {
         markers[i]['marker'].setMap(null);
@@ -38,32 +40,49 @@ function updateMap() {
     markers = [];
     plantcounts=  {green:0, yellow:0, red:0};
 
-    // get form parameters
-    parseAdd(getFormData());
+    // addCoalPlants, check if there are raw_plant_data
+    if (raw_plant_data.length) {
+        parseJson("/coalmap/data/alldata_records_unformatted.json", function() {
+            addCoalPlants(getFormData());
+        });
+    } else {
+        addCoalPlants(getFormData());
+    }
+    
 }
 
 
 
 
-// Supplementary functions for rendering map
+// Supplementary functions for rendering maps
+
 function getFormData() {
-    var getF = function (id) {
-        return parseFloat($('#'+id).text());
-    };
+    var getF = function (id) { return parseFloat($('#'+id).text()); };
     return {
-        carbontax: getF('carbontax'),
-        solarprice: getF('solarprice'),
-        solaryear: getF('solaryear'),
-        solarred: getF('solarred'),
+        carbontax  : getF('carbontax'),
+        solarprice : getF('solarprice'),
+        solaryear  : getF('solaryear'),
+        solarred   : getF('solarred'),
     }
 }
 
 
+function parseJson(json_url, callback) {
+    $.ajax({
+        type: "GET",
+        url: json_url,
+        dataType: "json",
+        success: function(data) {
+            raw_plant_data = data;
+            callback();
+        }
+    });
+}
 
 
-// Supporting functions
 
-function parseAdd(fdata) {
+
+function addCoalPlants(fdata) {
     $.ajax({
         type: "GET",
         url: "/coalmap/data/alldata_records_unformatted.json",
