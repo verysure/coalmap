@@ -30,11 +30,7 @@ function initMap() {
 
 // updateMap on form submit
 function updateMap() {
-    // clear map
-    for (var i = 0; i<markers.length; i++) {
-        markers[i]['marker'].setMap(null);
-    }
-    markers = [];
+    // clear counts
     plantcounts=  {green:0, yellow:0, red:0};
 
     // addCoalPlants, check if there are plant_data
@@ -74,27 +70,26 @@ function addCoalPlants(fdata) {
         // remove markers
         if (!plant_data[i].marker) {
             plant_data[i].marker.setMap(null);
-        }
-        
-        // add
-        var mw = createMarker({
-            title: title,
-            position: {
-                lat: plant_data[i]['Latitude'],
-                lng: plant_data[i]["Longitude"]
-            },
-            icon: icon,
-            info: renderInfo({
+        } else if (icon.fillColor != plant_data[i].marker.icon.fillColor) {
+            // add only if color change
+            var mw = createMarker({
                 title: title,
-                coal_mc: coal_mc.toFixed(2),
-                pv_lcoe: pv_lcoe.toFixed(2),
-                co2: (plant_data[i]["CO2"]/1000000).toFixed(1),
-                address: plant_data[i]['Street Address'] + ", "+ plant_data[i]['City'] +", " + plant_data[i]['State'] +  ", "+plant_data[i]['Zip']
-            }),
-        });
-        plant_data[i].marker = mw.marker;
-        plant_data[i].infowindow = mw.infowindow;
-        
+                position: {
+                    lat: plant_data[i]['Latitude'],
+                    lng: plant_data[i]["Longitude"]
+                },
+                icon: icon,
+                info: renderInfo({
+                    title: title,
+                    coal_mc: coal_mc.toFixed(2),
+                    pv_lcoe: pv_lcoe.toFixed(2),
+                    co2: (plant_data[i]["CO2"]/1000000).toFixed(1),
+                    address: plant_data[i]['Street Address'] + ", "+ plant_data[i]['City'] +", " + plant_data[i]['State'] +  ", "+plant_data[i]['Zip']
+                }),
+            });
+            plant_data[i].marker = mw.marker;
+            plant_data[i].infowindow = mw.infowindow;
+        }
         // Update plant counts
         $('#'+icon.fillColor+'span').text(++plantcounts[icon.fillColor]);
     }
