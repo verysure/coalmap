@@ -3,7 +3,7 @@
 var map;
 var markers = [];
 var plantcounts = {green:0, yellow:0, red:0};
-var raw_plant_data = [];
+var plant_data = [];
 
 
 // initialize map when loaded
@@ -38,8 +38,8 @@ function updateMap() {
     markers = [];
     plantcounts=  {green:0, yellow:0, red:0};
 
-    // addCoalPlants, check if there are raw_plant_data
-    if (raw_plant_data.length === 0) {
+    // addCoalPlants, check if there are plant_data
+    if (plant_data.length === 0) {
         parseJSON("/coalmap/data/alldata_records_unformatted.json", function() {
             addCoalPlants(getFormData());
         });
@@ -64,34 +64,35 @@ function getFormData() {
 }
 
 function addCoalPlants(fdata) {
-    for (var i = 0; i< raw_plant_data.length; i++) {
+    for (var i = 0; i< plant_data.length; i++) {
         // calculations for the coal and pv marginal cost
-        var coal_mc = raw_plant_data[i]["Marginal cost"] + fdata.carbontax*raw_plant_data[i]["CO2"]/raw_plant_data[i]["Net Generation (Megawatthours)"];
-        var pv_lcoe = raw_plant_data[i]['PV LCOE']*fdata.solarprice*Math.pow((1-fdata.solarred/100),(fdata.solaryear-2015));
-        var title = raw_plant_data[i]['Plant Name'] + ' ('+ raw_plant_data[i]['Utility Name'] + ')';
-        var icon = planticon(coal_mc, pv_lcoe, raw_plant_data[i]["CO2"]/20000000);
+        var coal_mc = plant_data[i]["Marginal cost"] + fdata.carbontax*plant_data[i]["CO2"]/plant_data[i]["Net Generation (Megawatthours)"];
+        var pv_lcoe = plant_data[i]['PV LCOE']*fdata.solarprice*Math.pow((1-fdata.solarred/100),(fdata.solaryear-2015));
+        var title = plant_data[i]['Plant Name'] + ' ('+ plant_data[i]['Utility Name'] + ')';
+        var icon = planticon(coal_mc, pv_lcoe, plant_data[i]["CO2"]/20000000);
         
         // add
-        addMarker({
+        var marker = addMarker({
             title: title,
             position: {
-                lat: raw_plant_data[i]['Latitude'],
-                lng: raw_plant_data[i]["Longitude"]
+                lat: plant_data[i]['Latitude'],
+                lng: plant_data[i]["Longitude"]
             },
             icon: icon,
             info: renderInfo({
                 title: title,
                 coal_mc: coal_mc.toFixed(2),
                 pv_lcoe: pv_lcoe.toFixed(2),
-                co2: (raw_plant_data[i]["CO2"]/1000000).toFixed(1),
-                address: raw_plant_data[i]['Street Address'] + ", "+ raw_plant_data[i]['City'] +", " + raw_plant_data[i]['State'] +  ", "+raw_plant_data[i]['Zip']
+                co2: (plant_data[i]["CO2"]/1000000).toFixed(1),
+                address: plant_data[i]['Street Address'] + ", "+ plant_data[i]['City'] +", " + plant_data[i]['State'] +  ", "+plant_data[i]['Zip']
             }),
         });
+        plant_data[i].marker = marker.marker;
+        plant_data[i].infowindow = marker.infowindow;
         
         // Update plant counts
         $('#'+icon.fillColor+'span').text(++plantcounts[icon.fillColor]);
     }
-    
 }
 
 function renderInfo(info) {
@@ -105,9 +106,36 @@ function renderInfo(info) {
         </div>";
 }
 
+function createMarker(mdata) {
 
+    // add marker
+    var marker = new google.maps.Marker({
+        title: mdata.title,
+        position: mdata.position,
+        icon: mdata.icon,
+        map: map
+    });
 
+    // add info to marker
+    var infoopen = false;
+    var infowindow = new google.maps.InfoWindow({content: mdata.info});
+    google.maps.event.addListener(marker, 'click', function() {
+        // first clear windows
+        for (var i = 0; i < plant_data.length; i++) {
+            plant_data[i].infowindow.close(map, plant_data[i].marker);
+        }
+        // check if window open or cloase
+        if (infoopen) {
+            infowindow.close(map,marker);
+            infoopen = false;
+        } else {
+            infowindow.open(map,marker);
+            infoopen = true;
+        }
+    });
 
+    return {marker:marker, infowindow:infowindow};
+}
 
 
 function addMarker(mdata) {
@@ -150,9 +178,8 @@ function planticon(coal_mc, renew_mc, scale) {
     var renew_ratio = renew_mc / coal_mc;
     var plant = {
         path: 'M 15,0 85,0 100,150 200,150 200,300 0,300 0,150 z',
-        // scale: 0.07 * scale + 0.05,
-        scale: 0.1,
-        fillOpacity:1,
+        scale: 0.07 * scale + 0.05,
+        fillOpacity: 1,
         strokeColor: 'transparent',
         fillColor: ''
     };
@@ -181,7 +208,7 @@ function parseJSON(json_url, callback) {
         url: json_url,
         dataType: "json",
         success: function(data) {
-            raw_plant_data = data;
+            plant_data = data;
             callback();
         }
     });
