@@ -83,24 +83,17 @@ function parseJson(json_url, callback) {
 
 
 function addCoalPlants(fdata) {
-    $.ajax({
-        type: "GET",
-        url: "/coalmap/data/alldata_records_unformatted.json",
-        dataType: "json",
-        success: function(data) {
-            for (var i = 0; i< data.length; i++) {
-            // for (var i = 0; i< 20; i++) {
-                addCoalPlant(
-                    data[i]['Plant Name'] + ' ('+ data[i]['Utility Name'] + ')',
-                    {lat: (data[i]['Latitude']), lng: (data[i]["Longitude"])},
-                    (data[i]["Marginal cost"] + fdata.carbontax*data[i]["CO2"]/data[i]["Net Generation (Megawatthours)"]),
-                    data[i]['PV LCOE']*fdata.solarprice*Math.pow((1-fdata.solarred/100),(fdata.solaryear-2015)),
-                    data[i]["CO2"],
-                    "Address: " + data[i]['Street Address'] + ", "+ data[i]['City'] +", " + data[i]['State'] +  ", "+data[i]['Zip']+"<br>CO2 emissions (Mt/yr): "+ (data[i]["CO2"]/1000000).toFixed(1)
-                );
-            }
-        }
-    });
+    for (var i = 0; i< data.length; i++) {
+        addCoalPlant(
+            raw_plant_data[i]['Plant Name'] + ' ('+ raw_plant_data[i]['Utility Name'] + ')',
+            {lat: (raw_plant_data[i]['Latitude']), lng: (raw_plant_data[i]["Longitude"])},
+            (raw_plant_data[i]["Marginal cost"] + fdata.carbontax*raw_plant_data[i]["CO2"]/raw_plant_data[i]["Net Generation (Megawatthours)"]),
+            raw_plant_data[i]['PV LCOE']*fdata.solarprice*Math.pow((1-fdata.solarred/100),(fdata.solaryear-2015)),
+            raw_plant_data[i]["CO2"],
+            "Address: " + raw_plant_data[i]['Street Address'] + ", "+ raw_plant_data[i]['City'] +", " + raw_plant_data[i]['State'] +  ", "+raw_plant_data[i]['Zip']+"<br>CO2 emissions (Mt/yr): "+ (raw_plant_data[i]["CO2"]/1000000).toFixed(1)
+        );
+    }
+    
 }
 
 
