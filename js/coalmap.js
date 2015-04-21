@@ -125,7 +125,7 @@ function renderInfo(info) {
         info.coal_mc,
         info.pv_lcoe,
         info.co2,
-        info.address,
+        info.address
     );
 }
 
