@@ -96,7 +96,7 @@ function addCoalPlants(fdata) {
                 lat: raw_plant_data[i]['Latitude'],
                 lng: raw_plant_data[i]["Longitude"]
             },
-            icon: planticon(coal_mc, pv_lcoe, raw_plant_data[i]["CO2"]/20000000),
+            icon: planticon(coal_mc, pv_lcoe,    raw_plant_data[i]["CO2"]/20000000),
             info: renderInfo({
                 title: title,
                 coal_mc: coal_mc.toFixed(2),
@@ -119,7 +119,7 @@ function renderInfo(info) {
             Address: {4}\
         </div>";
     
-    return string.format(
+    return infostring.format(
         info.title,
         info.coal_mc,
         info.pv_lcoe,
