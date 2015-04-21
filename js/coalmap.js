@@ -155,7 +155,7 @@ function planticon(coal_mc, renew_mc, scale) {
         scale: 0.1,
         fillopacity:1,
         strokecolor: 'transparent',
-        fillcolor: ''
+        fillColor: ''
     };
 
     if (renew_ratio <= 1) {
@@ -166,7 +166,7 @@ function planticon(coal_mc, renew_mc, scale) {
         plant['fillColor'] = 'red';
     }
     
-    return ;
+    return plant;
 }
 
 
