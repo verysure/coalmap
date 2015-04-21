@@ -1,7 +1,6 @@
 // var apikey = 'AyxJQCb3jgWo5pWvz122yF2SdWCcHGxviGgfa4Eo';
 // Global varibles
 var map;
-var markers = [];
 var plantcounts = {green:0, yellow:0, red:0};
 var plant_data = [];
 
@@ -64,12 +63,18 @@ function getFormData() {
 }
 
 function addCoalPlants(fdata) {
+    
     for (var i = 0; i< plant_data.length; i++) {
         // calculations for the coal and pv marginal cost
         var coal_mc = plant_data[i]["Marginal cost"] + fdata.carbontax*plant_data[i]["CO2"]/plant_data[i]["Net Generation (Megawatthours)"];
         var pv_lcoe = plant_data[i]['PV LCOE']*fdata.solarprice*Math.pow((1-fdata.solarred/100),(fdata.solaryear-2015));
         var title = plant_data[i]['Plant Name'] + ' ('+ plant_data[i]['Utility Name'] + ')';
         var icon = planticon(coal_mc, pv_lcoe, plant_data[i]["CO2"]/20000000);
+        
+        // remove markers
+        if (!plant_data[i].marker) {
+            plant_data[i].marker.setMap(null);
+        }
         
         // add
         var mw = createMarker({
@@ -106,8 +111,10 @@ function renderInfo(info) {
         </div>";
 }
 
-function createMarker(mdata) {
 
+
+
+function createMarker(mdata) {
     // add marker
     var marker = new google.maps.Marker({
         title: mdata.title,
@@ -136,39 +143,6 @@ function createMarker(mdata) {
 
     return {marker:marker, infowindow:infowindow};
 }
-
-
-function addMarker(mdata) {
-
-    // add marker
-    var marker = new google.maps.Marker({
-        title: mdata.title,
-        position: mdata.position,
-        icon: mdata.icon,
-        map: map
-    });
-
-    // add info to marker
-    var infoopen = false;
-    var infowindow = new google.maps.InfoWindow({content: mdata.info});
-    google.maps.event.addListener(marker, 'click', function() {
-        // first clear windows
-        for (var i = 0; i < markers.length; i++) {
-            markers[i]['infowindow'].close(map, markers[i]['marker']);
-        }
-        // check if window open or cloase
-        if (infoopen) {
-            infowindow.close(map,marker);
-            infoopen = false;
-        } else {
-            infowindow.open(map,marker);
-            infoopen = true;
-        }
-    });
-
-    markers.push({marker:marker, infowindow:infowindow});
-}
-
 
 
 
