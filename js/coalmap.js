@@ -83,7 +83,7 @@ function parseJson(json_url, callback) {
 
 
 function addCoalPlants(fdata) {
-    for (var i = 0; i< data.length; i++) {
+    for (var i = 0; i< raw_plant_data.length; i++) {
         addCoalPlant(
             raw_plant_data[i]['Plant Name'] + ' ('+ raw_plant_data[i]['Utility Name'] + ')',
             {lat: (raw_plant_data[i]['Latitude']), lng: (raw_plant_data[i]["Longitude"])},
