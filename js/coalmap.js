@@ -128,7 +128,7 @@ function addMarker(name, position, coal_mc, renew_mc, co2, plantinfo) {
     var co2ratio = co2/20000000;
 
     var infoopen = false;
-    var iconurl = planticon(coal_mc, renew_mc);
+    // var iconurl = planticon(coal_mc, renew_mc);
 
     if (iconurl[20] === 'g') {
         plantcounts['green'] += 1;
@@ -144,12 +144,13 @@ function addMarker(name, position, coal_mc, renew_mc, co2, plantinfo) {
     var marker = new google.maps.Marker({
         title: name,
         position: position,
+        icon: planticon(coal_mc, renew_mc),
         // map: map,
-        icon: {
-            size: new google.maps.Size(2*Math.round(10*co2ratio), 3*Math.round(10*co2ratio)),
-            scaledSize: new google.maps.Size(2*Math.round(10*co2ratio), 3*Math.round(10*co2ratio)),
-            url: iconurl,
-        }
+        // icon: {
+        //     size: new google.maps.Size(2*Math.round(10*co2ratio), 3*Math.round(10*co2ratio)),
+        //     scaledSize: new google.maps.Size(2*Math.round(10*co2ratio), 3*Math.round(10*co2ratio)),
+        //     url: iconurl,
+        // }
     });
 
     var infowindow = new google.maps.InfoWindow({
@@ -185,18 +186,31 @@ function clearInfos() {
 
 
 function planticon(coal_mc, renew_mc) {
-    var iconstring = "";
-    var iconpath = "/coalmap/js/markers/";
-    var renew_ratio = renew_mc / coal_mc;
+    // var iconstring = "";
+    // var iconpath = "/coalmap/js/markers/";
+    // var renew_ratio = renew_mc / coal_mc;
+    //
+
+    var plantPath = 'M 15,0 85,0 100,150 200,150 200,300 0,300 0,150 z'
+    var greenPlant = { path: plantPath, fillColor: 'green' };
+    var yellowPlant = { path: plantPath, fillColor: 'yellow' };
+    var redPlant = { path: plantPath, fillColor: 'red' };
+
 
     if (renew_ratio <= 1) {
-        iconstring = "green.png";
+        return greenPlant;
+        // iconstring = "green.png";
     } else if (renew_ratio <= 1.2) {
-        iconstring = "yellow.png";
+        return yellowPlant;
+        // iconstring = "yellow.png";
     } else {
-        iconstring = "red.png"
+        return redPlant;
+        // iconstring = "red.png"
     }
-    return iconpath + iconstring;
+    // return iconpath + iconstring;
+
+
+
 }
 
 
