@@ -107,11 +107,8 @@ function addCoalPlants(fdata) {
             }),
         });
         
-        // record the stats
-        // updatePlantCounts(icon);
-        function updatePlantCounts() {
-            $('#'+icon.fillColor+'span').text(++plantcounts[icon.fillColor]);
-        } ();
+        // Update plant counts
+        $('#'+icon.fillColor+'span').text(++plantcounts[icon.fillColor]);
     }
     
 }
