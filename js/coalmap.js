@@ -193,22 +193,26 @@ function planticon(coal_mc, renew_mc) {
     var renew_ratio = renew_mc / coal_mc;
     //
 
-    var plantPath = 'M 15,0 85,0 100,150 200,150 200,300 0,300 0,150 z'
-    var greenPlant = { path: plantPath, scale: 0.1, fillOpacity:0.8, fillColor: 'green' };
-    var yellowPlant = { path: plantPath, scale: 0.1, fillOpacity:0.8, fillColor: 'yellow' };
-    var redPlant = { path: plantPath, scale: 0.1, fillOpacity:0.8, fillColor: 'red' };
+    var plant = {
+        path: 'M 15,0 85,0 100,150 200,150 200,300 0,300 0,150 z',
+        scale: 0.1,
+        fillOpacity:1,
+        strokeColor: 'transparent',
+        fillColor: ''
+    };
 
 
     if (renew_ratio <= 1) {
-        return greenPlant;
+        plant['fillColor'] = 'green';
         // iconstring = "green.png";
     } else if (renew_ratio <= 1.2) {
-        return yellowPlant;
+        plant['fillColor'] = 'yellow';
         // iconstring = "yellow.png";
     } else {
-        return redPlant;
+        plant['fillColor'] = 'red';
         // iconstring = "red.png"
     }
+    return plant
     // return iconpath + iconstring;
 
 
