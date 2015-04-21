@@ -41,7 +41,7 @@ function updateMap() {
     plantcounts=  {green:0, yellow:0, red:0};
 
     // addCoalPlants, check if there are raw_plant_data
-    if (raw_plant_data.length) {
+    if (raw_plant_data.length === 0) {
         parseJSON("/coalmap/data/alldata_records_unformatted.json", function() {
             addCoalPlants(getFormData());
         });
@@ -74,7 +74,6 @@ function parseJSON(json_url, callback) {
         dataType: "json",
         success: function(data) {
             raw_plant_data = data;
-            console.log('parsed');
             callback();
         }
     });
