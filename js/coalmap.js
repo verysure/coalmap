@@ -144,56 +144,29 @@ function addMarker(mdata) {
 
 
 
-var greenicon = {
-    path: 'M 15,0 85,0 100,150 200,150 200,300 0,300 0,150 z',
-    // scale: 0.07 * scale + 0.05,
-    scale: 0.1,
-    fillOpacity:1,
-    strokeColor: 'transparent',
-    fillColor: 'green'
-};
-var redicon = {
-    path: 'M 15,0 85,0 100,150 200,150 200,300 0,300 0,150 z',
-    // scale: 0.07 * scale + 0.05,
-    scale: 0.1,
-    fillOpacity:1,
-    strokeColor: 'transparent',
-    fillColor: 'red'
-};
-var yellowicon = {
-    path: 'M 15,0 85,0 100,150 200,150 200,300 0,300 0,150 z',
-    // scale: 0.07 * scale + 0.05,
-    scale: 0.1,
-    fillOpacity:1,
-    strokeColor: 'transparent',
-    fillColor: 'yellow'
-};;
-
 
 
 function planticon(coal_mc, renew_mc, scale) {
     var renew_ratio = renew_mc / coal_mc;
-    // var plant = {
-    //     path: 'M 15,0 85,0 100,150 200,150 200,300 0,300 0,150 z',
-    //     // scale: 0.07 * scale + 0.05,
-    //     scale: 0.1,
-    //     fillOpacity:1,
-    //     strokeColor: 'transparent',
-    //     fillColor: ''
-    // };
+    var plant = {
+        // path: 'm 15,0 85,0 100,150 200,150 200,300 0,300 0,150 z',
+        path: google.maps.SymbolPath.CIRCLE,
+        // scale: 0.07 * scale + 0.05,
+        scale: 0.1,
+        fillopacity:1,
+        strokecolor: 'transparent',
+        fillcolor: ''
+    };
 
     if (renew_ratio <= 1) {
-        return greenicon;
-        // plant['fillColor'] = 'green';
+        plant['fillColor'] = 'green';
     } else if (renew_ratio <= 1.2) {
-        return yellowicon;
-        // plant['fillColor'] = 'yellow';
+        plant['fillColor'] = 'yellow';
     } else {
-        return redicon;
-        // plant['fillColor'] = 'red';
+        plant['fillColor'] = 'red';
     }
     
-    // return plant;
+    return ;
 }
 
 
