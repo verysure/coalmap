@@ -72,7 +72,7 @@ function addCoalPlants(fdata) {
         var icon = planticon(coal_mc, pv_lcoe, plant_data[i]["CO2"]/20000000);
         
         // add
-        var mw = addMarker({
+        var mw = createMarker({
             title: title,
             position: {
                 lat: plant_data[i]['Latitude'],
