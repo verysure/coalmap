@@ -195,7 +195,7 @@ function planticon(coal_mc, renew_mc, scale) {
 
     var plant = {
         path: 'M 15,0 85,0 100,150 200,150 200,300 0,300 0,150 z',
-        scale: 0.1 * scale,
+        scale: 0.08 * scale + 0.02,
         fillOpacity:1,
         strokeColor: 'transparent',
         fillColor: ''
