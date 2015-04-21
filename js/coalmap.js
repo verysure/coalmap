@@ -3,7 +3,7 @@
 var map;
 var markers = [];
 var plantcounts = {green:0, yellow:0, red:0};
-var raw_plant_data = [];
+var marker_data = [];
 
 
 // initialize map when loaded
@@ -13,11 +13,10 @@ google.maps.event.addDomListener(window, 'load', initMap);
 
 // Initialize the map on load
 function initMap() {
-    
     $(document).ready(function() {
         // Initialize the map
         map = new google.maps.Map(
-            document.getElementById('map-canvas'),
+            $('#map-canvas'),
             {
                 center:  {lat: 39.5, lng: -98.35},
                 zoom: 4,
@@ -31,9 +30,8 @@ function initMap() {
 
 // updateMap on form submit
 function firstMap() {
-
-    // addCoalPlants, check if there are raw_plant_data
-    if (raw_plant_data.length === 0) {
+    // addCoalPlants, check if there are marker_data
+    if (marker_data.length === 0) {
         parseJSON("/coalmap/data/alldata_records_unformatted.json", function() {
             addCoalPlants(getFormData());
         });
@@ -47,13 +45,13 @@ function firstMap() {
 function updateMap() {
     // clear map
     for (var i = 0; i<markers.length; i++) {
-        markers[i]['marker'].setMap(null);
+        markers[i].marker.setMap(null);
     }
     markers = [];
     plantcounts=  {green:0, yellow:0, red:0};
 
-    // addCoalPlants, check if there are raw_plant_data
-    if (raw_plant_data.length === 0) {
+    // addCoalPlants, check if there are marker_data
+    if (marker_data.length === 0) {
         parseJSON("/coalmap/data/alldata_records_unformatted.json", function() {
             addCoalPlants(getFormData());
         });
@@ -79,27 +77,27 @@ function getFormData() {
 }
 
 function addCoalPlants(fdata) {
-    for (var i = 0; i< raw_plant_data.length; i++) {
+    for (var i = 0; i< marker_data.length; i++) {
         // calculations for the coal and pv marginal cost
-        var coal_mc = raw_plant_data[i]["Marginal cost"] + fdata.carbontax*raw_plant_data[i]["CO2"]/raw_plant_data[i]["Net Generation (Megawatthours)"];
-        var pv_lcoe = raw_plant_data[i]['PV LCOE']*fdata.solarprice*Math.pow((1-fdata.solarred/100),(fdata.solaryear-2015));
-        var title = raw_plant_data[i]['Plant Name'] + ' ('+ raw_plant_data[i]['Utility Name'] + ')';
-        var icon = planticon(coal_mc, pv_lcoe, raw_plant_data[i]["CO2"]/20000000);
+        var coal_mc = marker_data[i]["Marginal cost"] + fdata.carbontax*marker_data[i]["CO2"]/marker_data[i]["Net Generation (Megawatthours)"];
+        var pv_lcoe = marker_data[i]['PV LCOE']*fdata.solarprice*Math.pow((1-fdata.solarred/100),(fdata.solaryear-2015));
+        var title = marker_data[i]['Plant Name'] + ' ('+ marker_data[i]['Utility Name'] + ')';
+        var icon = planticon(coal_mc, pv_lcoe, marker_data[i]["CO2"]/20000000);
         
         // add
         addMarker({
             title: title,
             position: {
-                lat: raw_plant_data[i]['Latitude'],
-                lng: raw_plant_data[i]["Longitude"]
+                lat: marker_data[i]['Latitude'],
+                lng: marker_data[i]["Longitude"]
             },
             icon: icon,
             info: renderInfo({
                 title: title,
                 coal_mc: coal_mc.toFixed(2),
                 pv_lcoe: pv_lcoe.toFixed(2),
-                co2: (raw_plant_data[i]["CO2"]/1000000).toFixed(1),
-                address: raw_plant_data[i]['Street Address'] + ", "+ raw_plant_data[i]['City'] +", " + raw_plant_data[i]['State'] +  ", "+raw_plant_data[i]['Zip']
+                co2: (marker_data[i]["CO2"]/1000000).toFixed(1),
+                address: marker_data[i]['Street Address'] + ", "+ marker_data[i]['City'] +", " + marker_data[i]['State'] +  ", "+marker_data[i]['Zip']
             }),
         });
         
@@ -131,7 +129,7 @@ function addMarker(mdata) {
     var marker = new google.maps.Marker({
         title: mdata.title,
         position: mdata.position,
-        icon: mdata.icon,
+        // icon: mdata.icon,
         map: map
     });
 
@@ -193,7 +191,7 @@ function parseJSON(json_url, callback) {
         url: json_url,
         dataType: "json",
         success: function(data) {
-            raw_plant_data = data;
+            marker_data = data;
             callback();
         }
     });
