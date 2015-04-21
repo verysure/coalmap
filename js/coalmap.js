@@ -12,8 +12,7 @@ google.maps.event.addDomListener(window, 'load', initMap);
 
 // Initialize the map on load
 function initMap() {
-
-    // initialize();
+    
     $(document).ready(function() {
         // Initialize the map
         map = new google.maps.Map(
@@ -24,10 +23,8 @@ function initMap() {
                 mapTypeId: google.maps.MapTypeId.ROADMAP
             }
         );
-
         // First render
         updateMap();
-
     });
 }
 
@@ -48,15 +45,14 @@ function updateMap() {
     } else {
         addCoalPlants(getFormData());
     }
-    
 }
 
 
 
 
 // Supplementary functions for rendering maps
-
 function getFormData() {
+    // get the form data from the html
     var getF = function (id) { return parseFloat($('#'+id).text()); };
     return {
         carbontax  : getF('carbontax'),
@@ -66,50 +62,64 @@ function getFormData() {
     }
 }
 
-
-function parseJSON(json_url, callback) {
-    $.ajax({
-        type: "GET",
-        url: json_url,
-        dataType: "json",
-        success: function(data) {
-            raw_plant_data = data;
-            callback();
-        }
-    });
-}
-
-
-
-
 function addCoalPlants(fdata) {
-    for (var i = 0; i< raw_plant_data.length; i++) {
+    for (var d in raw_plant_data) {
         // calculation for the coal and pv marginal cost
-        var coal_mc = raw_plant_data[i]["Marginal cost"] + fdata.carbontax*raw_plant_data[i]["CO2"]/raw_plant_data[i]["Net Generation (Megawatthours)"];
-        var pv_lcoe = raw_plant_data[i]['PV LCOE']*fdata.solarprice*Math.pow((1-fdata.solarred/100),(fdata.solaryear-2015));
-        var title = raw_plant_data[i]['Plant Name'] + ' ('+ raw_plant_data[i]['Utility Name'] + ')';
-        var icon = planticon(coal_mc, pv_lcoe, raw_plant_data[i]["CO2"]/20000000);
+        var coal_mc = d["Marginal cost"] + fdata.carbontax*d["CO2"]/d["Net Generation (Megawatthours)"];
+        var pv_lcoe = d['PV LCOE']*fdata.solarprice*Math.pow((1-fdata.solarred/100),(fdata.solaryear-2015));
+        var title = d['Plant Name'] + ' ('+ d['Utility Name'] + ')';
+        var icon = planticon(coal_mc, pv_lcoe, d["CO2"]/20000000);
         
         // add
         addMarker({
             title: title,
             position: {
-                lat: raw_plant_data[i]['Latitude'],
-                lng: raw_plant_data[i]["Longitude"]
+                lat: d['Latitude'],
+                lng: d["Longitude"]
             },
             icon: icon,
             info: renderInfo({
                 title: title,
                 coal_mc: coal_mc.toFixed(2),
                 pv_lcoe: pv_lcoe.toFixed(2),
-                co2: (raw_plant_data[i]["CO2"]/1000000).toFixed(1),
-                address: raw_plant_data[i]['Street Address'] + ", "+ raw_plant_data[i]['City'] +", " + raw_plant_data[i]['State'] +  ", "+raw_plant_data[i]['Zip']
+                co2: (d["CO2"]/1000000).toFixed(1),
+                address: d['Street Address'] + ", "+ d['City'] +", " + d['State'] +  ", "+d['Zip']
             }),
         });
         
         // Update plant counts
         $('#'+icon.fillColor+'span').text(++plantcounts[icon.fillColor]);
     }
+    
+    
+    
+    // for (var i = 0; i< raw_plant_data.length; i++) {
+    //     // calculation for the coal and pv marginal cost
+    //     var coal_mc = raw_plant_data[i]["Marginal cost"] + fdata.carbontax*raw_plant_data[i]["CO2"]/raw_plant_data[i]["Net Generation (Megawatthours)"];
+    //     var pv_lcoe = raw_plant_data[i]['PV LCOE']*fdata.solarprice*Math.pow((1-fdata.solarred/100),(fdata.solaryear-2015));
+    //     var title = raw_plant_data[i]['Plant Name'] + ' ('+ raw_plant_data[i]['Utility Name'] + ')';
+    //     var icon = planticon(coal_mc, pv_lcoe, raw_plant_data[i]["CO2"]/20000000);
+        
+    //     // add
+    //     addMarker({
+    //         title: title,
+    //         position: {
+    //             lat: raw_plant_data[i]['Latitude'],
+    //             lng: raw_plant_data[i]["Longitude"]
+    //         },
+    //         icon: icon,
+    //         info: renderInfo({
+    //             title: title,
+    //             coal_mc: coal_mc.toFixed(2),
+    //             pv_lcoe: pv_lcoe.toFixed(2),
+    //             co2: (raw_plant_data[i]["CO2"]/1000000).toFixed(1),
+    //             address: raw_plant_data[i]['Street Address'] + ", "+ raw_plant_data[i]['City'] +", " + raw_plant_data[i]['State'] +  ", "+raw_plant_data[i]['Zip']
+    //         }),
+    //     });
+        
+    //     // Update plant counts
+    //     $('#'+icon.fillColor+'span').text(++plantcounts[icon.fillColor]);
+    // }
     
 }
 
@@ -173,7 +183,6 @@ function planticon(coal_mc, renew_mc, scale) {
         fillColor: ''
     };
 
-
     if (renew_ratio <= 1) {
         plant['fillColor'] = 'green';
     } else if (renew_ratio <= 1.2) {
@@ -191,30 +200,27 @@ function planticon(coal_mc, renew_mc, scale) {
 
 
 
-
-
-
-
-
-
-
-
+// utility functions
+function parseJSON(json_url, callback) {
+    $.ajax({
+        type: "GET",
+        url: json_url,
+        dataType: "json",
+        success: function(data) {
+            raw_plant_data = data;
+            callback();
+        }
+    });
+}
 
 function outputUpdate(target, value) {
     $(target).text(value);
 }
 
 
-
-
-
-
-// scroll
 function scrollTo(obj) {
-
    // animate
    $('html, body').animate({
        scrollTop: $($(obj).attr('href')).offset().top
      }, 300);
-
 }
