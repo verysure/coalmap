@@ -74,7 +74,7 @@ function parseJSON(json_url, callback) {
         dataType: "json",
         success: function(data) {
             raw_plant_data = data;
-            console.log(raw_plant_data);
+            console.log('parsed');
             callback();
         }
     });
