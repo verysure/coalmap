@@ -116,7 +116,7 @@ function addMarker(mdata) {
     var marker = new google.maps.Marker({
         title: mdata.title,
         position: mdata.position,
-        // icon: mdata.icon,
+        icon: mdata.icon,
         map: map
     });
 
@@ -148,7 +148,8 @@ function planticon(coal_mc, renew_mc, scale) {
     var renew_ratio = renew_mc / coal_mc;
     var plant = {
         path: 'M 15,0 85,0 100,150 200,150 200,300 0,300 0,150 z',
-        scale: 0.07 * scale + 0.05,
+        // scale: 0.07 * scale + 0.05,
+        scale: 0.1,
         fillOpacity:1,
         strokeColor: 'transparent',
         fillColor: ''
