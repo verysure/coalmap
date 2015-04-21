@@ -144,26 +144,56 @@ function addMarker(mdata) {
 
 
 
+var greenicon = {
+    path: 'M 15,0 85,0 100,150 200,150 200,300 0,300 0,150 z',
+    // scale: 0.07 * scale + 0.05,
+    scale: 0.1,
+    fillOpacity:1,
+    strokeColor: 'transparent',
+    fillColor: 'green'
+};
+var redicon = {
+    path: 'M 15,0 85,0 100,150 200,150 200,300 0,300 0,150 z',
+    // scale: 0.07 * scale + 0.05,
+    scale: 0.1,
+    fillOpacity:1,
+    strokeColor: 'transparent',
+    fillColor: 'red'
+};
+var yellowicon = {
+    path: 'M 15,0 85,0 100,150 200,150 200,300 0,300 0,150 z',
+    // scale: 0.07 * scale + 0.05,
+    scale: 0.1,
+    fillOpacity:1,
+    strokeColor: 'transparent',
+    fillColor: 'yellow'
+};;
+
+
+
 function planticon(coal_mc, renew_mc, scale) {
     var renew_ratio = renew_mc / coal_mc;
-    var plant = {
-        path: 'M 15,0 85,0 100,150 200,150 200,300 0,300 0,150 z',
-        // scale: 0.07 * scale + 0.05,
-        scale: 0.1,
-        fillOpacity:1,
-        strokeColor: 'transparent',
-        fillColor: ''
-    };
+    // var plant = {
+    //     path: 'M 15,0 85,0 100,150 200,150 200,300 0,300 0,150 z',
+    //     // scale: 0.07 * scale + 0.05,
+    //     scale: 0.1,
+    //     fillOpacity:1,
+    //     strokeColor: 'transparent',
+    //     fillColor: ''
+    // };
 
     if (renew_ratio <= 1) {
-        plant['fillColor'] = 'green';
+        return greenicon;
+        // plant['fillColor'] = 'green';
     } else if (renew_ratio <= 1.2) {
-        plant['fillColor'] = 'yellow';
+        return yellowicon;
+        // plant['fillColor'] = 'yellow';
     } else {
-        plant['fillColor'] = 'red';
+        return redicon;
+        // plant['fillColor'] = 'red';
     }
     
-    return plant;
+    // return plant;
 }
 
 
