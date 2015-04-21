@@ -83,6 +83,7 @@ function parseJson(json_url, callback) {
 
 
 function addCoalPlants(fdata) {
+    console.log(raw_plant_data.length);
     for (var i = 0; i< raw_plant_data.length; i++) {
         
         // calculation for the coal and pv marginal cost
