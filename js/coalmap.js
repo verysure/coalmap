@@ -7,29 +7,22 @@ var plant_data = [];
 
 // initialize map when loaded
 google.maps.event.addDomListener(window, 'load', initMap);
-
-
-
 // Initialize the map on load
 function initMap() {
     $(document).ready(function() {
         // Initialize the map
-        map = new google.maps.Map( $('#map-canvas'),
-            // document.getElementById('map-canvas'),
-            
-            {
-                center:  {lat: 39.5, lng: -98.35},
-                zoom: 4,
-                mapTypeId: google.maps.MapTypeId.ROADMAP
-            }
-        );
+        map = new google.maps.Map(document.getElementById('map-canvas'), {
+            center:  {lat: 39.5, lng: -98.35},
+            zoom: 4,
+            mapTypeId: google.maps.MapTypeId.ROADMAP
+        });
         // First render
-        updateMap();
+        updateMapGraph();
     });
 }
 
-// updateMap on form submit
-function updateMap() {
+// updateMapGraph on form submit
+function updateMapGraph() {
     // clear counts
     plantcounts=  {green:0, yellow:0, red:0};
 
@@ -43,27 +36,18 @@ function updateMap() {
     }
 }
 
-
-
-
-// Supplementary functions for rendering maps
-function getFormData() {
-    // get the form data from the html
-    var getF = function (id) { return parseFloat($('#'+id).text()); };
-    return {
-        carbontax  : getF('carbontax'),
-        solarprice : getF('solarprice'),
-        solaryear  : getF('solaryear'),
-        solarred   : getF('solarred'),
-    }
+function coalMarginalCost(data, fdata) {
+    return data["Marginal cost"]+fdata.carbontax*data["CO2"]/data["Net Generation (Megawatthours)"];
+}
+function pvLCOE(data, fdata) {
+    return data['PV LCOE']*fdata.solarprice*Math.pow((1-fdata.solarred/100),(fdata.solaryear-2015));
 }
 
 function addCoalPlants(fdata) {
-    
     for (var i = 0; i< plant_data.length; i++) {
         // calculations for the coal and pv marginal cost
-        var coal_mc = plant_data[i]["Marginal cost"] + fdata.carbontax*plant_data[i]["CO2"]/plant_data[i]["Net Generation (Megawatthours)"];
-        var pv_lcoe = plant_data[i]['PV LCOE']*fdata.solarprice*Math.pow((1-fdata.solarred/100),(fdata.solaryear-2015));
+        var coal_mc = coalMarginalCost(plant_data[i], fdata);
+        var pv_lcoe = pvLCOE(plant_data[i], fdata);
         var title = plant_data[i]['Plant Name'] + ' ('+ plant_data[i]['Utility Name'] + ')';
         var icon = planticon(coal_mc, pv_lcoe, plant_data[i]["CO2"]/20000000);
         
@@ -95,6 +79,20 @@ function addCoalPlants(fdata) {
     }
 }
 
+
+
+//----------- Supplementary ----------------------
+function getFormData() {
+    // get the form data from the html
+    var getF = function (id) { return parseFloat($('#'+id).text()); };
+    return {
+        carbontax  : getF('carbontax'),
+        solarprice : getF('solarprice'),
+        solaryear  : getF('solaryear'),
+        solarred   : getF('solarred'),
+    }
+}
+
 function renderInfo(info) {
     return "\
         <h1 style='font-size:15px;'>"+info.title+"</h1>\
@@ -105,9 +103,6 @@ function renderInfo(info) {
             Address: "+info.address+"\
         </div>";
 }
-
-
-
 
 function createMarker(mdata) {
     // add marker
@@ -139,10 +134,6 @@ function createMarker(mdata) {
     return {marker:marker, infowindow:infowindow};
 }
 
-
-
-
-
 function planticon(coal_mc, renew_mc, scale) {
     var renew_ratio = renew_mc / coal_mc;
     var plant = {
@@ -165,12 +156,7 @@ function planticon(coal_mc, renew_mc, scale) {
 }
 
 
-
-
-
-
-
-// utility functions
+//---------Utility functions-----------------
 function parseJSON(json_url, callback) {
     $.ajax({
         type: "GET",
@@ -203,35 +189,26 @@ function scrollTo(obj) {
 // functions for charts
 
 // Testing for charts
-google.load('visualization', '1', {packages: ['corechart', 'line']});
-google.setOnLoadCallback(drawTimeLine);
+// google.load('visualization', '1', {packages: ['corechart', 'line']});
+// google.setOnLoadCallback(drawTimeLine);
 
-function drawTimeLine() {
-    var data = new google.visualization.DataTable();
-    data.addColumn('number', 'X');
-    data.addColumn('number', 'Plants to Shutdown');
+// function drawTimeLine(formdata) {
+//     var data = new google.visualization.DataTable();
+//     data.addColumn('number', 'X');
+//     data.addColumn('number', 'Plants to Shutdown');
 
-    data.addRows([
-        [0, 0],   [1, 10],  [2, 23],  [3, 17],  [4, 18],  [5, 9],
-        [6, 11],  [7, 27],  [8, 33],  [9, 40],  [10, 32], [11, 35],
-        [12, 30], [13, 40], [14, 42], [15, 47], [16, 44], [17, 48],
-        [18, 52], [19, 54], [20, 42], [21, 55], [22, 56], [23, 57],
-        [24, 60], [25, 50], [26, 52], [27, 51], [28, 49], [29, 53],
-        [30, 55], [31, 60], [32, 61], [33, 59], [34, 62], [35, 65],
-        [36, 62], [37, 58], [38, 55], [39, 61], [40, 64], [41, 65],
-        [42, 63], [43, 66], [44, 67], [45, 69], [46, 69], [47, 70],
-        [48, 72], [49, 68], [50, 66], [51, 65], [52, 67], [53, 70],
-        [54, 71], [55, 72], [56, 73], [57, 75], [58, 70], [59, 68],
-        [60, 64], [61, 60], [62, 65], [63, 67], [64, 68], [65, 69],
-        [66, 70], [67, 72], [68, 75], [69, 80]
-    ]);
+//     var year_plants = [];
+//     for (var i = 0; i < plant_data.length; i++) {
+//         // year_plants.push([]);
+//         data.addRow([]);
+//     }
 
-    var options = {
-        hAxis: {title: 'Time'},
-        vAxis: {title: 'Popularity'},
-        backgroundColor: '#f1f8e9'
-    };
+//     var options = {
+//         hAxis: {title: 'Time'},
+//         vAxis: {title: 'Popularity'},
+//         backgroundColor: '#f1f8e9'
+//     };
 
-    var chart = new google.visualization.LineChart(document.getElementById('chart_div'));
-    chart.draw(data, options);
-}
+//     var chart = new google.visualization.LineChart(document.getElementById('chart_div'));
+//     chart.draw(data, options);
+// }
