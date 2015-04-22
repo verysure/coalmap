@@ -142,10 +142,12 @@ function createMarker(mdata) {
 function planticon(coal_mc, renew_mc, scale) {
     var renew_ratio = renew_mc / coal_mc;
     var plant = {
-        path: 'M 15,0 85,0 100,150 200,150 200,300 0,300 0,150 z',
+        // path: 'M 0,0 100,0 100,100 200,150 200,200 0,200 0,150 z',
+        path: google.maps.SymbolPath.CIRCLE,
         scale: 0.07 * scale + 0.05,
+        scale: 3*scale + 2,
         fillOpacity: 1,
-        strokeColor: 'transparent',
+        strokeColor: 'black',
         fillColor: ''
     };
 
@@ -210,7 +212,6 @@ function drawTimeLine(formdata) {
     for (var i = 0; i < plant_data.length; i++) {
         year = Math.log(coalMarginalCost(plant_data[i], formdata)/pvLCOE(plant_data[i], formdata))/Math.log(1-formdata.solarred/100);
         
-        console.log(year);
         if (year < 0) year = 0;
         if (year <= (2050-2015)) {
             year_plants[Math.round(year)][1] += 1;
