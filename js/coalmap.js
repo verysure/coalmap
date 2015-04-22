@@ -46,8 +46,10 @@ function pvLCOE(data, fdata) {
 function addCoalPlants(fdata) {
     for (var i = 0; i< plant_data.length; i++) {
         // calculations for the coal and pv marginal cost
-        var coal_mc = coalMarginalCost(plant_data[i], fdata);
-        var pv_lcoe = pvLCOE(plant_data[i], fdata);
+        var coal_mc = plant_data[i]["Marginal cost"] + fdata.carbontax*plant_data[i]["CO2"]/plant_data[i]["Net Generation (Megawatthours)"];
+        var pv_lcoe = plant_data[i]['PV LCOE']*fdata.solarprice*Math.pow((1-fdata.solarred/100),(fdata.solaryear-2015));
+        // var coal_mc = coalMarginalCost(plant_data[i], fdata);
+        // var pv_lcoe = pvLCOE(plant_data[i], fdata);
         var title = plant_data[i]['Plant Name'] + ' ('+ plant_data[i]['Utility Name'] + ')';
         var icon = planticon(coal_mc, pv_lcoe, plant_data[i]["CO2"]/20000000);
         
