@@ -68,28 +68,29 @@ function addCoalPlants(fdata) {
         var icon = planticon(coal_mc, pv_lcoe, plant_data[i]["CO2"]/20000000);
         
         // remove markers
-        if (!plant_data[i].marker) {
+        if (plant_data[i].marker != undefined) {
             plant_data[i].marker.setMap(null);
-        } else if (icon.fillColor != plant_data[i].marker.icon.fillColor) {
-            // add only if color change
-            var mw = createMarker({
-                title: title,
-                position: {
-                    lat: plant_data[i]['Latitude'],
-                    lng: plant_data[i]["Longitude"]
-                },
-                icon: icon,
-                info: renderInfo({
-                    title: title,
-                    coal_mc: coal_mc.toFixed(2),
-                    pv_lcoe: pv_lcoe.toFixed(2),
-                    co2: (plant_data[i]["CO2"]/1000000).toFixed(1),
-                    address: plant_data[i]['Street Address'] + ", "+ plant_data[i]['City'] +", " + plant_data[i]['State'] +  ", "+plant_data[i]['Zip']
-                }),
-            });
-            plant_data[i].marker = mw.marker;
-            plant_data[i].infowindow = mw.infowindow;
         }
+        
+        // add
+        var mw = createMarker({
+            title: title,
+            position: {
+                lat: plant_data[i]['Latitude'],
+                lng: plant_data[i]["Longitude"]
+            },
+            icon: icon,
+            info: renderInfo({
+                title: title,
+                coal_mc: coal_mc.toFixed(2),
+                pv_lcoe: pv_lcoe.toFixed(2),
+                co2: (plant_data[i]["CO2"]/1000000).toFixed(1),
+                address: plant_data[i]['Street Address'] + ", "+ plant_data[i]['City'] +", " + plant_data[i]['State'] +  ", "+plant_data[i]['Zip']
+            }),
+        });
+        plant_data[i].marker = mw.marker;
+        plant_data[i].infowindow = mw.infowindow;
+        
         // Update plant counts
         $('#'+icon.fillColor+'span').text(++plantcounts[icon.fillColor]);
     }
