@@ -209,7 +209,7 @@ function drawTimeLine(formdata) {
     }
     for (var i = 0; i < plant_data.length; i++) {
         year = Math.log(coalMarginalCost(plant_data[i], formdata)/pvLCOE(plant_data[i], formdata))/Math.log(1-formdata.solarred/100);
-        if (year < 0) year = 0;
+        if (year < 2015) year = 2015;
         if (year <= 2050) {
             console.log(Math.round(year)-2015);
             year_plants[Math.round(year)-2015][1] += 1;
