@@ -145,7 +145,7 @@ function planticon(coal_mc, renew_mc, scale) {
         // path: 'M 0,0 100,0 100,100 200,150 200,200 0,200 0,150 z',
         path: google.maps.SymbolPath.CIRCLE,
         scale: 0.07 * scale + 0.05,
-        scale: 3*scale + 2,
+        scale: 6*scale + 4,
         fillOpacity: 1,
         strokeColor: 'transparent',
         fillColor: ''
@@ -158,7 +158,6 @@ function planticon(coal_mc, renew_mc, scale) {
     } else {
         plant['fillColor'] = 'red';
     }
-    
     return plant;
 }
 
