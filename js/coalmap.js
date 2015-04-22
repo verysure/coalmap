@@ -36,24 +36,15 @@ function updateMapGraph() {
     }
 }
 
-function coalMarginalCost(data, fdata) {
-    return data["Marginal cost"]+fdata.carbontax*data["CO2"]/data["Net Generation (Megawatthours)"];
-}
-function pvLCOE(data, fdata) {
-    return data['PV LCOE']*fdata.solarprice*Math.pow((1-fdata.solarred/100),(fdata.solaryear-2015));
-}
 
 function addCoalPlants(fdata) {
     for (var i = 0; i< plant_data.length; i++) {
         // calculations for the coal and pv marginal cost
-        // var coal_mc = plant_data[i]["Marginal cost"] + fdata.carbontax*plant_data[i]["CO2"]/plant_data[i]["Net Generation (Megawatthours)"];
-        // var pv_lcoe = plant_data[i]['PV LCOE']*fdata.solarprice*Math.pow((1-fdata.solarred/100),(fdata.solaryear-2015));
         var coal_mc = coalMarginalCost(plant_data[i], fdata);
         var pv_lcoe = pvLCOE(plant_data[i], fdata);
         var title = plant_data[i]['Plant Name'] + ' ('+ plant_data[i]['Utility Name'] + ')';
         var icon = planticon(coal_mc, pv_lcoe, plant_data[i]["CO2"]/20000000);
         
-        // add
         var mw = createMarker({
             title: title,
             position: {
@@ -84,6 +75,15 @@ function addCoalPlants(fdata) {
 
 
 //----------- Supplementary ----------------------
+
+// Calculation functions
+function coalMarginalCost(data, fdata) {
+    return data["Marginal cost"]+fdata.carbontax*data["CO2"]/data["Net Generation (Megawatthours)"];
+}
+function pvLCOE(data, fdata) {
+    return data['PV LCOE']*fdata.solarprice*Math.pow((1-fdata.solarred/100),(fdata.solaryear-2015));
+}
+
 function getFormData() {
     // get the form data from the html
     var getF = function (id) { return parseFloat($('#'+id).text()); };
@@ -190,27 +190,35 @@ function scrollTo(obj) {
 
 // functions for charts
 
-// Testing for charts
-// google.load('visualization', '1', {packages: ['corechart', 'line']});
-// google.setOnLoadCallback(drawTimeLine);
+Testing for charts
+google.load('visualization', '1', {packages: ['corechart', 'line']});
+google.setOnLoadCallback(drawTimeLine);
 
-// function drawTimeLine(formdata) {
-//     var data = new google.visualization.DataTable();
-//     data.addColumn('number', 'X');
-//     data.addColumn('number', 'Plants to Shutdown');
+function drawTimeLine(formdata) {
+    var data = new google.visualization.DataTable();
+    data.addColumn('number', 'X');
+    data.addColumn('number', 'Plants to Shutdown');
 
-//     var year_plants = [];
-//     for (var i = 0; i < plant_data.length; i++) {
-//         // year_plants.push([]);
-//         data.addRow([]);
-//     }
+    formdata.solaryear = 2015;
+    var year_plants = [];
+    for (var y = 2015; y <= 2050; y++) {
+        year_plants[y-2015] = [y, 0];
+    }
+    for (var i = 0; i < plant_data.length; i++) {
+        year = Math.log(coalMarginalCost(plant_data[i], formdata)/pvLCOE(plant_data[i], formdata))/Math.log(1-fdata.solarred/100);
+        year_plants[round(year)-2015][1] += 1;
+    }
+    for (var y = 2015; y < 2050; y++) {
+        year_plants[y-2015+1][1]+=year_plants[y-2015][1]
+    }
+    data.addRows(year_plants);
 
-//     var options = {
-//         hAxis: {title: 'Time'},
-//         vAxis: {title: 'Popularity'},
-//         backgroundColor: '#f1f8e9'
-//     };
+    var options = {
+        hAxis: {title: 'Time (years)'},
+        vAxis: {title: 'Plants to Shutdown'},
+        backgroundColor: '#f1f8e9'
+    };
 
-//     var chart = new google.visualization.LineChart(document.getElementById('chart_div'));
-//     chart.draw(data, options);
-// }
+    var chart = new google.visualization.LineChart(document.getElementById('chart_div'));
+    chart.draw(data, options);
+}
