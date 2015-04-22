@@ -147,7 +147,7 @@ function planticon(coal_mc, renew_mc, scale) {
         scale: 0.07 * scale + 0.05,
         scale: 3*scale + 2,
         fillOpacity: 1,
-        strokeColor: 'black',
+        strokeColor: 'transparent',
         fillColor: ''
     };
 
