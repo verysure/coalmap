@@ -67,11 +67,6 @@ function addCoalPlants(fdata) {
         var title = plant_data[i]['Plant Name'] + ' ('+ plant_data[i]['Utility Name'] + ')';
         var icon = planticon(coal_mc, pv_lcoe, plant_data[i]["CO2"]/20000000);
         
-        // remove markers
-        if (plant_data[i].marker != undefined) {
-            plant_data[i].marker.setMap(null);
-        }
-        
         // add
         var mw = createMarker({
             title: title,
@@ -88,6 +83,10 @@ function addCoalPlants(fdata) {
                 address: plant_data[i]['Street Address'] + ", "+ plant_data[i]['City'] +", " + plant_data[i]['State'] +  ", "+plant_data[i]['Zip']
             }),
         });
+        // remove markers
+        if (plant_data[i].marker != undefined) {
+            plant_data[i].marker.setMap(null);
+        }
         plant_data[i].marker = mw.marker;
         plant_data[i].infowindow = mw.infowindow;
         
