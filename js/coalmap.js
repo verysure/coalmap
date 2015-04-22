@@ -74,7 +74,7 @@ function addCoalPlants(fdata) {
                 lat: plant_data[i]['Latitude'],
                 lng: plant_data[i]["Longitude"]
             },
-            // icon: icon,
+            icon: icon,
             info: renderInfo({
                 title: title,
                 coal_mc: coal_mc.toFixed(2),
