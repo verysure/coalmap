@@ -4,7 +4,6 @@
         <title>Map</title>
 
         <link href='http://fonts.googleapis.com/css?family=Raleway:500,300' rel='stylesheet' type='text/css'>
-        <script type="text/javascript" src="https://www.google.com/jsapi"></script>
 
         <link rel="stylesheet" type="text/css" href="/coalmap/css/coalmap.css">
         <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
@@ -19,7 +18,7 @@
           <div class="container">
             <div class="navbar-header">
                 <!--  input controls-->
-                <form action="#" onsubmit="updateMap();return false">
+                <form action="#" onsubmit="updateMapGraph();return false">
                     <!-- Carbon Tax (usd per):<input type="text" name="carbontax"> -->
                     <label class=label for=carbonfader>Carbon Tax ($/ton):</label>
                         <input class=input type=range min=0 max=100 value=0 id=carbonfader step=1 oninput="outputUpdate('#carbontax', value);" name=carbontax>
@@ -66,10 +65,20 @@
 
                 </div>
             </div>
-            <div id="map-canvas"></div>
         </div>
+        <div id="map-canvas"></div>
 
+        
+        <!-- <div class="container" id='map'>
+            <div class="legendform">
+                <div class="container">
+                    <span class="plantspan" id="greenspan">0</span><img class="plantimg" src="/coalmap/js/markers/green.png" alt="" /><span class="plantdes">:Shut it down! </span>
+                    <span class="plantspan" id="yellowspan">0</span><img class="plantimg" src="/coalmap/js/markers/yellow.png" alt="" /><span class="plantdes">:Almost there</span>
+                    <span class="plantspan" id="redspan">0</span><img class="plantimg" src="/coalmap/js/markers/red.png" alt="" /><span class="plantdes">:Maybe next year ... </span>
 
+                </div>
+            </div>
+        </div> -->
         <div id="chart_div"></div>
 
 
