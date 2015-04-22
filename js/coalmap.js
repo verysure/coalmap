@@ -74,7 +74,7 @@ function addCoalPlants(fdata) {
                 lat: plant_data[i]['Latitude'],
                 lng: plant_data[i]["Longitude"]
             },
-            icon: icon,
+            // icon: icon,
             info: renderInfo({
                 title: title,
                 coal_mc: coal_mc.toFixed(2),
@@ -83,7 +83,7 @@ function addCoalPlants(fdata) {
                 address: plant_data[i]['Street Address'] + ", "+ plant_data[i]['City'] +", " + plant_data[i]['State'] +  ", "+plant_data[i]['Zip']
             }),
         });
-        // remove markers
+        // remove and add markers
         if (plant_data[i].marker != undefined) {
             plant_data[i].marker.setMap(null);
         }
