@@ -6,6 +6,7 @@ var plant_data = [];
 
 
 // initialize map when loaded
+google.load('visualization', '1', {packages: ['corechart', 'line']});
 google.maps.event.addDomListener(window, 'load', initMap);
 // Initialize the map on load
 function initMap() {
@@ -30,9 +31,11 @@ function updateMapGraph() {
     if (plant_data.length === 0) {
         parseJSON("/coalmap/data/alldata_records_unformatted.json", function() {
             addCoalPlants(getFormData());
+            drawTimeLine(getFormData());
         });
     } else {
         addCoalPlants(getFormData());
+        drawTimeLine(getFormData());
     }
 }
 
@@ -190,9 +193,9 @@ function scrollTo(obj) {
 
 // functions for charts
 
-Testing for charts
-google.load('visualization', '1', {packages: ['corechart', 'line']});
-google.setOnLoadCallback(drawTimeLine);
+// Testing for charts
+// google.load('visualization', '1', {packages: ['corechart', 'line']});
+// google.setOnLoadCallback(drawTimeLine);
 
 function drawTimeLine(formdata) {
     var data = new google.visualization.DataTable();
