@@ -12,11 +12,11 @@ google.maps.event.addDomListener(window, 'load', initMap);
 
 // Initialize the map on load
 function initMap() {
-    
     $(document).ready(function() {
         // Initialize the map
-        map = new google.maps.Map(
-            document.getElementById('map-canvas'),
+        map = new google.maps.Map( $('#map-canvas'),
+            // document.getElementById('map-canvas'),
+            
             {
                 center:  {lat: 39.5, lng: -98.35},
                 zoom: 4,
@@ -197,14 +197,19 @@ function scrollTo(obj) {
 
 
 
+
+
+
+// functions for charts
+
 // Testing for charts
 google.load('visualization', '1', {packages: ['corechart', 'line']});
-google.setOnLoadCallback(drawBackgroundColor);
+google.setOnLoadCallback(drawTimeLine);
 
-function drawBackgroundColor() {
+function drawTimeLine() {
     var data = new google.visualization.DataTable();
     data.addColumn('number', 'X');
-    data.addColumn('number', 'Dogs');
+    data.addColumn('number', 'Plants to Shutdown');
 
     data.addRows([
         [0, 0],   [1, 10],  [2, 23],  [3, 17],  [4, 18],  [5, 9],
