@@ -125,11 +125,11 @@ input[type=range].input {
 #map-canvas {
     margin: 0 auto;
     /*margin-top: 40px;*/
-    width: 95%;
+    width: 85%;
     height: 65%;
 }
 #chart_div {
     margin: 0 auto;
-    width: 95%;
+    width: 85%;
     height: 65%;
 }
