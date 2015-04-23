@@ -105,6 +105,9 @@ input[type=range].input {
 .formbutton {
     float: left;
 }
+.page-gap {
+    height: 150px;
+}
 
 
 
