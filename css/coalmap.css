@@ -7,6 +7,10 @@ html, body {
 
 body {
     background: url(/coalmap/img/solar-1.jpg) no-repeat bottom center fixed;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    background-size: cover;
+    -o-background-size: cover;
 }
 
 .intro {
