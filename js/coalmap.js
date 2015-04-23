@@ -48,7 +48,7 @@ function addCoalPlants(fdata) {
         var title = plant_data[i]['Plant Name'] + ' ('+ plant_data[i]['Utility Name'] + ')';
         var icon = planticon(coal_mc, pv_lcoe, plant_data[i]["CO2"]/20000000);
         
-        var mw = createMarker({
+        var markerwindow = createMarker({
             title: title,
             position: {
                 lat: plant_data[i]['Latitude'],
@@ -60,15 +60,16 @@ function addCoalPlants(fdata) {
                 coal_mc: coal_mc.toFixed(2),
                 pv_lcoe: pv_lcoe.toFixed(2),
                 co2: (plant_data[i]["CO2"]/1000000).toFixed(1),
-                address: plant_data[i]['Street Address'] + ", "+ plant_data[i]['City'] +", " + plant_data[i]['State'] +  ", "+plant_data[i]['Zip']
+                address: plant_data[i]['Street Address'] + ", "+ plant_data[i]['City'] +", " + plant_data[i]['State'] +  ", "+plant_data[i]['Zip'],
+                utility: plant_data[i]['Utility Name']
             }),
         });
         // remove and add markers
         if (plant_data[i].marker != undefined) {
             plant_data[i].marker.setMap(null);
         }
-        plant_data[i].marker = mw.marker;
-        plant_data[i].infowindow = mw.infowindow;
+        plant_data[i].marker = markerwindow.marker;
+        plant_data[i].infowindow = markerwindow.infowindow;
         
         // Update plant counts
         $('#'+icon.fillColor+'span').text(++plantcounts[icon.fillColor]);
@@ -105,7 +106,8 @@ function renderInfo(info) {
             Current Marginal Cost ($/MWh): "+info.coal_mc+"<br>\
             Renewable Energy LCOE ($/MWh): "+info.pv_lcoe+"<br>\
             CO2 emissions (Mt/yr): "+info.co2+"<br>\
-            Address: "+info.address+"\
+            Address: "+info.address+"<br>\
+            Utility: "+info.utility+"\
         </div>";
 }
 
