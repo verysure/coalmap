@@ -5,6 +5,10 @@ html, body {
     font-weight: 300;
 }
 
+body {
+    background: url(/coalmap/img/solar-1.jpg) no-repeat bottom center fixed;
+}
+
 .intro {
     /*margin-top: 10%;*/
     font-family: 'Raleway', sans-serif;
@@ -17,12 +21,11 @@ html, body {
     padding: 250px 0 0 0;
     text-align: center;
     color: #fff;
-    background: url(/coalmap/img/solar-1.jpg) no-repeat bottom center scroll;
-    background-color: #000;
+    /*background-color: #000;
     -webkit-background-size: cover;
     -moz-background-size: cover;
     background-size: cover;
-    -o-background-size: cover;
+    -o-background-size: cover;*/
 }
 
 .brand-heading {
