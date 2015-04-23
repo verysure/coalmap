@@ -5,7 +5,7 @@ html, body {
     font-weight: 300;
 }
 
-body {
+body.solarbg {
     background: url(/coalmap/img/solar-1.jpg) no-repeat bottom center fixed;
     -webkit-background-size: cover;
     -moz-background-size: cover;
@@ -42,7 +42,7 @@ body {
     font-family: 'Raleway', sans-serif;
     font-weight: 300;
     font-size: 30px;
-  text-shadow: 5px 5px 5px black;
+    text-shadow: 5px 5px 5px black;
 }
 
 .intro .btn-default{
@@ -64,6 +64,23 @@ body {
     border-radius: 10px;
   text-shadow: 5px 5px 2px black;
 }
+
+
+.section {
+    margin: 70px auto;
+    font-family: 'Raleway', sans-serif;
+}
+.sectiontitle {
+    font-weight: 500;
+    font-size: 70px;
+    text-shadow: 10px 10px 10px black;
+}
+.sectioncontent {
+    font-weight: 300;
+    font-size: 30px;
+    text-shadow: 5px 5px 5px black;
+}
+
 
 
 .sectioninfo {
