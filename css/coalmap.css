@@ -69,16 +69,19 @@ body.solarbg {
 .section {
     margin: 70px auto;
     font-family: 'Raleway', sans-serif;
+    color: white;
 }
 .sectiontitle {
     font-weight: 500;
     font-size: 70px;
     text-shadow: 10px 10px 10px black;
+    color: white;
 }
 .sectioncontent {
     font-weight: 300;
     font-size: 30px;
     text-shadow: 5px 5px 5px black;
+    color: white;
 }
 
 
