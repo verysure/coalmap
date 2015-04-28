@@ -210,26 +210,8 @@ function drawTimeLine(formdata) {
     data.addColumn('number', 'X');
     data.addColumn('number', 'Y');
 
-    // formdata.solaryear = 2015;
-    // var year_plants = [];
-    // for (var y = 2015; y <= 2050; y++) {
-    //     year_plants.push([y, 0]);
-    // }
-    // for (var i = 0; i < plant_data.length; i++) {
-    //     year = Math.log(coalMarginalCost(plant_data[i], formdata)/pvLCOE(plant_data[i], formdata))/Math.log(1-formdata.solarred/100);
-        
-    //     if (year < 0) year = 0;
-    //     if (year <= (2050-2015)) {
-    //         year_plants[Math.round(year)][1] += 1;
-    //     }
-    // }
-    // for (var y = 2015; y < 2050; y++) {
-    //     year_plants[y-2015+1][1]+=year_plants[y-2015][1]
-    // }
-
-    // Add data
+    // Calculate and add data
     data.addRows(calculateChartData(formdata));
-
 
     // Styling axis
     var textStyle = {
@@ -246,17 +228,16 @@ function drawTimeLine(formdata) {
 
     var options = {
         hAxis: {
-            title: 'Year', 
+            title: $('#chartvar [value="'+formdata.chartvar+'"]').get(0).text, 
             textStyle: textStyle, 
             titleTextStyle: titleTextStyle
         },
         vAxis: {
-            title: 'Coal Plants to Shutdown (%)',
+            title: 'Plants to Shutdown (%)',
             textStyle: textStyle, 
             titleTextStyle: titleTextStyle
         },
         backgroundColor: 'white',
-        curveType: 'function',
         lineWidth: 5,
         legend: 'none',
     };
@@ -268,7 +249,7 @@ function drawTimeLine(formdata) {
 
 // Calculates x vs total plants to shutdown
 function calculateChartData(formdata) {
-    // first determine the x axis and get the x axis region
+    // first determine the x axis and get the x range
     var x_id = formdata.chartvar;
     var x_min = parseFloat($('#' + x_id).get(0).min);
     var x_max = parseFloat($('#' + x_id).get(0).max);
@@ -276,6 +257,7 @@ function calculateChartData(formdata) {
     var total_plants = plant_data.length;
 
 
+    // count the plants vs x changes
     var x_plants = [];
     for (var x = x_min; x <= x_max; x += x_step) {
         // changes x variable

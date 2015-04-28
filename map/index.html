@@ -20,34 +20,34 @@
             <div class="navbar-header">
                 <!--  input controls-->
                 <form action="#" onsubmit="updateMapGraph();return false">
-                    <!-- Carbon Tax (usd per):<input type="text" name="carbontax"> -->
-                    <label class=label for=carbonfader>Carbon Tax ($/ton):</label>
-                        <input class=input type=range min=0 max=100 value=0 id=carbonfader step=1 oninput="outputUpdate('#carbontax', value);" name=carbontax>
-                        <output class=output for=carbonfader id="carbontax">0</output>
+
+                    <label class=label for=carbontax>Carbon Tax ($/ton):</label>
+                        <input class=input type=range min=0 max=100 value=0 id=carbontax step=1 oninput="outputUpdate('#carbontaxvalue', value);" name=carbontaxvalue>
+                        <output class=output for=carbontax id="carbontaxvalue">0</output>
                         <!-- <div> </div> -->
 
-                    <label class=label for=pricefader>PV cost factor:</label>
-                        <input class=input type=range min=0 max=1 value=1 id=pricefader step=0.02 oninput="outputUpdate('#solarprice', value);" name=solarprice>
-                        <output class=output for=pricefader id="solarprice">1</output>
+                    <label class=label for=solarprice>PV cost factor:</label>
+                        <input class=input type=range min=0 max=1 value=1 id=solarprice step=0.02 oninput="outputUpdate('#solarpricevalue', value);" name=solarpricevalue>
+                        <output class=output for=solarprice id="solarpricevalue">1</output>
 
                     <select id="chartvar">
-                        <option value="carbontax">Carbon Tax</option>
+                        <option value="carbontax">Carbon Tax ($/ton)</option>
                         <option value="solarprice">PV cost factor</option>
                         <option value="solaryear" selected>Year</option>
-                        <option value="solarred">PV price drop</option>
+                        <option value="solarred">Price drop (%/yr)</option>
                     </select>
 
 
                     <div style="clear:both"> </div>
 
-                    <label class=label for=yearfader>Year:</label>
-                        <input class=input type=range min=2015 max=2050 value=2015 id=yearfader step=1 oninput="outputUpdate('#solaryear', value);" name=solaryear>
-                        <output class=output for=yearfader id="solaryear">2015</output>
+                    <label class=label for=solaryear>Year:</label>
+                        <input class=input type=range min=2015 max=2050 value=2015 id=solaryear step=1 oninput="outputUpdate('#solaryearvalue', value);" name=solaryearvalue>
+                        <output class=output for=solaryear id="solaryearvalue">2015</output>
                         <!-- <div> </div> -->
 
-                    <label class=label for=redfader>PV price drop (%/yr):</label>
-                        <input class=input type=range min=0 max=50 value=5 id=redfader step=1 oninput="outputUpdate('#solarred', value);" name=solarred>
-                        <output class=output for=redfader id="solarred">5</output>
+                    <label class=label for=solarred>PV price drop (%/yr):</label>
+                        <input class=input type=range min=0 max=50 value=5 id=solarred step=1 oninput="outputUpdate('#solarredvalue', value);" name=solarredvalue>
+                        <output class=output for=solarred id="solarredvalue">5</output>
                         <!-- <div> </div> -->
 
                     <input type="submit" value="Submit" class="formbutton">
@@ -68,7 +68,7 @@
 
         <div id="map" class="sectioninfo">
             <div class="container">
-                <div class="title">Map for Coal Plants</div>
+                <div class="title">Map of Coal Plants to Shutdown</div>
                 
                 <span class="plantspan" id="greenspan">0</span><img class="plantimg" src="/coalmap/js/markers/green.png" alt="" /><span class="plantdes">:Shut it down! </span>
                 <span class="plantspan" id="yellowspan">0</span><img class="plantimg" src="/coalmap/js/markers/yellow.png" alt="" /><span class="plantdes">:Almost there</span>
@@ -83,7 +83,7 @@
         
         <div id="charts" class="sectioninfo">
             <div class="container">
-                <div class="title">Charts for Coal Plants</div>
+                <div class="title">Charts of Coal Plants to Shutdown</div>
                 
 <!--                 <form action="#" onsubmit="updateMapGraph();return false">
                     <input type="submit" value="Submit" class="formbutton">
