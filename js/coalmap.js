@@ -225,9 +225,31 @@ function drawTimeLine(formdata) {
     }
     data.addRows(year_plants);
 
+
+    // Styling axis
+    var textStyle = {
+        fontSize: 20,
+        italic: false,
+        fontName: 'Arial',
+    };
+    var titleTextStyle = {
+        fontSize: 30,
+        italic: false,
+        fontName: 'Arial',
+        bold: true,
+    };
+
     var options = {
-        hAxis: {title: 'Time (years)'},
-        vAxis: {title: 'Plants to Shutdown'},
+        hAxis: {
+            title: 'Time (years)', 
+            textStyle: textStyle, 
+            titleTextStyle: titleTextStyle
+        },
+        vAxis: {
+            title: 'Plants to Shutdown',
+            textStyle: textStyle, 
+            titleTextStyle: titleTextStyle
+        },
         backgroundColor: 'white'
     };
 
