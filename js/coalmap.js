@@ -250,7 +250,9 @@ function drawTimeLine(formdata) {
             textStyle: textStyle, 
             titleTextStyle: titleTextStyle
         },
-        backgroundColor: 'white'
+        backgroundColor: 'white',
+        curveType: 'function',
+        lineWidth: 5,
     };
 
     var chart = new google.visualization.LineChart(document.getElementById('chart_div'));
