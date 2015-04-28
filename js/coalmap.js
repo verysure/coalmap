@@ -14,6 +14,7 @@ function initMap() {
         // Initialize the map
         map = new google.maps.Map(document.getElementById('map-canvas'), {
             center:  {lat: 39.5, lng: -98.35},
+            scrollwheel: false,
             zoom: 4,
             mapTypeId: google.maps.MapTypeId.ROADMAP
         });
@@ -96,6 +97,7 @@ function getFormData() {
         solarprice : getF('solarprice'),
         solaryear  : getF('solaryear'),
         solarred   : getF('solarred'),
+        chartvar   : $('#chartvar').value,
     }
 }
 
@@ -226,7 +228,7 @@ function drawTimeLine(formdata) {
     var options = {
         hAxis: {title: 'Time (years)'},
         vAxis: {title: 'Plants to Shutdown'},
-        backgroundColor: '#f1f8e9'
+        backgroundColor: 'white'
     };
 
     var chart = new google.visualization.LineChart(document.getElementById('chart_div'));
