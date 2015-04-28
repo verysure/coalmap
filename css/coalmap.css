@@ -89,7 +89,7 @@ body.solarbg {
 
 .sectioninfo {
     text-align: center;
-    margin-top: 110px;
+    padding-top: 120px;
     font-size: 20px;
 }
 
@@ -102,7 +102,7 @@ body.solarbg {
 .plantimg {
     float: left;
     height: 30px;
-    width: 20px;
+    width: 30px;
 }
 .plantdes {
     float: left;

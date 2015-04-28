@@ -30,14 +30,6 @@
                         <input class=input type=range min=0 max=1 value=1 id=solarprice step=0.02 oninput="outputUpdate('#solarpricevalue', value);" name=solarpricevalue>
                         <output class=output for=solarprice id="solarpricevalue">1</output>
 
-                    <select id="chartvar">
-                        <option value="carbontax">Carbon Tax ($/ton)</option>
-                        <option value="solarprice">PV cost factor</option>
-                        <option value="solaryear" selected>Year</option>
-                        <option value="solarred">Price drop (%/yr)</option>
-                    </select>
-
-
                     <div style="clear:both"> </div>
 
                     <label class=label for=solaryear>Year:</label>
@@ -49,6 +41,15 @@
                         <input class=input type=range min=0 max=50 value=5 id=solarred step=1 oninput="outputUpdate('#solarredvalue', value);" name=solarredvalue>
                         <output class=output for=solarred id="solarredvalue">5</output>
                         <!-- <div> </div> -->
+                    <div style="clear:both"> </div>
+
+                    <label class=label>X axis variable:</label>
+                    <select id="chartvar" class=label>
+                        <option value="carbontax">Carbon Tax ($/ton)</option>
+                        <option value="solarprice">PV cost factor</option>
+                        <option value="solaryear" selected>Year</option>
+                        <option value="solarred">Price drop (%/yr)</option>
+                    </select>
 
                     <input type="submit" value="Submit" class="formbutton">
                 </form>
@@ -69,10 +70,21 @@
         <div id="map" class="sectioninfo">
             <div class="container">
                 <div class="title">Map of Coal Plants to Shutdown</div>
-                
-                <span class="plantspan" id="greenspan">0</span><img class="plantimg" src="/coalmap/js/markers/green.png" alt="" /><span class="plantdes">:Shut it down! </span>
-                <span class="plantspan" id="yellowspan">0</span><img class="plantimg" src="/coalmap/js/markers/yellow.png" alt="" /><span class="plantdes">:Almost there</span>
-                <span class="plantspan" id="redspan">0</span><img class="plantimg" src="/coalmap/js/markers/red.png" alt="" /><span class="plantdes">:Maybe next year ... </span>
+                <span class="plantspan" id="greenspan">0</span>
+                <svg xmlns="http://www.w3.org/2000/svg" class="plantimg">
+                    <circle cx="15" cy="15" r="15" fill="green" />
+                </svg>
+                <span class="plantdes">:Shut it down! </span>
+                <span class="plantspan" id="yellowspan">0</span>
+                <svg xmlns="http://www.w3.org/2000/svg" class="plantimg">
+                    <circle cx="15" cy="15" r="15" fill="yellow" />
+                </svg>
+                <span class="plantdes">:Almost there</span>
+                <span class="plantspan" id="redspan">0</span>
+                <svg xmlns="http://www.w3.org/2000/svg" class="plantimg">
+                    <circle cx="15" cy="15" r="15" fill="red" />
+                </svg>
+                <span class="plantdes">:Maybe next year ... </span>
 
             </div>
         </div>
