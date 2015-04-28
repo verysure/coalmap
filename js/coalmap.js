@@ -207,8 +207,8 @@ function scrollTo(obj) {
 
 function drawTimeLine(formdata) {
     var data = new google.visualization.DataTable();
-    data.addColumn('number', 'X');
-    data.addColumn('number', 'Y');
+    data.addColumn('number', 'test');
+    data.addColumn('number', 'Plants to Shutdown (%)');
 
     // Calculate and add data
     data.addRows(calculateChartData(formdata));
@@ -269,7 +269,7 @@ function calculateChartData(formdata) {
         }).reduce(function(a,b){return a+b;})/total_plants * 100;
 
         // add this to the data points
-        x_plants.push([x, plants]);
+        x_plants.push([x, parseFloat(plants.toFixed(2))]);
     }
 
     return x_plants;
