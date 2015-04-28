@@ -210,25 +210,25 @@ function drawTimeLine(formdata) {
     data.addColumn('number', 'X');
     data.addColumn('number', 'Y');
 
-    formdata.solaryear = 2015;
-    var year_plants = [];
-    for (var y = 2015; y <= 2050; y++) {
-        year_plants.push([y, 0]);
-    }
-    for (var i = 0; i < plant_data.length; i++) {
-        year = Math.log(coalMarginalCost(plant_data[i], formdata)/pvLCOE(plant_data[i], formdata))/Math.log(1-formdata.solarred/100);
+    // formdata.solaryear = 2015;
+    // var year_plants = [];
+    // for (var y = 2015; y <= 2050; y++) {
+    //     year_plants.push([y, 0]);
+    // }
+    // for (var i = 0; i < plant_data.length; i++) {
+    //     year = Math.log(coalMarginalCost(plant_data[i], formdata)/pvLCOE(plant_data[i], formdata))/Math.log(1-formdata.solarred/100);
         
-        if (year < 0) year = 0;
-        if (year <= (2050-2015)) {
-            year_plants[Math.round(year)][1] += 1;
-        }
-    }
-    for (var y = 2015; y < 2050; y++) {
-        year_plants[y-2015+1][1]+=year_plants[y-2015][1]
-    }
+    //     if (year < 0) year = 0;
+    //     if (year <= (2050-2015)) {
+    //         year_plants[Math.round(year)][1] += 1;
+    //     }
+    // }
+    // for (var y = 2015; y < 2050; y++) {
+    //     year_plants[y-2015+1][1]+=year_plants[y-2015][1]
+    // }
 
     // Add data
-    data.addRows(year_plants);
+    data.addRows(calculateChartData(formdata));
 
 
     // Styling axis
@@ -251,7 +251,7 @@ function drawTimeLine(formdata) {
             titleTextStyle: titleTextStyle
         },
         vAxis: {
-            title: 'Coal Plants to Shutdown',
+            title: 'Coal Plants to Shutdown (%)',
             textStyle: textStyle, 
             titleTextStyle: titleTextStyle
         },
@@ -266,26 +266,29 @@ function drawTimeLine(formdata) {
 }
 
 
-function calculateChart(formdata) {
+// Calculates x vs total plants to shutdown
+function calculateChartData(formdata) {
+    // first determine the x axis and get the x axis region
+    var x_id = formdata.chartvar;
+    var x_min = parseFloat($('#' + x_id).get(0).min);
+    var x_max = parseFloat($('#' + x_id).get(0).max);
+    var x_step = parseFloat($('#' + x_id).get(0).step);
+    var total_plants = plant_data.length;
 
-    // first determine the x axis
-    formdata.chartvar
 
+    var x_plants = [];
+    for (var x = x_min; x <= x_max; x += x_step) {
+        // changes x variable
+        formdata[x_id] = x;
 
-    formdata.solaryear = 2015;
-    var year_plants = [];
-    for (var y = 2015; y <= 2050; y++) {
-        year_plants.push([y, 0]);
+        // counts how mant better pvLcoe plants, returns percentages
+        var plants = plant_data.map(function(obj){
+            return pvLCOE(obj, formdata) <= coalMarginalCost(obj, formdata);
+        }).reduce(function(a,b){return a+b;})/total_plants * 100;
+
+        // add this to the data points
+        x_plants.push([x, plants]);
     }
-    for (var i = 0; i < plant_data.length; i++) {
-        year = Math.log(coalMarginalCost(plant_data[i], formdata)/pvLCOE(plant_data[i], formdata))/Math.log(1-formdata.solarred/100);
-        
-        if (year < 0) year = 0;
-        if (year <= (2050-2015)) {
-            year_plants[Math.round(year)][1] += 1;
-        }
-    }
-    for (var y = 2015; y < 2050; y++) {
-        year_plants[y-2015+1][1]+=year_plants[y-2015][1]
-    }
+
+    return x_plants;
 }
