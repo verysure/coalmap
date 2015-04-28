@@ -91,13 +91,16 @@ function pvLCOE(data, fdata) {
 
 function getFormData() {
     // get the form data from the html
-    var getF = function (id) { return parseFloat($('#'+id).text()); };
+    var getF = function (id) { 
+        var val = parseFloat($('#'+id).get(0).value);
+        return (isNaN(val) ? $('#'+id).get(0).value : val); 
+    };
     return {
         carbontax  : getF('carbontax'),
         solarprice : getF('solarprice'),
         solaryear  : getF('solaryear'),
         solarred   : getF('solarred'),
-        chartvar   : $('#chartvar').value,
+        chartvar   : getF('chartvar'),
     }
 }
 
@@ -205,7 +208,7 @@ function scrollTo(obj) {
 function drawTimeLine(formdata) {
     var data = new google.visualization.DataTable();
     data.addColumn('number', 'X');
-    data.addColumn('number', 'Plants to Shutdown');
+    data.addColumn('number', 'Y');
 
     formdata.solaryear = 2015;
     var year_plants = [];
@@ -223,6 +226,8 @@ function drawTimeLine(formdata) {
     for (var y = 2015; y < 2050; y++) {
         year_plants[y-2015+1][1]+=year_plants[y-2015][1]
     }
+
+    // Add data
     data.addRows(year_plants);
 
 
@@ -241,20 +246,46 @@ function drawTimeLine(formdata) {
 
     var options = {
         hAxis: {
-            title: 'Time (years)', 
+            title: 'Year', 
             textStyle: textStyle, 
             titleTextStyle: titleTextStyle
         },
         vAxis: {
-            title: 'Plants to Shutdown',
+            title: 'Coal Plants to Shutdown',
             textStyle: textStyle, 
             titleTextStyle: titleTextStyle
         },
         backgroundColor: 'white',
         curveType: 'function',
         lineWidth: 5,
+        legend: 'none',
     };
 
     var chart = new google.visualization.LineChart(document.getElementById('chart_div'));
     chart.draw(data, options);
+}
+
+
+function calculateChart(formdata) {
+
+    // first determine the x axis
+    formdata.chartvar
+
+
+    formdata.solaryear = 2015;
+    var year_plants = [];
+    for (var y = 2015; y <= 2050; y++) {
+        year_plants.push([y, 0]);
+    }
+    for (var i = 0; i < plant_data.length; i++) {
+        year = Math.log(coalMarginalCost(plant_data[i], formdata)/pvLCOE(plant_data[i], formdata))/Math.log(1-formdata.solarred/100);
+        
+        if (year < 0) year = 0;
+        if (year <= (2050-2015)) {
+            year_plants[Math.round(year)][1] += 1;
+        }
+    }
+    for (var y = 2015; y < 2050; y++) {
+        year_plants[y-2015+1][1]+=year_plants[y-2015][1]
+    }
 }
