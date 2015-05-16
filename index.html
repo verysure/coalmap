@@ -5,10 +5,15 @@
 
         <link href='http://fonts.googleapis.com/css?family=Raleway:500,300' rel='stylesheet' type='text/css'>
         <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
-        <link rel="stylesheet" type="text/css" href="/coalmap/css/coalmap.css">
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
         <script src="https://maps.googleapis.com/maps/api/js"></script>
         <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+        <link rel="stylesheet" type="text/css" href="/coalmap/css/coalmap.css">
+
+        <script type="text/x-mathjax-config">
+          MathJax.Hub.Config({tex2jax: {inlineMath: ['\\(','\\)']}});
+        </script>
+        <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"> </script>
     </head>
     <body class="solarbg">
 
@@ -23,6 +28,10 @@
                       Mapping the future decline of U.S. coal power.
                   </p>
                   <br>
+                  <a class="btn btn-default" href="#costdescription" role="button" onclick="scrollTo(this);">INTRO <i class="fa fa-arrow-down"></i></a>
+
+                  &nbsp;&nbsp;&nbsp;
+
                   <a class="btn btn-default" href="/coalmap/map/" role="button">DEMO <i class="fa fa-arrow-right"></i></a>
 
                 </div>
@@ -42,9 +51,15 @@
           <div class="sectioncontent">
             Comparison is based on marginal cost of operating an existing coal plant (<b>Coal MC</b>) to the levelized cost of electicity (<a href="http://www.eia.gov/forecasts/aeo/electricity_generation.cfm">LCOE</a>) of a new utility-scale solar PV installation. The infrastructure cost of coal plants are not included in the <b>Coal MC</b> since replacing coal plants does not return the infrastructure cost.<br>
 
-            Coal MC[$/MWh] = (Fuel cost [$/yr]+O&M cost[$/yr] + Carbon tax[$/yr])/Annual generation [MWh/yr] <br>
+            <span class="equation">
+              $$ \mbox{Coal MC} ($/Mwh)= {\mbox{Fuel cost} ($/yr) + \mbox{O&M cost}($/yr) + \mbox{Carbon tax}($/yr) \over \mbox{Annual generation} (MWh/yr)} $$
+            </span>
 
             Costs due to emissions for NOx and SO2 are highly variable in recent years. However, as more coal plants have retired, the price of these allowances has decreased. Therefore, we neglected these costs on our calculations.
+
+            <span class="equation">
+              $$ \mbox{LCOE} ($/Mwh) =  $$
+            </span>
 
           </div>
           </div>
@@ -83,6 +98,14 @@
 
  -->
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+        <script type="text/javascript">
+          function scrollTo(obj) {
+             // animate
+             $('html, body').animate({
+                 scrollTop: $($(obj).attr('href')).offset().top
+               }, 300);
+          }
+        </script>
 
     </body>
 </html>
