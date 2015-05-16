@@ -6,7 +6,7 @@ html, body {
 }
 
 body.solarbg {
-    background: url(/coalmap/img/solar-1.jpg) no-repeat bottom center fixed;
+    background: url(/coalmap/img/solar-dim.jpg) no-repeat bottom center fixed;
     -webkit-background-size: cover;
     -moz-background-size: cover;
     background-size: cover;
@@ -67,6 +67,7 @@ body.solarbg {
 
 
 .section {
+    min-height: 100%;
     margin: 70px auto;
     font-family: 'Raleway', sans-serif;
     color: white;
