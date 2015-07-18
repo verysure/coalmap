@@ -312,7 +312,7 @@ function drawScatteredChart(formdata) {
 
     var options = {
         hAxis: {
-            title: 'Plant Size (Nameplate Capacity (MW))',
+            title: 'Plant Size (Capacity (MW))',
             textStyle: textStyle,
             titleTextStyle: titleTextStyle
         },
