@@ -295,15 +295,6 @@ function drawScatteredChart(formdata) {
             pvLCOE(plant, formdata)
         ];
     });
-    // var size_cost = [];
-    // for (var i = 0; i < plant_data.length; i++) {
-    //     size_cost.push([
-    //         plant_data[i]["Net Generation (Megawatthours)"]/1e6,
-    //         coalMarginalCost(plant_data[i]),
-    //         plant_data[i]['']
-    //     ]);
-    // }
-
     data.addRows(size_cost);
 
     // Styling axis
