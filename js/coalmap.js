@@ -290,7 +290,7 @@ function drawScatteredChart(formdata) {
     // Calculate and add data
     var size_cost = plant_data.map(function (plant) {
         return [
-            plant["Net Generation (Megawatthours)"]/1e6,
+            plant["Nameplate Capacity (MW)"],
             coalMarginalCost(plant, formdata),
             pvLCOE(plant, formdata)
         ];
@@ -312,7 +312,7 @@ function drawScatteredChart(formdata) {
 
     var options = {
         hAxis: {
-            title: 'Plant Size (by net TWh/yr)',
+            title: 'Plant Size (Nameplate Capacity (MW))',
             textStyle: textStyle,
             titleTextStyle: titleTextStyle
         },
