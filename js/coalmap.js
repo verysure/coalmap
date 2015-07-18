@@ -33,10 +33,12 @@ function updateMapGraph() {
         parseJSON("/coalmap/data/alldata_records_unformatted.json", function() {
             addCoalPlants(getFormData());
             drawTimeLine(getFormData());
+            drawScatteredChart(getFormData());
         });
     } else {
         addCoalPlants(getFormData());
         drawTimeLine(getFormData());
+        drawScatteredChart(getFormData());
     }
 }
 
@@ -48,7 +50,7 @@ function addCoalPlants(fdata) {
         var pv_lcoe = pvLCOE(plant_data[i], fdata);
         var title = plant_data[i]['Plant Name'] + ' ('+ plant_data[i]['Utility Name'] + ')';
         var icon = planticon(coal_mc, pv_lcoe, plant_data[i]["CO2"]/20000000);
-        
+
         var markerwindow = createMarker({
             title: title,
             position: {
@@ -71,7 +73,7 @@ function addCoalPlants(fdata) {
         }
         plant_data[i].marker = markerwindow.marker;
         plant_data[i].infowindow = markerwindow.infowindow;
-        
+
         // Update plant counts
         $('#'+icon.fillColor+'span').text(++plantcounts[icon.fillColor]);
     }
@@ -91,9 +93,9 @@ function pvLCOE(data, fdata) {
 
 function getFormData() {
     // get the form data from the html
-    var getF = function (id) { 
+    var getF = function (id) {
         var val = parseFloat($('#'+id).get(0).value);
-        return (isNaN(val) ? $('#'+id).get(0).value : val); 
+        return (isNaN(val) ? $('#'+id).get(0).value : val);
     };
     return {
         carbontax  : getF('carbontax'),
@@ -228,13 +230,13 @@ function drawTimeLine(formdata) {
 
     var options = {
         hAxis: {
-            title: $('#chartvar [value="'+formdata.chartvar+'"]').get(0).text, 
-            textStyle: textStyle, 
+            title: $('#chartvar [value="'+formdata.chartvar+'"]').get(0).text,
+            textStyle: textStyle,
             titleTextStyle: titleTextStyle
         },
         vAxis: {
             title: 'Plants to Shutdown (%)',
-            textStyle: textStyle, 
+            textStyle: textStyle,
             titleTextStyle: titleTextStyle
         },
         backgroundColor: 'white',
@@ -273,4 +275,65 @@ function calculateChartData(formdata) {
     }
 
     return x_plants;
+}
+
+
+
+// Draw Scattered Chart
+function drawScatteredChart(formdata) {
+    var data = new google.visualization.DataTable();
+    // use MWH?
+    data.addColumn('number', 'plantsize');
+    data.addColumn('number', 'Coal Operational Cost');
+    data.addColumn('number', 'Solar LCOE');
+
+    // Calculate and add data
+    var size_cost = plant_data.map(function (plant) {
+        return [
+            plant["Net Generation (Megawatthours)"]/1e6,
+            coalMarginalCost(plant, formdata),
+            pvLCOE(plant, formdata)
+        ];
+    });
+    // var size_cost = [];
+    // for (var i = 0; i < plant_data.length; i++) {
+    //     size_cost.push([
+    //         plant_data[i]["Net Generation (Megawatthours)"]/1e6,
+    //         coalMarginalCost(plant_data[i]),
+    //         plant_data[i]['']
+    //     ]);
+    // }
+
+    data.addRows(size_cost);
+
+    // Styling axis
+    var textStyle = {
+        fontSize: 20,
+        italic: false,
+        fontName: 'Arial',
+    };
+    var titleTextStyle = {
+        fontSize: 30,
+        italic: false,
+        fontName: 'Arial',
+        bold: true,
+    };
+
+    var options = {
+        hAxis: {
+            title: 'Plant Size (by net TWh/yr)',
+            textStyle: textStyle,
+            titleTextStyle: titleTextStyle
+        },
+        vAxis: {
+            title: 'Cost ($/MWh)',
+            textStyle: textStyle,
+            titleTextStyle: titleTextStyle
+        },
+        backgroundColor: 'white',
+        // legend: 'none',
+    };
+
+    var chart = new google.visualization.ScatterChart(document.getElementById('scattered_chart'));
+    chart.draw(data, options);
 }

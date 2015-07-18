@@ -166,7 +166,7 @@ input[type=range].input {
     font-family: 'Raleway', sans-serif;
     font-weight: 500;
     font-size: 50px;
-    
+
 }
 .page-gap {
     height: 150px;
@@ -180,7 +180,9 @@ input[type=range].input {
     width: 85%;
     height: 65%;
 }
-#chart_div {
+
+
+.coal-charts {
     margin: 0 auto;
     width: 85%;
     height: 65%;
