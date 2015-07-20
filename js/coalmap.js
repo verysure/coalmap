@@ -58,14 +58,7 @@ function addCoalPlants(fdata) {
                 lng: plant_data[i]["Longitude"]
             },
             icon: icon,
-            info: renderInfo({
-                title: title,
-                coal_mc: coal_mc.toFixed(2),
-                pv_lcoe: pv_lcoe.toFixed(2),
-                co2: (plant_data[i]["CO2"]/1000000).toFixed(1),
-                address: plant_data[i]['Street Address'] + ", "+ plant_data[i]['City'] +", " + plant_data[i]['State'] +  ", "+plant_data[i]['Zip'],
-                utility: plant_data[i]['Utility Name']
-            }),
+            info: renderInfo(plant_data[i], fdata)
         });
         // remove and add markers
         if (plant_data[i].marker != undefined) {
@@ -106,17 +99,19 @@ function getFormData() {
     }
 }
 
-function renderInfo(info) {
+function renderInfo(plant, fdata) {
     return "\
-        <h1 style='font-size:15px;'>"+info.title+"</h1>\
+        <h1 style='font-size:15px;'>"+plant['Plant Name'] + ' ('+ plant['Utility Name'] + ')'+"</h1>\
         <div id='bodyContent'>\
-            Current Marginal Cost ($/MWh): "+info.coal_mc+"<br>\
-            Renewable Energy LCOE ($/MWh): "+info.pv_lcoe+"<br>\
-            CO2 emissions (Mt/yr): "+info.co2+"<br>\
-            Address: "+info.address+"<br>\
-            Utility: "+info.utility+"\
+            Current Marginal Cost ($/MWh): "+coalMarginalCost(plant, fdata)+"<br>\
+            Renewable Energy LCOE ($/MWh): "+pvLCOE(plant, fdata)+"<br>\
+            CO2 emissions (Mt/yr): "+(plant["CO2"]/1000000).toFixed(1)+"<br>\
+            Address: "+plant['Street Address'] + ", "+ plant['City'] +", " + plant['State'] +  ", "+plant['Zip']+"<br>\
+            Utility: "+plant['Utility Name']+"\
         </div>";
 }
+
+
 
 function createMarker(mdata) {
     // add marker
@@ -288,13 +283,20 @@ function drawScatteredChart(formdata) {
     data.addColumn('number', 'Solar LCOE');
 
     // Calculate and add data
+    // var coal_mc_avg = 0;
+    // var pv_avg = 0;
     var size_cost = plant_data.map(function (plant) {
+        // coal_mc_avg += coalMarginalCost(plant, formdata);
+        // pv_avg += pvLCOE(plant, formdata);
         return [
             plant["Nameplate Capacity (MW)"],
             coalMarginalCost(plant, formdata),
             pvLCOE(plant, formdata)
         ];
     });
+    // coal_mc_avg = coal_mc_avg / plant_data.length;
+    // pv_avg = pv_avg / plant_data.length;
+    // console.log(Math.max(coal_mc_avg, pv_avg));
     data.addRows(size_cost);
 
     // Styling axis
@@ -319,10 +321,13 @@ function drawScatteredChart(formdata) {
         vAxis: {
             title: 'Cost ($/MWh)',
             textStyle: textStyle,
-            titleTextStyle: titleTextStyle
+            titleTextStyle: titleTextStyle,
+            viewWindow: {
+                min: 0,
+                max: 200
+            }
         },
         backgroundColor: 'white',
-        // legend: 'none',
     };
 
     var chart = new google.visualization.ScatterChart(document.getElementById('scattered_chart'));
