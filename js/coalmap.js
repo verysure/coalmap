@@ -26,11 +26,12 @@ function initMap() {
 // updateMapGraph on form submit
 function updateMapGraph() {
     // clear counts
-    plantcounts=  {green:0, yellow:0, red:0};
+    plantcounts = {green:0, yellow:0, red:0};
 
     // addCoalPlants, check if there are plant_data
     if (plant_data.length === 0) {
-        parseJSON("/coalmap/data/alldata_records_unformatted.json", function() {
+        // parseJSON("/coalmap/data/alldata_records_unformatted.json", function() {
+        parseJSON("/coalmap/data/alldata_records.json", function() {
             addCoalPlants(getFormData());
             drawTimeLine(getFormData());
             drawScatteredChart(getFormData());
@@ -44,6 +45,12 @@ function updateMapGraph() {
 
 
 function addCoalPlants(fdata) {
+    // clear coalplants data
+    $.each(plantcounts, function(index, value){
+        $('#'+index+'span').text(value);
+    });
+
+    // add each coalplants
     for (var i = 0; i< plant_data.length; i++) {
         // calculations for the coal and pv marginal cost
         var coal_mc = coalMarginalCost(plant_data[i], fdata);
