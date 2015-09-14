@@ -53,10 +53,12 @@ function addCoalPlants(fdata) {
     // add each coalplants
     for (var i = 0; i< plant_data.length; i++) {
         // calculations for the coal and pv marginal cost
-        var coal_mc = coalMarginalCost(plant_data[i], fdata);
-        var pv_lcoe = pvLCOE(plant_data[i], fdata);
+        // var coal_mc = coalMarginalCost(plant_data[i], fdata);
+        // var pv_lcoe = pvLCOE(plant_data[i], fdata);
+        // var wind_lcoe = windLCOE(plant_data[i], fdata);
         var title = plant_data[i]['Plant Name'] + ' ('+ plant_data[i]['Utility Name'] + ')';
-        var icon = planticon(coal_mc, pv_lcoe, plant_data[i]["CO2"]/20000000);
+        // var icon = planticon(coal_mc, pv_lcoe, wind_lcoe, plant_data[i]["CO2"]/20000000);
+        var icon = planticon(plant_data[i], fdata);
 
         var markerwindow = createMarker({
             title: title,
@@ -72,6 +74,7 @@ function addCoalPlants(fdata) {
             plant_data[i].marker.setMap(null);
         }
         plant_data[i].marker = markerwindow.marker;
+        plant_data[i].marker.setMap(map);
         plant_data[i].infowindow = markerwindow.infowindow;
 
         // Update plant counts
@@ -88,8 +91,12 @@ function coalMarginalCost(data, fdata) {
     return data["Marginal cost"]+fdata.carbontax*data["CO2"]/data["Net Generation (Megawatthours)"];
 }
 function pvLCOE(data, fdata) {
-    return data['PV LCOE']*fdata.solarprice*Math.pow((1-fdata.solarred/100),(fdata.solaryear-2015));
+    return data['PV LCOE']*Math.pow((1-fdata.solarred/100),(fdata.solaryear-2015));
 }
+function windLCOE(data, fdata) {
+    return data['Wind PPA']*Math.pow((1-fdata.windred/100),(fdata.solaryear-2015));
+}
+
 
 function getFormData() {
     // get the form data from the html
@@ -99,7 +106,7 @@ function getFormData() {
     };
     return {
         carbontax  : getF('carbontax'),
-        solarprice : getF('solarprice'),
+        windred    : getF('windred'),
         solaryear  : getF('solaryear'),
         solarred   : getF('solarred'),
         chartvar   : getF('chartvar'),
@@ -110,9 +117,11 @@ function renderInfo(plant, fdata) {
     return "\
         <h1 style='font-size:15px;'>"+plant['Plant Name'] + ' ('+ plant['Utility Name'] + ')'+"</h1>\
         <div id='bodyContent'>\
-            Current Marginal Cost ($/MWh): "+coalMarginalCost(plant, fdata)+"<br>\
-            Renewable Energy LCOE ($/MWh): "+pvLCOE(plant, fdata)+"<br>\
-            CO2 emissions (Mt/yr): "+(plant["CO2"]/1000000).toFixed(1)+"<br>\
+            Coal Average Operating Cost ($/MWh): "+coalMarginalCost(plant, fdata).toFixed(2)+"<br>\
+            Solar Energy LCOE ($/MWh): "+pvLCOE(plant, fdata).toFixed(2)+"<br>\
+            Wind Energy LCOE ($/MWh): "+windLCOE(plant, fdata).toFixed(2)+"<br>\
+            Nameplate Capacity (MWh): "+plant["Nameplate Capacity (MW)"].toFixed(2)+"<br>\
+            CO2 Emissions (Mt/yr): "+(plant["CO2"]/1000000).toFixed(2)+"<br>\
             Address: "+plant['Street Address'] + ", "+ plant['City'] +", " + plant['State'] +  ", "+plant['Zip']+"<br>\
             Utility: "+plant['Utility Name']+"\
         </div>";
@@ -126,7 +135,7 @@ function createMarker(mdata) {
         title: mdata.title,
         position: mdata.position,
         icon: mdata.icon,
-        map: map
+        // map: map
     });
 
     // add info to marker
@@ -150,25 +159,49 @@ function createMarker(mdata) {
     return {marker:marker, infowindow:infowindow};
 }
 
-function planticon(coal_mc, renew_mc, scale) {
-    var renew_ratio = renew_mc / coal_mc;
+// function planticon(coal_mc, pv_lcoe, wind_lcoe, scale) {
+function planticon(plant, fdata) {
+    // calculate the plants
+    var scale = plant["CO2"]/20000000;
+    var coal_mc = coalMarginalCost(plant, fdata);
+    var pv_lcoe = pvLCOE(plant, fdata);
+    var wind_lcoe = windLCOE(plant, fdata);
+
+    // create plant icon
     var plant = {
-        // path: 'M 0,0 100,0 100,100 200,150 200,200 0,200 0,150 z',
         path: google.maps.SymbolPath.CIRCLE,
-        scale: 0.07 * scale + 0.05,
+        // scale: 0.07 * scale + 0.05,
         scale: 6*scale + 4,
         fillOpacity: 1,
         strokeColor: 'transparent',
         fillColor: ''
     };
 
-    if (renew_ratio <= 1) {
-        plant['fillColor'] = 'green';
-    } else if (renew_ratio <= 1.2) {
-        plant['fillColor'] = 'yellow';
-    } else {
-        plant['fillColor'] = 'red';
+    // new color scheme by ranking
+    min_val = coal_mc;
+    plant['fillColor'] = 'black'
+
+    if (wind_lcoe < min_val) {
+        min_val = wind_lcoe;
+        plant['fillColor'] = 'blue';
     }
+    if (pv_lcoe <= min_val) {
+        plant['fillColor'] = 'yellow';
+    }
+
+
+
+    // var renew_ratio = pv_lcoe / coal_mc;
+    // if (renew_ratio <= 1) {
+    //     plant['fillColor'] = 'green';
+    // } else if (renew_ratio <= 1.2) {
+    //     plant['fillColor'] = 'yellow';
+    // } else {
+    //     plant['fillColor'] = 'red';
+    // }
+
+
+    // Return the Plant
     return plant;
 }
 
