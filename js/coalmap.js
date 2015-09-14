@@ -18,6 +18,9 @@ function initMap() {
             zoom: 4,
             mapTypeId: google.maps.MapTypeId.ROADMAP
         });
+        map.controls[google.maps.ControlPosition.RIGHT_BOTTOM].push(
+            document.getElementById('map-legend')
+        );
         // First render
         updateMapGraph();
     });
@@ -49,6 +52,7 @@ function addCoalPlants(fdata) {
     $.each(plantcounts, function(index, value){
         $('#'+index+'span').text(value);
     });
+
 
     // add each coalplants
     for (var i = 0; i< plant_data.length; i++) {
@@ -91,10 +95,10 @@ function coalMarginalCost(data, fdata) {
     return data["Marginal cost"]+fdata.carbontax*data["CO2"]/data["Net Generation (Megawatthours)"];
 }
 function pvLCOE(data, fdata) {
-    return data['PV LCOE']*Math.pow((1-fdata.solarred/100),(fdata.solaryear-2015));
+    return data['PV LCOE']*Math.pow((1-fdata.solarred/100),(fdata.passedyear-2015));
 }
 function windLCOE(data, fdata) {
-    return data['Wind PPA']*Math.pow((1-fdata.windred/100),(fdata.solaryear-2015));
+    return data['Wind PPA']*Math.pow((1-fdata.windred/100),(fdata.passedyear-2015));
 }
 
 
@@ -107,7 +111,7 @@ function getFormData() {
     return {
         carbontax  : getF('carbontax'),
         windred    : getF('windred'),
-        solaryear  : getF('solaryear'),
+        passedyear  : getF('passedyear'),
         solarred   : getF('solarred'),
         chartvar   : getF('chartvar'),
     }
@@ -122,6 +126,7 @@ function renderInfo(plant, fdata) {
             Wind Energy LCOE ($/MWh): "+windLCOE(plant, fdata).toFixed(2)+"<br>\
             Nameplate Capacity (MWh): "+plant["Nameplate Capacity (MW)"].toFixed(2)+"<br>\
             CO2 Emissions (Mt/yr): "+(plant["CO2"]/1000000).toFixed(2)+"<br>\
+            Retire Year: "+ (plant["RetireYear"] === null ? 'Not Scheduled' : plant["RetireYear"].toFixed(0)) +"<br>\
             Address: "+plant['Street Address'] + ", "+ plant['City'] +", " + plant['State'] +  ", "+plant['Zip']+"<br>\
             Utility: "+plant['Utility Name']+"\
         </div>";
@@ -160,12 +165,12 @@ function createMarker(mdata) {
 }
 
 // function planticon(coal_mc, pv_lcoe, wind_lcoe, scale) {
-function planticon(plant, fdata) {
-    // calculate the plants
-    var scale = plant["CO2"]/20000000;
-    var coal_mc = coalMarginalCost(plant, fdata);
-    var pv_lcoe = pvLCOE(plant, fdata);
-    var wind_lcoe = windLCOE(plant, fdata);
+function planticon(plant_d, fdata) {
+    // calculate the plant_d
+    var scale = plant_d["CO2"]/20000000;
+    var coal_mc = coalMarginalCost(plant_d, fdata);
+    var pv_lcoe = pvLCOE(plant_d, fdata);
+    var wind_lcoe = windLCOE(plant_d, fdata);
 
     // create plant icon
     var plant = {
@@ -179,7 +184,7 @@ function planticon(plant, fdata) {
 
     // new color scheme by ranking
     min_val = coal_mc;
-    plant['fillColor'] = 'black'
+    plant['fillColor'] = 'red'
 
     if (wind_lcoe < min_val) {
         min_val = wind_lcoe;
@@ -187,6 +192,14 @@ function planticon(plant, fdata) {
     }
     if (pv_lcoe <= min_val) {
         plant['fillColor'] = 'yellow';
+    }
+
+    if (plant_d['RetireType'] === 'Full') {
+        if (plant_d['RetireYear'] <= fdata.passedyear) {
+            plant['fillColor'] = 'black';
+        } else {
+            plant['fillColor'] = 'grey';
+        }
     }
 
 

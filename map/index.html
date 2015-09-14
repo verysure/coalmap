@@ -37,9 +37,9 @@
 
                     <div style="clear:both"> </div>
 
-                    <label class=label for=solaryear>Year:</label>
-                        <input class=input type=range min=2015 max=2050 value=2015 id=solaryear step=1 oninput="outputUpdate('#solaryearvalue', value);" name=solaryearvalue>
-                        <output class=output for=solaryear id="solaryearvalue">2015</output>
+                    <label class=label for=passedyear>Year:</label>
+                        <input class=input type=range min=2015 max=2050 value=2015 id=passedyear step=1 oninput="outputUpdate('#passedyearvalue', value);" name=passedyearvalue>
+                        <output class=output for=passedyear id="passedyearvalue">2015</output>
                         <!-- <div> </div> -->
 
                     <label class=label for=solarred>Solar PV System Cost Decline (%/yr):</label>
@@ -52,7 +52,7 @@
                     <select id="chartvar" class=label>
                         <option value="carbontax">Carbon Tax ($/ton)</option>
                         <option value="windred">PV cost factor</option>
-                        <option value="solaryear" selected>Year</option>
+                        <option value="passedyear" selected>Year</option>
                         <option value="solarred">Price drop (%/yr)</option>
                     </select>
 
@@ -75,7 +75,7 @@
 
         <div id="map" class="sectioninfo">
             <div class="container">
-                <div class="title">Cheapest Energy Source</div>
+                <div class="title">Map of Coal Plants to Shut Down</div>
                 <span class="plantspan" id="greenspan">0</span>
                 <svg xmlns="http://www.w3.org/2000/svg" class="plantimg">
                     <circle cx="15" cy="15" r="15" fill="green" />
@@ -96,6 +96,8 @@
                 Calculation of Coal MC and LCOE are explained in <a href="/coalmap/#costdescription">home</a>.
             </div>
         </div>
+
+        <div id="map-legend"> </div>
 
         <div id="map-canvas"></div>
         <div class="page-gap"></div>
