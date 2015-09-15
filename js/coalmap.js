@@ -1,7 +1,8 @@
 // var apikey = 'AyxJQCb3jgWo5pWvz122yF2SdWCcHGxviGgfa4Eo';
 // Global varibles
 var map;
-var plantcounts = {green:0, yellow:0, red:0};
+var plantcounts = {blue:0, yellow:0, red:0, grey: 0, black: 0};
+var map_legend;
 var plant_data = [];
 
 
@@ -18,9 +19,9 @@ function initMap() {
             zoom: 4,
             mapTypeId: google.maps.MapTypeId.ROADMAP
         });
-        map.controls[google.maps.ControlPosition.RIGHT_BOTTOM].push(
-            document.getElementById('map-legend')
-        );
+        map_legend = document.getElementById('map-legend');
+        map.controls[google.maps.ControlPosition.RIGHT_TOP].push(map_legend);
+
         // First render
         updateMapGraph();
     });
@@ -29,7 +30,7 @@ function initMap() {
 // updateMapGraph on form submit
 function updateMapGraph() {
     // clear counts
-    plantcounts = {green:0, yellow:0, red:0};
+    plantcounts = {blue:0, yellow:0, red:0, grey: 0, black: 0}
 
     // addCoalPlants, check if there are plant_data
     if (plant_data.length === 0) {
@@ -48,11 +49,6 @@ function updateMapGraph() {
 
 
 function addCoalPlants(fdata) {
-    // clear coalplants data
-    $.each(plantcounts, function(index, value){
-        $('#'+index+'span').text(value);
-    });
-
 
     // add each coalplants
     for (var i = 0; i< plant_data.length; i++) {
@@ -82,8 +78,12 @@ function addCoalPlants(fdata) {
         plant_data[i].infowindow = markerwindow.infowindow;
 
         // Update plant counts
-        $('#'+icon.fillColor+'span').text(++plantcounts[icon.fillColor]);
+        plantcounts[icon.fillColor]++;
     }
+
+    // render the plantcounts to the legend
+    renderLegend(fdata);
+
 }
 
 
@@ -120,7 +120,7 @@ function getFormData() {
 function renderInfo(plant, fdata) {
     return "\
         <h1 style='font-size:15px;'>"+plant['Plant Name'] + ' ('+ plant['Utility Name'] + ')'+"</h1>\
-        <div id='bodyContent'>\
+        <div>\
             Coal Average Operating Cost ($/MWh): "+coalMarginalCost(plant, fdata).toFixed(2)+"<br>\
             Solar Energy LCOE ($/MWh): "+pvLCOE(plant, fdata).toFixed(2)+"<br>\
             Wind Energy LCOE ($/MWh): "+windLCOE(plant, fdata).toFixed(2)+"<br>\
@@ -130,6 +130,33 @@ function renderInfo(plant, fdata) {
             Address: "+plant['Street Address'] + ", "+ plant['City'] +", " + plant['State'] +  ", "+plant['Zip']+"<br>\
             Utility: "+plant['Utility Name']+"\
         </div>";
+}
+function renderLegend(fdata) {
+    var iconsize = 10;
+    var legend_text = "";
+    var color_text = [
+        {c: 'yellow', t: 'Solar'},
+        {c: 'blue', t: 'Wind'},
+        {c: 'red', t: 'Coal'},
+        {c: 'grey', t: 'Retiring'},
+        {c: 'black', t: 'Retired'}
+    ];
+
+    // create legend
+    legend_text += "<table>";
+    for (var i = 0; i<color_text.length; i++) {
+        legend_text += "<tr><td>"+plantcounts[color_text[i].c]+"</td><td>"+circleIconText(color_text[i].c, iconsize)+"</td><td>: "+color_text[i].t+"</td></tr>";
+    }
+    legend_text += "</table>";
+    // legend_text += "<br>Solar System Cost ($/W): "+1.9*Math.pow((1-fdata.solarred/100),(fdata.passedyear-2015));
+
+    // render legend
+    $('#legend-text').html(legend_text);
+}
+function circleIconText(color, size) {
+    return "<svg xmlns='http://www.w3.org/2000/svg' class='inline-icon' style='width:"+2*size+"px; height:"+2*size+"px;'>\
+            <circle cx='"+size+"' cy='"+size+"' r='"+size+"' fill='"+color+"' />\
+        </svg>";
 }
 
 
