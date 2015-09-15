@@ -177,7 +177,6 @@ b, strong {
     width: 100%;
     height: 70%;
 }
-
 .map-content {
     font-size: 20px;
     text-align: center;
@@ -195,21 +194,19 @@ b, strong {
 
 
 
-/*for legend*/
+/*for inner map style*/
 #map-legend {
     text-align: left;
     padding-right: 10px;
 }
-.inline-icon {
-    float: left;
-}
+
 #legend-text {
     padding: 10px;
     background: rgba(255, 255, 255, 0.8);
     font-size: 15px;
 }
-.cleardiv {
-    clear: both;
+.marker-info {
+    text-align: left;
 }
 
 
@@ -217,6 +214,6 @@ b, strong {
 
 .coal-charts {
     margin: 0 auto;
-    width: 85%;
-    height: 65%;
+    width: 100%;
+    height: 70%;
 }

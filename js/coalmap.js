@@ -38,12 +38,12 @@ function updateMapGraph() {
         parseJSON("/coalmap/data/alldata_records.json", function() {
             addCoalPlants(getFormData());
             drawTimeLine(getFormData());
-            drawScatteredChart(getFormData());
+            // drawScatteredChart(getFormData());
         });
     } else {
         addCoalPlants(getFormData());
         drawTimeLine(getFormData());
-        drawScatteredChart(getFormData());
+        // drawScatteredChart(getFormData());
     }
 }
 
@@ -118,17 +118,16 @@ function getFormData() {
 }
 
 function renderInfo(plant, fdata) {
-    return "\
+    return "<div class='marker-info'>\
         <h1 style='font-size:15px;'>"+plant['Plant Name'] + ' ('+ plant['Utility Name'] + ')'+"</h1>\
-        <div>\
-            Coal Average Operating Cost ($/MWh): "+coalMarginalCost(plant, fdata).toFixed(2)+"<br>\
-            Solar Energy LCOE ($/MWh): "+pvLCOE(plant, fdata).toFixed(2)+"<br>\
-            Wind Energy LCOE ($/MWh): "+windLCOE(plant, fdata).toFixed(2)+"<br>\
-            Nameplate Capacity (MWh): "+plant["Nameplate Capacity (MW)"].toFixed(2)+"<br>\
-            CO2 Emissions (Mt/yr): "+(plant["CO2"]/1000000).toFixed(2)+"<br>\
-            Retire Year: "+ (plant["RetireYear"] === null ? 'Not Scheduled' : plant["RetireYear"].toFixed(0)) +"<br>\
-            Address: "+plant['Street Address'] + ", "+ plant['City'] +", " + plant['State'] +  ", "+plant['Zip']+"<br>\
-            Utility: "+plant['Utility Name']+"\
+        Coal Average Operating Cost ($/MWh): "+coalMarginalCost(plant, fdata).toFixed(2)+"<br>\
+        Solar Energy LCOE ($/MWh): "+pvLCOE(plant, fdata).toFixed(2)+"<br>\
+        Wind Energy LCOE ($/MWh): "+windLCOE(plant, fdata).toFixed(2)+"<br>\
+        Nameplate Capacity (MWh): "+plant["Nameplate Capacity (MW)"].toFixed(2)+"<br>\
+        CO2 Emissions (Mt/yr): "+(plant["CO2"]/1000000).toFixed(2)+"<br>\
+        Retire Year: "+ (plant["RetireYear"] === null ? 'Not Scheduled' : plant["RetireYear"].toFixed(0)) +"<br>\
+        Address: "+plant['Street Address'] + ", "+ plant['City'] +", " + plant['State'] +  ", "+plant['Zip']+"<br>\
+        Utility: "+plant['Utility Name']+"\
         </div>";
 }
 function renderLegend(fdata) {
@@ -281,6 +280,9 @@ function scrollTo(obj) {
 // Testing for charts
 // google.load('visualization', '1', {packages: ['corechart', 'line']});
 // google.setOnLoadCallback(drawTimeLine);
+var chart_data;
+var chart_options;
+var chart;
 
 function drawTimeLine(formdata) {
     var data = new google.visualization.DataTable();
@@ -319,8 +321,14 @@ function drawTimeLine(formdata) {
         legend: 'none',
     };
 
-    var chart = new google.visualization.LineChart(document.getElementById('chart_div'));
-    chart.draw(data, options);
+    chart = new google.visualization.LineChart(document.getElementById('chart_div'));
+    chart_data = data;
+    chart_options = options;
+    // chart.draw(data, options);
+    drawChart();
+}
+function drawChart() {
+    chart.draw(chart_data, chart_options);
 }
 
 
@@ -416,18 +424,25 @@ function drawScatteredChart(formdata) {
 
 
 
-// for affix
+// Other js modification of the website
 $(function () {
+    // Add affix
     $('#map-side').affix({
         offset: {
-            top: $('#map-side').offset().top - $('#navbar').height()
+            // top: $('#map-side').offset().top - $('#navbar').height()
+            top: 0
         }
     });
-
+    // Add affix style to head
     $('head').append('<style type="text/css">#map-side.affix {top: '+$('#navbar').height()+'px;}</style>');
 
+    // fix the sidebar size when affix
     $('#map-side').width($('.col-xs-3').width());
     $(window).on('resize', function(){
         $('#map-side').width($('.col-xs-3').width());
+        drawChart();
     });
+
+    // Page-gap
+    $('.page-gap').height($('#navbar').height());
 });

@@ -32,30 +32,41 @@
         </nav>
 
 
-        <div id="map" class="sectioninfo">
+        <!-- <div id="map" class="sectioninfo">
             <div class="container">
                 <div class="title">Map of Coal Plants to Shut Down</div>
             </div>
-        </div>
+        </div> -->
+        <div class="page-gap"></div>
 
         <div class="container" style="height:100%;">
             <div class="row" style="height:100%;">
 
                 <!-- Main Content -->
                 <div class="col-xs-9 map-content" style="height:100%;">
+
+                    <!-- Main map of coal plants -->
                     <h1>Map of Coal Plants to Shut Down</h1>
 
                     <div id="map-canvas"></div>
                     <div id="map-legend"><div id="legend-text"></div></div>
 
                     Calculation of Coal MC and LCOE are explained in <a href="/coalmap/#costdescription">home</a>.<br>
+
+
+                    <!-- Charts -->
+                    <div class="page-gap"></div>
+                    <h1>Advanced Charts</h1>
+                    <div id="chart_div" class="coal-charts"></div>
+
+
                 </div>
 
                 <!-- Sidebar -->
                 <div class="col-xs-3" >
                     <div id="map-side">
 
-                    <h1>Map Variables</h1>
+                    <h1>Map Controls</h1>
 
                     <form action="#" onsubmit="updateMapGraph();return false">
 
@@ -103,32 +114,12 @@
         </div>
 
 
-
-
-        <div class="sectioninfo" style="padding-top: 0px;">
-            <div class="container">
-            </div>
-        </div>
-
-
-        <div class="page-gap"></div>
-
-
-        <div id="charts" class="sectioninfo">
-            <div class="container">
-                <div class="title">Charts of Coal Plants to Shutdown</div>
-            </div>
-        </div>
-        <div id="chart_div" class="coal-charts"></div>
-
-        <div class="page-gap"></div>
-
-        <div id="scatter" class="sectioninfo">
+        <!-- <div id="scatter" class="sectioninfo">
             <div class="container">
                 <div class="title">Charts of Coal Plants</div>
             </div>
         </div>
-        <div id="scattered_chart" class="coal-charts"></div>
+        <div id="scattered_chart" class="coal-charts"></div> -->
 
 
         <script src="/coalmap/js/coalmap.js"> </script>
