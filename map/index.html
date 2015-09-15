@@ -17,49 +17,8 @@
         <!-- Fixed navbar -->
         <nav class="navbar navbar-default navbar-fixed-top">
           <div class="container">
-            <div class="navbar-header">
-                <!--  input controls-->
-                <form action="#" onsubmit="updateMapGraph();return false">
-
-                    <label class=label for=carbontax>Carbon Tax ($/ton):</label>
-                        <input class=input type=range min=0 max=100 value=0 id=carbontax step=1 oninput="outputUpdate('#carbontaxvalue', value);" name=carbontaxvalue>
-                        <output class=output for=carbontax id="carbontaxvalue">0</output>
-                        <!-- <div> </div> -->
-
-                    <!-- <label class=label for=solarprice>PV cost factor:</label>
-                        <input class=input type=range min=0 max=1 value=1 id=solarprice step=0.02 oninput="outputUpdate('#solarpricevalue', value);" name=solarpricevalue>
-                        <output class=output for=solarprice id="solarpricevalue">1</output> -->
-
-                    <label class=label for=windred>Wind System Cost Decline (%/yr):</label>
-                        <input class=input type=range min=0 max=10 value=1 id=windred step=1 oninput="outputUpdate('#windredvalue', value);" name=windredvalue>
-                        <output class=output for=windred id="windredvalue">1</output>
-
-
-                    <div style="clear:both"> </div>
-
-                    <label class=label for=passedyear>Year:</label>
-                        <input class=input type=range min=2015 max=2050 value=2015 id=passedyear step=1 oninput="outputUpdate('#passedyearvalue', value);" name=passedyearvalue>
-                        <output class=output for=passedyear id="passedyearvalue">2015</output>
-                        <!-- <div> </div> -->
-
-                    <label class=label for=solarred>Solar PV System Cost Decline (%/yr):</label>
-                        <input class=input type=range min=0 max=20 value=5 id=solarred step=1 oninput="outputUpdate('#solarredvalue', value);" name=solarredvalue>
-                        <output class=output for=solarred id="solarredvalue">5</output>
-                        <!-- <div> </div> -->
-                    <div style="clear:both"> </div>
-
-                    <label class=label>X axis variable:</label>
-                    <select id="chartvar" class=label>
-                        <option value="carbontax">Carbon Tax ($/ton)</option>
-                        <option value="windred">PV cost factor</option>
-                        <option value="passedyear" selected>Year</option>
-                        <option value="solarred">Price drop (%/yr)</option>
-                    </select>
-
-                    <input type="submit" value="Submit" class="formbutton">
-                </form>
-
-            </div>
+            <!-- <div class="navbar-header">
+            </div> -->
             <div id="navbar" class="navbar-collapse collapse">
               <ul class="nav navbar-nav navbar-right">
                 <!-- <li class="active"><a href="#">About</a></li> -->
@@ -79,13 +38,75 @@
             </div>
         </div>
 
+        <div class="container" style="height:100%;">
+            <div class="row" style="height:100%;">
 
-        <div id="map-canvas"></div>
-        <div id="map-legend"><div id="legend-text"></div></div>
+                <!-- Main Content -->
+                <div class="col-xs-9 map-content" style="height:100%;">
+                    <h1>Map of Coal Plants to Shut Down</h1>
+
+                    <div id="map-canvas"></div>
+                    <div id="map-legend"><div id="legend-text"></div></div>
+
+                    Calculation of Coal MC and LCOE are explained in <a href="/coalmap/#costdescription">home</a>.<br>
+                </div>
+
+                <!-- Sidebar -->
+                <div class="col-xs-3" >
+                    <div id="map-side">
+
+                    <h1>Map Variables</h1>
+
+                    <form action="#" onsubmit="updateMapGraph();return false">
+
+                        <table>
+                            <tr> <td colspan="2"> <label for=carbontax>Carbon Tax ($/ton):</label> </td> </tr>
+                            <tr>
+                                <td> <output for=carbontax id="carbontaxvalue">0</output> </td>
+                                <td> <input class=input type=range min=0 max=100 value=0 id=carbontax step=1 oninput="outputUpdate('#carbontaxvalue', value);" name=carbontaxvalue> </td>
+                            </tr>
+
+                            <tr> <td colspan="2"> <label for=passedyear>Passed Year:</label> </td> </tr>
+                            <tr>
+                                <td> <output for=passedyear id="passedyearvalue">2015</output> </td>
+                                <td> <input class=input type=range min=2015 max=2050 value=2015 id=passedyear step=1 oninput="outputUpdate('#passedyearvalue', value);" name=passedyearvalue> </td>
+                            </tr>
+
+                            <tr> <td colspan="2"> <label for=windred>Wind System Cost Decline (%/yr):</label> </td> </tr>
+                            <tr>
+                                <td> <output for=windred id="windredvalue">1</output> </td>
+                                <td> <input class=input type=range min=0 max=10 value=1 id=windred step=1 oninput="outputUpdate('#windredvalue', value);" name=windredvalue> </td>
+                            </tr>
+
+                            <tr> <td colspan="2"> <label for=solarred>Solar System Cost Decline (%/yr):</label> </td> </tr>
+                            <tr>
+                                <td> <output for=solarred id="solarredvalue">5</output> </td>
+                                <td> <input class=input type=range min=0 max=20 value=5 id=solarred step=1 oninput="outputUpdate('#solarredvalue', value);" name=solarredvalue> </td>
+                            </tr>
+                        </table>
+
+                        <label>X axis variable:</label>
+                        <select id="chartvar">
+                            <option value="carbontax">Carbon Tax ($/ton)</option>
+                            <option value="windred">PV cost factor</option>
+                            <option value="passedyear" selected>Year</option>
+                            <option value="solarred">Price drop (%/yr)</option>
+                        </select>
+
+                        <input type="submit" value="Submit" class="formbutton">
+                    </form>
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+
+
+
 
         <div class="sectioninfo" style="padding-top: 0px;">
             <div class="container">
-                Calculation of Coal MC and LCOE are explained in <a href="/coalmap/#costdescription">home</a>.
             </div>
         </div>
 

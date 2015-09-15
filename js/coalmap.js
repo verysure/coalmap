@@ -20,7 +20,7 @@ function initMap() {
             mapTypeId: google.maps.MapTypeId.ROADMAP
         });
         map_legend = document.getElementById('map-legend');
-        map.controls[google.maps.ControlPosition.RIGHT_TOP].push(map_legend);
+        map.controls[google.maps.ControlPosition.RIGHT_BOTTOM].push(map_legend);
 
         // First render
         updateMapGraph();
@@ -413,3 +413,21 @@ function drawScatteredChart(formdata) {
     var chart = new google.visualization.ScatterChart(document.getElementById('scattered_chart'));
     chart.draw(data, options);
 }
+
+
+
+// for affix
+$(function () {
+    $('#map-side').affix({
+        offset: {
+            top: $('#map-side').offset().top - $('#navbar').height()
+        }
+    });
+
+    $('head').append('<style type="text/css">#map-side.affix {top: '+$('#navbar').height()+'px;}</style>');
+
+    $('#map-side').width($('.col-xs-3').width());
+    $(window).on('resize', function(){
+        $('#map-side').width($('.col-xs-3').width());
+    });
+});

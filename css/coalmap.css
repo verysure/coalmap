@@ -145,10 +145,7 @@ b, strong {
     width: 170px;
 }
 
-input[type=range].input {
-    float: left;
-    width: 150px;
-}
+
 
 .output {
     float: left;
@@ -160,7 +157,7 @@ input[type=range].input {
 }
 
 
-
+/*These should merge with .map-content*/
 .title {
     text-align: center;
     font-family: 'Raleway', sans-serif;
@@ -173,17 +170,34 @@ input[type=range].input {
 }
 
 
-
+/*Map canvas*/
 #map-canvas {
     margin: 0 auto;
     /*margin-top: 40px;*/
-    width: 85%;
-    height: 65%;
+    width: 100%;
+    height: 70%;
 }
+
+.map-content {
+    font-size: 20px;
+    text-align: center;
+}
+.map-content h1 {
+    font-family: 'Raleway', sans-serif;
+    font-weight: 500;
+    font-size: 50px;
+}
+#map-side h1 {
+    font-family: 'Raleway', sans-serif;
+    font-weight: 500;
+    font-size: 30px;
+}
+
 
 
 /*for legend*/
 #map-legend {
+    text-align: left;
     padding-right: 10px;
 }
 .inline-icon {
