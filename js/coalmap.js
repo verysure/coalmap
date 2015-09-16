@@ -20,7 +20,7 @@ function initMap() {
             mapTypeId: google.maps.MapTypeId.ROADMAP
         });
         map_legend = document.getElementById('map-legend');
-        map.controls[google.maps.ControlPosition.RIGHT_BOTTOM].push(map_legend);
+        map.controls[google.maps.ControlPosition.LEFT_BOTTOM].push(map_legend);
 
         // First render
         updateMapGraph();

@@ -197,7 +197,7 @@ b, strong {
 /*for inner map style*/
 #map-legend {
     text-align: left;
-    padding-right: 10px;
+    padding-left: 10px;
 }
 
 #legend-text {
