@@ -111,7 +111,7 @@ function getFormData() {
     return {
         carbontax  : getF('carbontax'),
         windred    : getF('windred'),
-        passedyear  : getF('passedyear'),
+        passedyear : getF('passedyear'),
         solarred   : getF('solarred'),
         chartvar   : getF('chartvar'),
     }
@@ -258,17 +258,6 @@ function parseJSON(json_url, callback) {
     });
 }
 
-function outputUpdate(target, value) {
-    $(target).text(value);
-}
-
-
-function scrollTo(obj) {
-   // animate
-   $('html, body').animate({
-       scrollTop: $($(obj).attr('href')).offset().top
-     }, 300);
-}
 
 
 
@@ -425,6 +414,25 @@ function drawScatteredChart(formdata) {
 
 
 // Other js modification of the website
+
+
+function outputUpdate(target, value) {
+    $(target).text(value);
+}
+
+function pvSystemPrice(){
+    var redval = parseFloat($('#solarred')[0].value);
+    var years = parseFloat($('#passedyear')[0].value);
+    return (1.9*Math.pow(1-redval*0.01, years-2015)).toFixed(2);
+}
+
+function scrollTo(obj) {
+    // animate
+    $('html, body').animate({
+       scrollTop: $($(obj).attr('href')).offset().top
+    }, 300);
+}
+
 $(function () {
     // Add affix
     $('#map-side').affix({
@@ -445,4 +453,10 @@ $(function () {
 
     // Page-gap
     $('.page-gap').height($('#navbar').height());
+
+    // register event
+    $('#pvsystemprice').text(pvSystemPrice());
+    $('#passedyear, #solarred').on('input', function(){
+        $('#pvsystemprice').text(pvSystemPrice());
+    });
 });
