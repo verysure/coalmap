@@ -453,4 +453,10 @@ $(function () {
     $('#passedyear, #solarred').on('input', function(){
         $('#pvsystemprice').text(pvSystemPrice());
     });
+
+    // register mouseup
+    $('input').mouseup(updateMapGraph);
+    // register select on change
+    $('#chartvar').change(updateMapGraph);
+
 });
