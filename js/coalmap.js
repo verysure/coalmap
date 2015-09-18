@@ -1,7 +1,7 @@
 // var apikey = 'AyxJQCb3jgWo5pWvz122yF2SdWCcHGxviGgfa4Eo';
 // Global varibles
 var map;
-var plantcounts = {blue:0, yellow:0, red:0, grey: 0, black: 0};
+var plantcounts = {green:0, yellow:0, red:0, grey: 0, black: 0};
 var map_legend;
 var plant_data = [];
 // New plant_data fields:
@@ -32,7 +32,7 @@ function initMap() {
 // updateMapGraph on form submit
 function updateMapGraph() {
     // clear counts
-    plantcounts = {blue:0, yellow:0, red:0, grey: 0, black: 0}
+    plantcounts = {green:0, yellow:0, red:0, grey: 0, black: 0}
 
     // addCoalPlants, check if there are plant_data
     if (plant_data.length === 0) {
@@ -66,30 +66,31 @@ function addCoalPlants(fdata) {
 
     // add each coalplants
     for (var i = 0; i< plant_data.length; i++) {
-        // calculations for the coal and pv marginal cost
-        // var coal_mc = coalMarginalCost(plant_data[i], fdata);
-        // var pv_lcoe = pvLCOE(plant_data[i], fdata);
-        // var wind_lcoe = windLCOE(plant_data[i], fdata);
-        var title = plant_data[i]['Plant Name'] + ' ('+ plant_data[i]['Utility Name'] + ')';
-        // var icon = planticon(coal_mc, pv_lcoe, wind_lcoe, plant_data[i]["CO2"]/20000000);
         var icon = planticon(plant_data[i], fdata);
 
-        var markerwindow = createMarker({
-            title: title,
-            position: {
-                lat: plant_data[i]['Latitude'],
-                lng: plant_data[i]["Longitude"]
-            },
-            icon: icon,
-            info: renderInfo(plant_data[i], fdata)
-        });
-        // remove and add markers
-        if (plant_data[i].marker != undefined) {
-            plant_data[i].marker.setMap(null);
+        if (plant_data[i].marker === undefined) {
+            var title = plant_data[i]['Plant Name'] + ' ('+ plant_data[i]['Utility Name'] + ')';
+            var markerwindow = createMarker({
+                title: title,
+                position: {
+                    lat: plant_data[i]['Latitude'],
+                    lng: plant_data[i]["Longitude"]
+                },
+                icon: icon,
+                info: renderInfo(plant_data[i], fdata)
+            });
+            // remove and add markers
+            if (plant_data[i].marker != undefined) {
+                plant_data[i].marker.setMap(null);
+            }
+            plant_data[i].marker = markerwindow.marker;
+            plant_data[i].marker.setMap(map);
+            plant_data[i].infowindow = markerwindow.infowindow;
+        } else {
+            plant_data[i].marker.setIcon(icon);
+            plant_data[i].infowindow.setContent(renderInfo(plant_data[i], fdata));
         }
-        plant_data[i].marker = markerwindow.marker;
-        plant_data[i].marker.setMap(map);
-        plant_data[i].infowindow = markerwindow.infowindow;
+
 
         // Update plant counts
         plantcounts[icon.fillColor]++;
@@ -149,7 +150,7 @@ function renderLegend(fdata) {
     var legend_text = "";
     var color_text = [
         {c: 'yellow', t: 'Solar'},
-        {c: 'blue', t: 'Wind'},
+        {c: 'green', t: 'Wind'},
         {c: 'red', t: 'Coal'},
         {c: 'grey', t: 'Retiring'},
         {c: 'black', t: 'Retired'}
@@ -228,7 +229,7 @@ function planticon(plant_d, fdata) {
 
     if (wind_lcoe < min_val) {
         min_val = wind_lcoe;
-        plant['fillColor'] = 'blue';
+        plant['fillColor'] = 'green';
     }
     if (pv_lcoe <= min_val) {
         plant['fillColor'] = 'yellow';
