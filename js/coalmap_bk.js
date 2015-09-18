@@ -2,10 +2,9 @@
 // Global varibles
 var map;
 var plantcounts = {blue:0, yellow:0, red:0, grey: 0, black: 0};
-var map_legend;
 var plant_data = [];
 // New plant_data fields:
-// coalmc, co2_ng; pvlcoe; windlcoe; marker; window
+// coalmc, co2ng; pvlcoe; windlcoe; marker; window
 
 
 // initialize map when loaded
@@ -21,7 +20,7 @@ function initMap() {
             zoom: 4,
             mapTypeId: google.maps.MapTypeId.ROADMAP
         });
-        map_legend = document.getElementById('map-legend');
+        var map_legend = document.getElementById('map-legend');
         map.controls[google.maps.ControlPosition.LEFT_BOTTOM].push(map_legend);
 
         // First render
@@ -56,11 +55,119 @@ function parseJSON(json_url, callback) {
         url: json_url,
         dataType: "json",
         success: function(data) {
-            plant_data = data;
-            callback();
+            // parse and manage the data onload to speedup and use less memory
+            plant_data = data.map(parseData);
+            // callback();
         }
     });
 }
+
+// Ultimate Parser for logging minimum required data and creating marker infowindow
+var opened_data = null;
+function parseData(data) {
+    // basic data
+    var parsed_data = {
+        coalmc: data["Marginal cost"],
+        co2ng: data["CO2"]/data["Net Generation (Megawatthours)"],
+        pvlcoe: data['PV LCOE'],
+        windlcoe: data['Wind PPA'],
+        ryr: 0
+    };
+
+    // getting the retire year
+    if (data['RetireType'] === 'Full' && data['RetireYear'] !== null) {
+        parsed_data.ryr = data['RetireYear'];
+    }
+
+    // create marker
+    parsed_data.marker = new google.maps.Marker({
+        map: map,
+        title: data['Plant Name'] + ' ('+ data['Utility Name'] + ')',
+        position: {
+            lat: data['Latitude'],
+            lng: data["Longitude"]
+        },
+        icon: {
+            path: 0, // This means circle
+            scale: 6*data["CO2"]/20000000+4,
+            fillOpacity: 1,
+            strokeColor: 'transparent',
+            fillColor: getIconColor(parsed_data)
+        },
+    });
+
+    // for infowindow
+    parsed_data.basicinfo = "<div class='marker-info'>\
+        <h1 style='font-size:15px;'>"+data['Plant Name'] + ' ('+ data['Utility Name'] + ')'+"</h1>\
+        Coal Average Operating Cost ($/MWh): {coalmc}<br>\
+        Solar Energy LCOE ($/MWh): {pvlcoe}<br>\
+        Wind Energy LCOE ($/MWh): {windlcoe}<br>\
+        Nameplate Capacity (MWh): "+data["Nameplate Capacity (MW)"].toFixed(2)+"<br>\
+        CO2 Emissions (Mt/yr): "+(data["CO2"]/1000000).toFixed(2)+"<br>\
+        Retire Year: "+ (parsed_data.ryr === 0 ? 'Not Scheduled' : parsed_data.ryr.toFixed(0)) +"<br>\
+        Address: "+data['Street Address'] + ", "+ data['City'] +", " + data['State'] +  ", "+data['Zip']+"<br>\
+        Utility: "+data['Utility Name']+"\
+        </div>";
+    parsed_data.infowindow = new google.maps.InfoWindow({content: renderInfoString(parsed_data)});
+    parsed_data.marker.addListener('click', function(){
+        if (opened_data !== null){
+            opened_data.infowindow.close(map, opened_data.marker);
+        }
+
+        if (opened_data !== parsed_data){
+            parsed_data.infowindow.open(map, parsed_data.marker);
+            opened_data = parsed_data;
+        } else {
+            opened_data = null;
+        }
+    });
+
+    return parsed_data;
+}
+
+
+// support parseData
+function getIconColor(parsed_data) {
+    var pv = parsed_data.pvlcoe*reduce(getf('#passedyear'), getf('#solarred'));
+    var wind = parsed_data.windlcoe*reduce(getf('#passedyear'), getf('#windred'));
+    var coal = parsed_data.coalmc + parsed_data.co2ng * getf('#carbontax');
+    var ryr = parsed_data.ryr;
+
+    if (ryr !== 0) {
+        if (ryr <= getf('#passedyear')){
+            return 'black';
+        } else {
+            return 'grey';
+        }
+    }
+
+    if (coal < wind && coal < pv) {
+        return 'red';
+    } else if (wind < pv) {
+        return 'blue';
+    } else {
+        return 'yellow';
+    }
+}
+
+function reduce(year, drop) {
+    return Math.pow((1-drop),(year-2015));
+}
+
+
+// support getIconColor
+function getf(id) {
+    return parseFloat($(id).get(0).value);
+}
+
+//
+function renderInfoString(parsed_data){
+    return parsed_data.basicinfo.replace('{coalmc}', parsed_data.coalmc + parsed_data.co2ng * getf('#carbontax')).replace('{pvlcoe}', parsed_data.pvlcoe*reduce(getf('#passedyear'), getf('#solarred'))).replace('{windlcoe}', parsed_data.windlcoe*reduce(getf('#passedyear'), getf('#windred')));
+}
+
+
+
+
 
 function addCoalPlants(fdata) {
 
