@@ -136,11 +136,11 @@ function renderInfo(plant, fdata) {
     return "<div class='marker-info'>\
         <h1 style='font-size:15px;'>"+plant['Plant Name'] + ' ('+ plant['Utility Name'] + ')'+"</h1>\
         Coal Average Operating Cost ($/MWh): "+coalMarginalCost(plant, fdata).toFixed(2)+"<br>\
-        Solar Energy LCOE ($/MWh): "+pvLCOE(plant, fdata).toFixed(2)+"<br>\
-        Wind Energy LCOE ($/MWh): "+windLCOE(plant, fdata).toFixed(2)+"<br>\
+        Solar LCOE ($/MWh): "+pvLCOE(plant, fdata).toFixed(2)+"<br>\
+        Wind LCOE ($/MWh): "+windLCOE(plant, fdata).toFixed(2)+"<br>\
         Nameplate Capacity (MW): "+plant["Nameplate Capacity (MW)"].toFixed(2)+"<br>\
         CO2 Emissions (Mt/yr): "+(plant["CO2"]/1000000).toFixed(2)+"<br>\
-        Retire Year: "+ (plant["RetireYear"] === null ? 'Not Scheduled' : plant["RetireYear"].toFixed(0)) +"<br>\
+        Retirement Year: "+ (plant["RetireYear"] === null ? 'Not Scheduled' : plant["RetireYear"].toFixed(0)) +"<br>\
         Address: "+plant['Street Address'] + ", "+ plant['City'] +", " + plant['State'] +  ", "+plant['Zip']+"<br>\
         Utility: "+plant['Utility Name']+"\
         </div>";
