@@ -96,8 +96,26 @@
                                 <td> <output for=solarred id="solarredvalue">5</output> </td>
                                 <td> <input class=input type=range min=0 max=20 value=5 id=solarred step=1 oninput="outputUpdate('#solarredvalue', value);" name=solarredvalue> </td>
                             </tr>
+
+                            <tr> <td colspan="2"> <label>Investment Tax Credit for PV (%):</label> </td> </tr>
+                            <tr>
+                                <select id="solaritc">
+                                    <option value="0">0</option>
+                                    <option value="10">10</option>
+                                    <option value="30" selected>30</option>
+                                </select>
+                            </tr>
+
+                            <tr> <td colspan="2"> <label>Production Tax Credit for Wind ($/MWh):</label> </td> </tr>
+                            <tr>
+                                <select id="winditc">
+                                    <option value="0">0</option>
+                                    <option value="2p3" selected>23</option>
+                                </select>
+                            </tr>
                         </table>
 
+                        <label>Wind System Price:</label><span id="windsystemprice"></span> ($/W)
                         <label>PV System Price:</label><span id="pvsystemprice"></span> ($/W)
 
                         <label>X axis variable:</label>

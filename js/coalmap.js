@@ -110,10 +110,10 @@ function coalMarginalCost(data, fdata) {
     return data["Marginal cost"]+fdata.carbontax*data["CO2"]/data["Net Generation (Megawatthours)"];
 }
 function pvLCOE(data, fdata) {
-    return data['PV LCOE']*Math.pow((1-fdata.solarred/100),(fdata.passedyear-2015));
+    return data['PV_LCOE_custom_'+fdata.solaritc+'ITC']*Math.pow((1-fdata.solarred/100),(fdata.passedyear-2015));
 }
 function windLCOE(data, fdata) {
-    return data['Wind PPA']*Math.pow((1-fdata.windred/100),(fdata.passedyear-2015));
+    return data['Wind_LCOE_0ITC_'+fdata.winditc+'PTC']*Math.pow((1-fdata.windred/100),(fdata.passedyear-2015));
 }
 
 
@@ -129,6 +129,8 @@ function getFormData() {
         passedyear : getF('passedyear'),
         solarred   : getF('solarred'),
         chartvar   : getF('chartvar'),
+        solaritc   : getF('solaritc'),
+        winditc    : getF('winditc'),
     }
 }
 
