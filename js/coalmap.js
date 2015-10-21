@@ -113,6 +113,7 @@ function pvLCOE(data, fdata) {
     return data['PV_LCOE_custom_'+fdata.solaritc+'ITC']*Math.pow((1-fdata.solarred/100),(fdata.passedyear-2015));
 }
 function windLCOE(data, fdata) {
+    console.log('Wind_LCOE_0ITC_'+fdata.winditc+'PTC');
     return data['Wind_LCOE_0ITC_'+fdata.winditc+'PTC']*Math.pow((1-fdata.windred/100),(fdata.passedyear-2015));
 }
 
@@ -129,8 +130,8 @@ function getFormData() {
         passedyear : getF('passedyear'),
         solarred   : getF('solarred'),
         chartvar   : getF('chartvar'),
-        solaritc   : getF('solaritc'),
-        winditc    : getF('winditc'),
+        solaritc   : $('#solaritc').get(0).value,
+        winditc    : $('#winditc').get(0).value,
     }
 }
 
@@ -457,7 +458,7 @@ $(function () {
     });
 
     // register mouseup
-    $('input').mouseup(updateMapGraph);
+    $('.input').mouseup(updateMapGraph);
     // register select on change
     $('#chartvar').change(updateMapGraph);
 

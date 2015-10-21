@@ -76,42 +76,47 @@
                             <tr> <td colspan="2"> <label for=carbontax>Carbon Tax ($/ton):</label> </td> </tr>
                             <tr>
                                 <td> <output for=carbontax id="carbontaxvalue">0</output> </td>
-                                <td> <input class=input type=range min=0 max=100 value=0 id=carbontax step=1 oninput="outputUpdate('#carbontaxvalue', value);" name=carbontaxvalue> </td>
+                                <td> <input class="input" type=range min=0 max=100 value=0 id=carbontax step=1 oninput="outputUpdate('#carbontaxvalue', value);" name=carbontaxvalue> </td>
                             </tr>
 
                             <tr> <td colspan="2"> <label for=passedyear>Year:</label> </td> </tr>
                             <tr>
                                 <td> <output for=passedyear id="passedyearvalue">2015</output> </td>
-                                <td> <input class=input type=range min=2015 max=2050 value=2015 id=passedyear step=1 oninput="outputUpdate('#passedyearvalue', value);" name=passedyearvalue> </td>
+                                <td> <input class="input" type=range min=2015 max=2050 value=2015 id=passedyear step=1 oninput="outputUpdate('#passedyearvalue', value);" name=passedyearvalue> </td>
                             </tr>
 
                             <tr> <td colspan="2"> <label for=windred>Wind System Cost Decline (%/yr):</label> </td> </tr>
                             <tr>
                                 <td> <output for=windred id="windredvalue">1</output> </td>
-                                <td> <input class=input type=range min=0 max=10 value=1 id=windred step=1 oninput="outputUpdate('#windredvalue', value);" name=windredvalue> </td>
+                                <td> <input class="input" type=range min=0 max=10 value=1 id=windred step=1 oninput="outputUpdate('#windredvalue', value);" name=windredvalue> </td>
                             </tr>
 
                             <tr> <td colspan="2"> <label for=solarred>Solar PV System Cost Decline (%/yr):</label> </td> </tr>
                             <tr>
                                 <td> <output for=solarred id="solarredvalue">5</output> </td>
-                                <td> <input class=input type=range min=0 max=20 value=5 id=solarred step=1 oninput="outputUpdate('#solarredvalue', value);" name=solarredvalue> </td>
+                                <td> <input class="input" type=range min=0 max=20 value=5 id=solarred step=1 oninput="outputUpdate('#solarredvalue', value);" name=solarredvalue> </td>
                             </tr>
 
-                            <tr> <td colspan="2"> <label>Investment Tax Credit for PV (%):</label> </td> </tr>
                             <tr>
-                                <select id="solaritc">
-                                    <option value="0">0</option>
-                                    <option value="10">10</option>
-                                    <option value="30" selected>30</option>
-                                </select>
+                                <td colspan="2"> <label>Investment Tax Credit for PV (%):</label> </td>
+
+                                <td>
+                                    <select id="solaritc" class='input'>
+                                        <option value="0">0</option>
+                                        <option value="10">10</option>
+                                        <option value="30" selected>30</option>
+                                    </select>
+                                </td>
                             </tr>
 
-                            <tr> <td colspan="2"> <label>Production Tax Credit for Wind ($/MWh):</label> </td> </tr>
                             <tr>
-                                <select id="winditc">
-                                    <option value="0">0</option>
-                                    <option value="2p3" selected>23</option>
-                                </select>
+                                <td colspan="2"> <label>Production Tax Credit for Wind ($/MWh):</label> </td>
+                                <td>
+                                    <select id="winditc" class='input'>
+                                        <option value="0">0</option>
+                                        <option value="2p3" selected>23</option>
+                                    </select>
+                                </td>
                             </tr>
                         </table>
 
