@@ -149,7 +149,7 @@ function renderLegend(fdata) {
     var iconsize = 10;
     var legend_text = "";
     var color_text = [
-        {c: 'yellow', t: 'Solar'},
+        {c: 'yellow', t: 'Solar PV'},
         {c: 'green', t: 'Wind'},
         {c: 'red', t: 'Coal'},
         {c: 'grey', t: 'Retiring'},
