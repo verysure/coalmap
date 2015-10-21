@@ -1,111 +1,132 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>CoalMap</title>
+        <title>Map</title>
 
         <link href='http://fonts.googleapis.com/css?family=Raleway:500,300' rel='stylesheet' type='text/css'>
+        <script type="text/javascript" src="https://www.google.com/jsapi"></script>
+
+        <link rel="stylesheet" type="text/css" href="/coalmap/css/coalmap.css">
         <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
         <script src="https://maps.googleapis.com/maps/api/js"></script>
         <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
-        <link rel="stylesheet" type="text/css" href="/coalmap/css/coalmap.css">
-
-        <script type="text/x-mathjax-config">
-          MathJax.Hub.Config({tex2jax: {inlineMath: ['\\(','\\)']}});
-        </script>
-        <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"> </script>
     </head>
-    <body class="solarbg">
+    <body>
+
+        <!-- Fixed navbar -->
+        <nav class="navbar navbar-default navbar-fixed-top">
+          <div class="container">
+            <!-- <div class="navbar-header">
+            </div> -->
+            <div id="navbar" class="navbar-collapse collapse">
+              <ul class="nav navbar-nav navbar-right">
+                <!-- <li class="active"><a href="#">About</a></li> -->
+                <li><a href="#map" onclick="scrollTo(this);">Map</a></li>
+                <li><a href="#charts" onclick="scrollTo(this);">Charts</a></li>
+                <li><a href="#scatter" onclick="scrollTo(this);">Scattered</a></li>
+                <li><a href="/coalmap/">Home</a></li>
+              </ul>
+            </div><!--/.nav-collapse -->
+          </div>
+        </nav>
 
 
-        <header class="intro">
-          <div class="intro-body">
+        <!-- <div id="map" class="sectioninfo">
             <div class="container">
-              <div class="row">
-                <div class="col-md-8 col-md-offset-2">
-                  <h1 class="brand-heading"> CoalMap </h1>
-                  <p class="intro-text">
-                      Mapping the future decline of U.S. coal power.
-                  </p>
-                  <br>
-                  <a class="btn btn-default" href="#costdescription" role="button" onclick="scrollTo(this);">INTRO <i class="fa fa-arrow-down"></i></a>
+                <div class="title">Map of Coal Plants to Shut Down</div>
+            </div>
+        </div> -->
+        <div class="page-gap"></div>
 
-                  &nbsp;&nbsp;&nbsp;
+        <div class="container" style="height:100%;">
+            <div class="row" style="height:100%;">
 
-                  <a class="btn btn-default" href="/coalmap/map/" role="button">DEMO <i class="fa fa-arrow-right"></i></a>
+                <!-- Main Content -->
+                <div class="col-xs-9 map-content" style="height:100%;">
+
+                    <!-- Main map of coal plants -->
+                    <h1>Map of Coal Plants to Shut Down</h1>
+
+                    <div id="map-canvas"></div>
+                    <div id="map-legend"><div id="legend-text"></div></div>
+
+                    Calculation of Coal MC and LCOE are explained in <a href="/coalmap/#costdescription">home</a>.<br>
+
+
+                    <!-- Charts -->
+                    <div class="page-gap"></div>
+                    <h1>Advanced Charts</h1>
+                    <div id="chart_div" class="coal-charts"></div>
+
+                    <div class="page-gap"></div>
 
                 </div>
-              </div>
+
+                <!-- Sidebar -->
+                <div class="col-xs-3" >
+                    <div id="map-side">
+
+                    <h1>Map Controls</h1>
+
+                    <form action="#" onsubmit="updateMapGraph();return false">
+
+                        <table>
+                            <tr> <td colspan="2"> <label for=carbontax>Carbon Tax ($/ton):</label> </td> </tr>
+                            <tr>
+                                <td> <output for=carbontax id="carbontaxvalue">0</output> </td>
+                                <td> <input class=input type=range min=0 max=100 value=0 id=carbontax step=1 oninput="outputUpdate('#carbontaxvalue', value);" name=carbontaxvalue> </td>
+                            </tr>
+
+                            <tr> <td colspan="2"> <label for=passedyear>Year:</label> </td> </tr>
+                            <tr>
+                                <td> <output for=passedyear id="passedyearvalue">2015</output> </td>
+                                <td> <input class=input type=range min=2015 max=2050 value=2015 id=passedyear step=1 oninput="outputUpdate('#passedyearvalue', value);" name=passedyearvalue> </td>
+                            </tr>
+
+                            <tr> <td colspan="2"> <label for=windred>Wind System Cost Decline (%/yr):</label> </td> </tr>
+                            <tr>
+                                <td> <output for=windred id="windredvalue">1</output> </td>
+                                <td> <input class=input type=range min=0 max=10 value=1 id=windred step=1 oninput="outputUpdate('#windredvalue', value);" name=windredvalue> </td>
+                            </tr>
+
+                            <tr> <td colspan="2"> <label for=solarred>Solar System Cost Decline (%/yr):</label> </td> </tr>
+                            <tr>
+                                <td> <output for=solarred id="solarredvalue">5</output> </td>
+                                <td> <input class=input type=range min=0 max=20 value=5 id=solarred step=1 oninput="outputUpdate('#solarredvalue', value);" name=solarredvalue> </td>
+                            </tr>
+                        </table>
+
+                        <label>PV System Price:</label><span id="pvsystemprice"></span> ($/W)
+
+                        <label>X axis variable:</label>
+                        <select id="chartvar">
+                            <option value="carbontax">Carbon Tax ($/ton)</option>
+                            <option value="passedyear" selected>Year</option>
+                            <option value="windred">Wind Price Drop (%/yr)</option>
+                            <option value="solarred">PV Price Drop (%/yr)</option>
+                        </select>
+
+                        <!-- <input type="submit" value="Submit" class="formbutton"> -->
+                    </form>
+                    </div>
+
+                </div>
+
             </div>
-          </div>
-        </header>
-       
-
-
-
-
-
-        <div class="section" id="costdescription">
-          <div class="container">
-          <div class="sectiontitle">Cost Description</div>
-          <div class="sectioncontent">
-            Comparison is based on marginal cost of operating an existing coal plant (<b>Coal MC</b>) to the levelized cost of electicity (<a href="http://www.eia.gov/forecasts/aeo/electricity_generation.cfm">LCOE</a>) of a new utility-scale solar PV installation. The infrastructure cost of coal plants are not included in the <b>Coal MC</b> since replacing coal plants does not return the infrastructure cost.<br>
-
-            <span class="equation">
-              $$ \mbox{Coal MC} ($/Mwh)= {\mbox{Fuel cost} ($/yr) + \mbox{O&M cost}($/yr) + \mbox{Carbon tax}($/yr) \over \mbox{Annual generation} (MWh/yr)} $$
-            </span>
-
-            Costs due to emissions for NOx and SO2 are highly variable in recent years. However, as more coal plants have retired, the price of these allowances has decreased. Therefore, we neglected these costs on our calculations.
-
-            <span class="equation">
-              $$ \mbox{LCOE} ($/Mwh) =  $$
-            </span>
-
-          </div>
-          </div>
         </div>
 
 
-<!--         
-        <div class="section">
-          <div class="container">
-          <div class="sectiontitle">General Intro</div>
-          <div class="sectioncontent">Electricity generation accounts for 31% of U.S. greenhouse gas emission (http://www.epa.gov/climatechange/ghgemissions/sources/electricity.html). Coal has supplied the majority of power in the U.S. for decades, and coal plants currently generate about 39% of <a href="http://www.eia.gov/tools/faqs/faq.cfm?id=427&t=3">U.S. power</a>. <br>
-
-          Source: https://financere.nrel.gov/finance/content/us-power-sector-undergoes-dramatic-shift-generation-mix<br>
-
-          Despite these significant trends, the EIA predicts that the contribution of coal plants to the generation mix will increase in 2016 with increased energy demand and increased natural gas prices (<a href="http://www.eia.gov/forecasts/steo/pdf/steo_full.pdf"> link</a>). <br>
-          The average age of U.S. coal plants is about 38 years old.<br>
-          High rates of mercury, SO2, NOx, and particulate matter emissions.<br>
-          <a href="http://vault.sierraclub.org/coal/map/">Sierra Club</a> working on coal from emissions. ILSR has built a map showing the cost-competitiveness of residential and commercial retail rates across the U.S. (http://ilsr.org/projects/solarparitymap/). We’ve compiled a map that pits solar against coal for lowest cost of wholesale electricity rates to determines when utility-scale solar projects will beat coal-fired plants on cost, forcing utilities to convert their generation infrastructure.<br>
-          </div>
-          </div>
+        <!-- <div id="scatter" class="sectioninfo">
+            <div class="container">
+                <div class="title">Charts of Coal Plants</div>
+            </div>
         </div>
+        <div id="scattered_chart" class="coal-charts"></div> -->
 
 
-
- 
-        <div class="section">
-          <div class="container">
-          <div class="sectiontitle">Carbon Tax</div>
-          <div class="sectioncontent">
-            The price that should be set for a carbon tax is a topic of much debate. Even calculating the harm that carbon dioxide emissions due to society, called the Social Cost of Carbon (SCC) (http://www.epa.gov/climatechange/EPAactivities/economics/scc.html), is a difficult calculation that requires setting discount rates and estimates for damages caused. The Obama administration has used a SCC of $38 for making decisions (https://www.whitehouse.gov/sites/default/files/omb/inforeg/social_cost_of_carbon_for_ria_2013_update.pdf), The price in California is currently around $12.71/metric ton CO2 (http://calcarbondash.org/), and prices range around the world as shown below: 
-
-            (source: http://daily.sightline.org/2014/11/17/all-the-worlds-carbon-pricing-systems-in-one-animated-map/)
-          </div>
-          </div>
-        </div>
-
- -->
+        <script src="/coalmap/js/coalmap.js"> </script>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
-        <script type="text/javascript">
-          function scrollTo(obj) {
-             // animate
-             $('html, body').animate({
-                 scrollTop: $($(obj).attr('href')).offset().top
-               }, 300);
-          }
-        </script>
 
     </body>
 </html>
