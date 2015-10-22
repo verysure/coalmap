@@ -218,7 +218,11 @@ b, strong {
     text-align: left;
 }
 
-
+hr {
+    border-top: 1px solid black;
+    margin-top: 5px;
+    margin-bottom: 5px;
+}
 
 
 .coal-charts {

@@ -6,35 +6,14 @@
         <link href='http://fonts.googleapis.com/css?family=Raleway:500,300' rel='stylesheet' type='text/css'>
         <script type="text/javascript" src="https://www.google.com/jsapi"></script>
 
-        <link rel="stylesheet" type="text/css" href="css/coalmap.css">
         <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
         <script src="https://maps.googleapis.com/maps/api/js"></script>
         <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+        <link rel="stylesheet" type="text/css" href="css/coalmap.css">
     </head>
     <body>
 
-        <!-- Fixed navbar -->
-        <!-- <nav class="navbar navbar-default navbar-fixed-top">
-          <div class="container">
-            <div id="navbar" class="navbar-collapse collapse">
-              <ul class="nav navbar-nav navbar-right">
-                <li><a href="#map" onclick="scrollTo(this);">Map</a></li>
-                <li><a href="#charts" onclick="scrollTo(this);">Charts</a></li>
-                <li><a href="#scatter" onclick="scrollTo(this);">Scattered</a></li>
-                <li><a href="/coalmap/">Home</a></li>
-              </ul>
-            </div>
-          </div>
-        </nav> -->
-
-
-        <!-- <div id="map" class="sectioninfo">
-            <div class="container">
-                <div class="title">Map of Coal Plants to Shut Down</div>
-            </div>
-        </div> -->
-        <!-- <div class="page-gap"></div> -->
 
         <div class="container" style="height:100%;">
             <div class="row" style="height:100%;">
@@ -113,11 +92,35 @@
                                 <td> <input class="input" type=range min=2015 max=2050 value=2015 id=passedyear step=1 oninput="outputUpdate('#passedyearvalue', value);" name=passedyearvalue> </td>
                             </tr>
 
+                            <tr> <td colspan="2"> <hr> </td> </tr>
+
                             <tr> <td colspan="2"> <label for=windred>Wind System Cost Decline (%/yr):</label> </td> </tr>
                             <tr>
                                 <td> <output for=windred id="windredvalue">1</output> </td>
                                 <td> <input class="input" type=range min=0 max=10 value=1 id=windred step=1 oninput="outputUpdate('#windredvalue', value);" name=windredvalue> </td>
                             </tr>
+
+                            <tr>
+                                <td colspan="2"> <label>Production Tax Credit for Wind ($/MWh):</label> </td>
+
+                            </tr>
+                            <tr>
+                                <td colspan="2">
+                                    <select id="winditc" class='input'>
+                                        <option value="0">0</option>
+                                        <option value="2p3" selected>23</option>
+                                    </select>
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <td colspan="2">
+                                    <label>Wind System Price:</label><span id="windsystemprice"></span> ($/W)
+                                </td>
+                            </tr>
+
+                            <tr> <td colspan="2"> <hr> </td> </tr>
+
 
                             <tr> <td colspan="2"> <label for=solarred>Solar PV System Cost Decline (%/yr):</label> </td> </tr>
                             <tr>
@@ -128,7 +131,11 @@
                             <tr>
                                 <td colspan="2"> <label>Investment Tax Credit for PV (%):</label> </td>
 
-                                <td>
+                            </tr>
+
+                            <tr>
+
+                                <td colspan="2">
                                     <select id="solaritc" class='input'>
                                         <option value="0">0</option>
                                         <option value="10">10</option>
@@ -138,20 +145,19 @@
                             </tr>
 
                             <tr>
-                                <td colspan="2"> <label>Production Tax Credit for Wind ($/MWh):</label> </td>
-                                <td>
-                                    <select id="winditc" class='input'>
-                                        <option value="0">0</option>
-                                        <option value="2p3" selected>23</option>
-                                    </select>
+                                <td colspan="2">
+                                    <label>PV System Price:</label><span id="pvsystemprice"></span> ($/W)
                                 </td>
                             </tr>
+
+                            <tr> <td colspan="2"> <hr> </td> </tr>
+
+
                         </table>
 
-                        <label>Wind System Price:</label><span id="windsystemprice"></span> ($/W)
-                        <label>PV System Price:</label><span id="pvsystemprice"></span> ($/W)
 
-                        <label>X axis variable:</label>
+
+                        <label>For Charts: X axis variable</label>
                         <select id="chartvar">
                             <option value="carbontax">Carbon Tax ($/ton)</option>
                             <option value="passedyear" selected>Year</option>
