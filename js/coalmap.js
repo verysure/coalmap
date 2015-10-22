@@ -37,7 +37,7 @@ function updateMapGraph() {
     // addCoalPlants, check if there are plant_data
     if (plant_data.length === 0) {
         // parseJSON("/coalmap/data/alldata_records_unformatted.json", function() {
-        parseJSON("/coalmap/data/alldata_records.json", function() {
+        parseJSON("data/alldata_records.json", function() {
             addCoalPlants(getFormData());
             drawTimeLine(getFormData());
             // drawScatteredChart(getFormData());
@@ -210,7 +210,7 @@ function createMarker(mdata) {
 // function planticon(coal_mc, pv_lcoe, wind_lcoe, scale) {
 function planticon(plant_d, fdata) {
     // calculate the plant_d
-    var scale = plant_d["CO2"]/20000000;
+    var scale = plant_d["Nameplate Capacity (MW)"]/3600;
     var coal_mc = coalMarginalCost(plant_d, fdata);
     var pv_lcoe = pvLCOE(plant_d, fdata);
     var wind_lcoe = windLCOE(plant_d, fdata);
