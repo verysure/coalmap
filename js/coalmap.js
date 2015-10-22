@@ -131,6 +131,8 @@ function getFormData() {
         chartvar   : getF('chartvar'),
         solaritc   : $('#solaritc').get(0).value,
         winditc    : $('#winditc').get(0).value,
+        windcheck  : $('#windcheck').get(0).checked,
+        solarcheck : $('#solarcheck').get(0).checked,
     }
 }
 
@@ -161,10 +163,13 @@ function renderLegend(fdata) {
     // create legend
     legend_text += "<table>";
     for (var i = 0; i<color_text.length; i++) {
-        legend_text += "<tr><td>"+plantcounts[color_text[i].c]+"</td><td>"+circleIconText(color_text[i].c, iconsize)+"</td><td>: "+color_text[i].t+"</td></tr>";
+        if ((color_text[i].c === 'yellow' && !fdata.solarcheck) || (color_text[i].c === 'green' && !fdata.windcheck)) {
+            legend_text += "<tr><td><strike>"+plantcounts[color_text[i].c]+"</strike></td><td>"+circleIconText(color_text[i].c, iconsize)+"</td><td>: <strike>"+color_text[i].t+"</strike></td></tr>";
+        } else {
+            legend_text += "<tr><td>"+plantcounts[color_text[i].c]+"</td><td>"+circleIconText(color_text[i].c, iconsize)+"</td><td>: "+color_text[i].t+"</td></tr>";
+        }
     }
     legend_text += "</table>";
-    // legend_text += "<br>Solar System Cost ($/W): "+1.9*Math.pow((1-fdata.solarred/100),(fdata.passedyear-2015));
 
     // render legend
     $('#legend-text').html(legend_text);
@@ -229,11 +234,11 @@ function planticon(plant_d, fdata) {
     min_val = coal_mc;
     plant['fillColor'] = 'red'
 
-    if (wind_lcoe < min_val) {
+    if (wind_lcoe < min_val && fdata.windcheck) {
         min_val = wind_lcoe;
         plant['fillColor'] = 'green';
     }
-    if (pv_lcoe <= min_val) {
+    if (pv_lcoe <= min_val && fdata.solarcheck) {
         plant['fillColor'] = 'yellow';
     }
 
@@ -465,9 +470,11 @@ $(function () {
         $('#windsystemprice').text(windSystemPrice());
     });
 
-    // register mouseup
-    $('.input').mouseup(updateMapGraph);
     // register select on change
-    $('#chartvar').change(updateMapGraph);
+    $('#chartvar, .input').change(updateMapGraph);
+
+    $('#windcheck').change(function () {
+        $('#')
+    });
 
 });

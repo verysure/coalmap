@@ -80,6 +80,8 @@
                     <form action="#" onsubmit="updateMapGraph();return false">
 
                         <table>
+
+                            <tr> <td colspan="2"> <hr> </td> </tr>
                             <tr> <td colspan="2"> <label for=carbontax>Carbon Tax ($/ton):</label> </td> </tr>
                             <tr>
                                 <td> <output for=carbontax id="carbontaxvalue">0</output> </td>
@@ -93,6 +95,11 @@
                             </tr>
 
                             <tr> <td colspan="2"> <hr> </td> </tr>
+
+                            <tr>
+                                <td> <label>Wind</label> </td>
+                                <td> <input type="checkbox" class=input id="windcheck" checked> </td>
+                            </tr>
 
                             <tr> <td colspan="2"> <label for=windred>Wind System Cost Decline (%/yr):</label> </td> </tr>
                             <tr>
@@ -121,6 +128,10 @@
 
                             <tr> <td colspan="2"> <hr> </td> </tr>
 
+                            <tr>
+                                <td> <label>Solar</label> </td>
+                                <td> <input type="checkbox" class=input id="solarcheck" checked> </td>
+                            </tr>
 
                             <tr> <td colspan="2"> <label for=solarred>Solar PV System Cost Decline (%/yr):</label> </td> </tr>
                             <tr>
