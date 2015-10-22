@@ -113,7 +113,6 @@ function pvLCOE(data, fdata) {
     return data['PV_LCOE_custom_'+fdata.solaritc+'ITC']*Math.pow((1-fdata.solarred/100),(fdata.passedyear-2015));
 }
 function windLCOE(data, fdata) {
-    console.log('Wind_LCOE_0ITC_'+fdata.winditc+'PTC');
     return data['Wind_LCOE_0ITC_'+fdata.winditc+'PTC']*Math.pow((1-fdata.windred/100),(fdata.passedyear-2015));
 }
 
