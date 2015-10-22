@@ -422,6 +422,11 @@ function pvSystemPrice(){
     var years = parseFloat($('#passedyear')[0].value);
     return (1.9*Math.pow(1-redval*0.01, years-2015)).toFixed(2);
 }
+function windSystemPrice(){
+    var redval = parseFloat($('#windred')[0].value);
+    var years = parseFloat($('#passedyear')[0].value);
+    return (1.9*Math.pow(1-redval*0.01, years-2015)).toFixed(2);
+}
 
 function scrollTo(obj) {
     // animate
@@ -455,6 +460,10 @@ $(function () {
     $('#pvsystemprice').text(pvSystemPrice());
     $('#passedyear, #solarred').on('input', function(){
         $('#pvsystemprice').text(pvSystemPrice());
+    });
+    $('#windsystemprice').text(windSystemPrice());
+    $('#passedyear, #windred').on('input', function(){
+        $('#windsystemprice').text(windSystemPrice());
     });
 
     // register mouseup
