@@ -277,7 +277,7 @@ var chart;
 function drawTimeLine(formdata) {
     var data = new google.visualization.DataTable();
     data.addColumn('number', 'test');
-    data.addColumn('number', 'Plants to Shutdown (%)');
+    data.addColumn('number', 'Coal Plants to Shutdown (%)');
 
     // Calculate and add data
     data.addRows(calculateChartData(formdata));
@@ -340,7 +340,7 @@ function calculateChartData(formdata) {
 
         // counts how mant better pvLcoe plants, returns percentages
         var plants = plant_data.map(function(obj){
-            return pvLCOE(obj, formdata) <= coalMarginalCost(obj, formdata);
+            return (coalMarginalCost(obj, formdata) < pvLCOE(obj, formdata)) && (coalMarginalCost(obj, formdata) < windLCOE(obj, formdata));
         }).reduce(function(a,b){return a+b;})/total_plants * 100;
 
         // add this to the data points
