@@ -302,7 +302,7 @@ function drawTimeLine(formdata) {
             titleTextStyle: titleTextStyle
         },
         vAxis: {
-            title: 'Plants to Shutdown (%)',
+            title: 'Coal Plants to Shutdown (%)',
             textStyle: textStyle,
             titleTextStyle: titleTextStyle
         },
