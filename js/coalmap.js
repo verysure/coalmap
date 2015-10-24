@@ -473,8 +473,4 @@ $(function () {
     // register select on change
     $('#chartvar, .input').change(updateMapGraph);
 
-    $('#windcheck').change(function () {
-        $('#')
-    });
-
 });
