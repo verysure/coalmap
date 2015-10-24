@@ -295,11 +295,13 @@ function drawTimeLine(formdata) {
         bold: true,
     };
 
+
     var options = {
         hAxis: {
             title: $('#chartvar [value="'+formdata.chartvar+'"]').get(0).text,
             textStyle: textStyle,
-            titleTextStyle: titleTextStyle
+            titleTextStyle: titleTextStyle,
+            format: '#',
         },
         vAxis: {
             title: 'Coal Plants to Shutdown (%)',
@@ -352,7 +354,7 @@ function calculateChartData(formdata) {
 
 
 
-// Draw Scattered Chart
+// Draw Scattered Chart (OBSOLETE)
 function drawScatteredChart(formdata) {
     var data = new google.visualization.DataTable();
     // use MWH?
