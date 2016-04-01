@@ -5,7 +5,7 @@ CoalMap is an open-source demonstration of the timeline for economically replaci
 
 Contacts
 --------
-[verysure](http://www.mit.edu/~tonyw/) ([email](ttttonywu@gmail.com)), [Joel Jean](http://www.joeljean.com/), David Borrelli, Fanni Fan.
+[Tony Wu](ttttonywu@gmail.com), [Joel Jean](http://www.joeljean.com/), David Borrelli, Fanni Fan.
 
 
 References
