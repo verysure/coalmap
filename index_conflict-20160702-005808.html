@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Map</title>
+
+        <link href='http://fonts.googleapis.com/css?family=Raleway:500,300' rel='stylesheet' type='text/css'>
+        <script type="text/javascript" src="https://www.google.com/jsapi"></script>
+
+        <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
+        <script src="https://maps.googleapis.com/maps/api/js"></script>
+        <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+        <link rel="stylesheet" type="text/css" href="css/coalmap.css">
+    </head>
+    <body>
+
+
+        <div class="container" style="height:100%;">
+            <div class="row" style="height:100%;">
+
+                <!-- Main Content -->
+                <div class="col-xs-9 map-content" style="height:100%;">
+
+                    <!-- Main map of coal plants -->
+                    <h1>CoalMap</h1>
+                    <h2>Mapping the Economics of U.S. Coal Power and the Rise of Renewables</h2>
+
+                    <div id="map-canvas"></div>
+                    <div id="map-legend"><div id="legend-text"></div></div>
+
+                    <div class="description">
+                        How to read CoalMap:
+                        <ul>
+                            <li>
+                                Every dot represents a coal plant that was operating in the US in 2013 (the most recent complete dataset available when this analysis was performed). Our focus is on grid-connected electric power. The only coal plants shown are those owned by electric utilities or independent power producers (IPPs) and used primarily for electricity generation (not combined heat and power generation).
+                            </li>
+
+                            <li>
+                                The color of each dot represents the cheapest power generation option at the location of each coal plant. For example, a yellow dot means that electricity from a new utility-scale solar photovoltaic (PV) plant at the same location would be cheaper than power from the existing coal plant under the simulated conditions.
+                            </li>
+
+                            <li>
+                                Black dots represent coal plants that have already been retired.
+                            </li>
+
+                            <li>
+                                Gray dots represent coal plants that are scheduled for retirement.
+                            </li>
+
+                            <li>
+                                The size of each dot represents the nameplate capacity of the existing coal plant.
+                            </li>
+
+                            <li>
+                                Pro Tip: Change the map to "Satellite" view and zoom in to any dot to see a closeup view of each plant.
+                            </li>
+
+                        </ul>
+                        More detailed explanation of the calculations shown here, please check out the paper published in <a href="http://mitei.mit.edu/publications/working-papers/mapping-economics-us-coal-power-and-rise-renewables" target="_blank">MIT Energy Initiative</a> (<a href='http://mitei.mit.edu/system/files/MITEI-WP-2016-01.pdf' target="_blank">pdf</a>).<br>
+                        Contact us at <a href="mailto:info@coalmap.com" target="_blank">info@coalmap.com</a>.
+                    </div>
+                    <br>
+
+
+                    <!-- Charts -->
+                    <div class="page-gap"></div>
+                    <h1>Interactive Summary Plot</h1>
+                    <div id="chart_div" class="coal-charts"></div>
+
+                    <div class="page-gap"></div>
+
+                </div>
+
+                <!-- Sidebar -->
+                <div class="col-xs-3" >
+                    <div id="map-side">
+
+                    <h1>Map Controls</h1>
+
+                    <form action="#" onsubmit="updateMapGraph();return false">
+
+                        <table>
+
+                            <tr> <td colspan="2"> <hr> </td> </tr>
+                            <tr> <td colspan="2"> <label for=carbontax>Carbon Tax ($/ton):</label> </td> </tr>
+                            <tr>
+                                <td> <output for=carbontax id="carbontaxvalue">0</output> </td>
+                                <td> <input class="input" type=range min=0 max=100 value=0 id=carbontax step=1 oninput="outputUpdate('#carbontaxvalue', value);" name=carbontaxvalue> </td>
+                            </tr>
+
+                            <tr> <td colspan="2"> <label for=passedyear>Year:</label> </td> </tr>
+                            <tr>
+                                <td> <output for=passedyear id="passedyearvalue">2015</output> </td>
+                                <td> <input class="input" type=range min=2015 max=2050 value=2015 id=passedyear step=1 oninput="outputUpdate('#passedyearvalue', value);" name=passedyearvalue> </td>
+                            </tr>
+
+                            <tr> <td colspan="2"> <hr> </td> </tr>
+
+                            <tr>
+                                <td> <label>Wind</label> </td>
+                                <td> <input type="checkbox" class=input id="windcheck" checked> </td>
+                            </tr>
+
+                            <tr> <td colspan="2"> <label for=windred>Wind System Cost Decline (%/yr):</label> </td> </tr>
+                            <tr>
+                                <td> <output for=windred id="windredvalue">1</output> </td>
+                                <td> <input class="input" type=range min=0 max=10 value=1 id=windred step=1 oninput="outputUpdate('#windredvalue', value);" name=windredvalue> </td>
+                            </tr>
+
+                            <tr>
+                                <td colspan="2"> <label>Production Tax Credit for Wind ($/MWh):</label> </td>
+
+                            </tr>
+                            <tr>
+                                <td colspan="2">
+                                    <select id="winditc" class='input'>
+                                        <option value="0">0</option>
+                                        <option value="2p3" selected>23</option>
+                                    </select>
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <td colspan="2">
+                                    <label>Wind System Price:</label><span id="windsystemprice"></span> ($/W)
+                                </td>
+                            </tr>
+
+                            <tr> <td colspan="2"> <hr> </td> </tr>
+
+                            <tr>
+                                <td> <label>Solar</label> </td>
+                                <td> <input type="checkbox" class=input id="solarcheck" checked> </td>
+                            </tr>
+
+                            <tr> <td colspan="2"> <label for=solarred>Solar PV System Cost Decline (%/yr):</label> </td> </tr>
+                            <tr>
+                                <td> <output for=solarred id="solarredvalue">5</output> </td>
+                                <td> <input class="input" type=range min=0 max=20 value=5 id=solarred step=1 oninput="outputUpdate('#solarredvalue', value);" name=solarredvalue> </td>
+                            </tr>
+
+                            <tr>
+                                <td colspan="2"> <label>Investment Tax Credit for PV (%):</label> </td>
+
+                            </tr>
+
+                            <tr>
+
+                                <td colspan="2">
+                                    <select id="solaritc" class='input'>
+                                        <option value="0">0</option>
+                                        <option value="10">10</option>
+                                        <option value="30" selected>30</option>
+                                    </select>
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <td colspan="2">
+                                    <label>PV System Price:</label><span id="pvsystemprice"></span> ($/W)
+                                </td>
+                            </tr>
+
+                            <tr> <td colspan="2"> <hr> </td> </tr>
+
+
+                        </table>
+
+
+
+                        <label>For Charts: X axis variable</label>
+                        <select id="chartvar">
+                            <option value="carbontax">Carbon Tax ($/ton)</option>
+                            <option value="passedyear" selected>Year</option>
+                            <option value="windred">Wind Price Drop (%/yr)</option>
+                            <option value="solarred">PV Price Drop (%/yr)</option>
+                        </select>
+
+                        <!-- <input type="submit" value="Submit" class="formbutton"> -->
+                    </form>
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+
+
+        <!-- <div id="scatter" class="sectioninfo">
+            <div class="container">
+                <div class="title">Charts of Coal Plants</div>
+            </div>
+        </div>
+        <div id="scattered_chart" class="coal-charts"></div> -->
+
+
+        <script src="js/coalmap.js"> </script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+
+    </body>
+</html>

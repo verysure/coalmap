@@ -18,7 +18,7 @@ Google Map API: https://developers.google.com/maps/
 
 Design: Bootstrap, JQuery, FontsAwesome, Google Fonts.
 
-Cover image is taken by the follow:
+We no longer use the following cover photo in our webpage, but we still like to thank the author:
 
 "Sideka Solartechnik Ibbenbüren 5" by Sideka Solartechnik - Own work. Licensed under CC BY-SA 3.0 via Wikimedia Commons - http://commons.wikimedia.org/wiki/File:Sideka_Solartechnik_Ibbenb%C3%BCren_5.JPG#/media/File:Sideka_Solartechnik_Ibbenb%C3%BCren_5.JPG
 
