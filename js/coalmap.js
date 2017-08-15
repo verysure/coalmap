@@ -38,7 +38,7 @@ function updateMapGraph() {
     if (plant_data.length === 0) {
         // parseJSON("/coalmap/data/alldata_records_unformatted.json", function() {
         // parseJSON("data/alldata_records.json", function() {
-        parseJSON("/coalmap/data/alldata_records.json", function() {
+        parseJSON("data/alldata_records.json", function() {
             addCoalPlants(getFormData());
             drawTimeLine(getFormData());
             // drawScatteredChart(getFormData());
